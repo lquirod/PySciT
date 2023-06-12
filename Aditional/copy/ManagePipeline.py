@@ -1,16 +1,18 @@
 from sklearn.pipeline import Pipeline
 import pandas as pd
-from abc import abstractmethod, ABC
+# from Enumerations import Enumerations as enum
+import Enumerations as Enum
+
 # from sklearn.preprocessing import MinMaxScaler
 # sc_model = MinMaxScaler ()
 # sc_model.fit_transform (ran_data)
 from sklearn import linear_model
-#   @classmethod
-#   @abstractmethod
-class ManagePipeline(ABC):
+
+class ManagePipeline:
     def __init__(self, pipeName = 'MyNewPipe'):
         self.Name = pipeName
         self.hasAlgorithm = None
+        self.theAlgorithm = None
         self.typeAlgorithm = None
         self.aPipeline = Pipeline([])
 
@@ -58,46 +60,40 @@ class ManagePipeline(ABC):
         return self.hasAlgorithm
 
     ####################################################################################################
-    #### Concrete Operations
+    #### Additional
+    def fitData(self, x,y = None, sample_weight=None):
+        # self.aPipeline.fit(x, y, sample_weight)
+        self.aPipeline.fit(x, y)
 
-    @abstractmethod
+    def getCoef(self):
+        if self.hasAlgorithm is None:
+            return None
+        else:
+            return self.steps()[self.hasAlgorithm].coef_
+
     def get_params(self, deep=True):
         if self.hasAlgorithm is None:
             return None
         else:
             return self.steps()[self.hasAlgorithm].deep(deep)
 
-    @abstractmethod
     def setParams(self, params):
         if self.hasAlgorithm is None:
             return None
         else:
             return self.steps()[self.hasAlgorithm].set_params(params)
-
-    @abstractmethod
-    def fitData(self, x,y = None, sample_weight=None):
-        # self.aPipeline.fit(x, y, sample_weight)
-        self.aPipeline.fit(x, y)
     
-    @abstractmethod
-    def execute(self, X):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.steps()[self.hasAlgorithm].predict(X)
-        
-    @abstractmethod
     def score(self, X, y, sample_weight=None):
         if self.hasAlgorithm is None:
             return None
         else:
             return self.steps()[self.hasAlgorithm].score(X, y, sample_weight)
     
+    def predict(self, X):
+        if self.hasAlgorithm is None:
+            return None
+        else:
+            return self.steps()[self.hasAlgorithm].predict(X)
 
-    # def getCoef(self):
-    #     if self.hasAlgorithm is None:
-    #         return None
-    #     else:
-    #         return self.steps()[self.hasAlgorithm].coef_
 
 

@@ -1,5 +1,5 @@
 import pandas as pd
-
+from Enumerations import Transformations as TR
 class ManageData:
     
     def __init__(self, data = None, dataName = 'New Data'):
@@ -11,6 +11,12 @@ class ManageData:
         self.Name = 'Clean Data'
         del self.Data
         self.history.clear()
+
+    def getHistory(self):
+        ret = []
+        for h in self.history:
+            ret.append(h.name)
+        return ret
 
     ####################################################################################################
     #### Manage Data
@@ -31,8 +37,6 @@ class ManageData:
             return None
         else:
             return self.Data.columns.values.tolist()
-
-
 
     ####################################################################################################
     #### Modify Data

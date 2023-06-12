@@ -1,2 +1,2 @@
-import Enumerations.Transformations as Transformations
-import Enumerations.Algorithms as Algorithms
+import Enumerations.Transformations as TR
+import Enumerations.Algorithms as ALG

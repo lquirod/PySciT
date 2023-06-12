@@ -5,6 +5,14 @@ from sklearn.preprocessing import MinMaxScaler
 # sc_model.fit_transform (ran_data)
 from sklearn import linear_model
 
+
+#  @classmethod
+#     def display(cls):
+#         print(cls.get_contents())
+    
+#     @abstractmethod
+
+
 class ManageOperations:
     Algorithms = {'Linear Regression'}
     Transformations = {'MinMax scaling'}

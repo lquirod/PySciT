@@ -1,6 +1,6 @@
 import UserActions as user
 from MoreFunctions import *
-import ManageOperations as mo
+from ManageItems import ManageOperations as mo
 
 menuOpciones = [
     "Status",
@@ -100,10 +100,10 @@ while opc != "Salir":
                 elif opc == "Introducir transformación":
                     aux1 = choiceDialog(list(tr.Transformations), "¿Qué operación desea introducir?")
                     aStep = tr.getTransformation(aux1)
-                    steps = user1.getSteps()
-                    pos = len(user1.getSteps())
+                    steps = user1.getSteps().copy()
+                    pos = len(steps)
                     if pos > 0:
-                        steps[pos] = "Añadir al final"
+                        steps.append("Añadir al final")
                         pos = choiceDialog(steps, "¿En cuál posición quiere introducir la transformación?", 0)
                     user1.addStep(aStep, pos)
                     print("Añadido")
@@ -111,8 +111,8 @@ while opc != "Salir":
                 elif opc == "Seleccionar Algoritmo":
                     aux1 = choiceDialog(list(tr.Algorithms), "¿Qué algoritmo desea que opere el pipeline?")
                     aStep = tr.getAlgorithm(aux1)
-                    steps = user1.getSteps()
-                    pos = len(user1.getSteps())
+                    steps = user1.getSteps().copy()
+                    pos = len(steps)
                     if pos > 0:
                         steps[pos] = "Añadir al final"
                         pos = choiceDialog(steps, "¿En cuál posición quiere introducir el algoritmo?", 0)
@@ -120,7 +120,7 @@ while opc != "Salir":
                     print("Añadido")
 
                 elif opc == "Cambiar de posición los Steps":
-                    aux1 = user1.getSteps()
+                    aux1 = user1.getSteps().copy()
                     if len(aux) > 0:
                         steps.append("Añadir al final")
                         aux1 = choiceDialog(aux, "Seleccione el Step a eliminar", 2)
@@ -130,7 +130,7 @@ while opc != "Salir":
                         print('No hay Steps')
 
                 elif opc == "Eliminar Step":
-                    aux1 = user1.getSteps()
+                    aux1 = user1.getSteps().copy()
                     if len(aux) > 0:
                         steps.append("Añadir al final")
                         aux1 = choiceDialog(aux, "Seleccione el Step a eliminar", 2)
@@ -165,11 +165,11 @@ while opc != "Salir":
             print('No hay Pipelines para operar')
 
     elif opc == "Borrar Pipeline":
-        aux = user1.getMyPipelinesNames()
+        aux = list(user1.getMyPipelinesNames().values)
         if len(aux) > 0:
-            aux[len(user1.getMyPipelinesNames())] = 'Cancelar'
-            aux = choiceDialog(list(aux.values), "Seleccione el Pipeline a eliminar", 2)
-            print("Se ha seleccionado el Pipeline: "+aux[1])
+            aux.append('Cancelar')
+            aux = choiceDialog(aux, "Seleccione el Pipeline a eliminar", 2)
+            print("Se ha seleccionado: "+aux[1])
             user1.delPipeline(aux[0])
         else:
             print('No hay Pipelines para operar')
