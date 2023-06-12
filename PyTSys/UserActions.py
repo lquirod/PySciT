@@ -1,5 +1,4 @@
-import clases.ManageData as md
-import clases.ManagePipeline as mp
+import ManageClasses as M
 
 
 class UserActions:
@@ -13,7 +12,7 @@ class UserActions:
     ####################################################################################################
     #### Operations with user's Pipelines
     def createPipeline(self, newNamePipeline='New Pipeline'):
-        self.myPipelines.append(mp.ManagePipeline(newNamePipeline))
+        self.myPipelines.append(M.Pipe.ManagePipeline(newNamePipeline))
         return len(self.myPipelines)
     
     def getMyPipelinesNames(self):
@@ -98,7 +97,7 @@ class UserActions:
     ####################################################################################################
     #### Operations with user's Datas
     def createData(self, data = None, newNameData='New Data'):
-        self.myDatas.append(md.ManageData(data, newNameData))
+        self.myDatas.append(M.Data.ManageData(data, newNameData))
         return len(self.myDatas)
 
     def selectData(self, select = None):

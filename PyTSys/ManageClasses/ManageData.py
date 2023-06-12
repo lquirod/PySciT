@@ -1,6 +1,7 @@
 import pandas as pd
 
 class ManageData:
+    
     def __init__(self, data = None, dataName = 'New Data'):
         self.Name = dataName
         self.Data = data
