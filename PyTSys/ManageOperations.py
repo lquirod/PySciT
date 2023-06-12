@@ -1,3 +1,4 @@
+import Enumerations as Enum
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 # sc_model = MinMaxScaler ()

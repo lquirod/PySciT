@@ -1,6 +1,6 @@
 import UserActions as user
 from MoreFunctions import *
-import ManageClasses.ManageOperations as mo
+import ManageOperations as mo
 
 menuOpciones = [
     "Status",

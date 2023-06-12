@@ -1,2 +1,2 @@
-import Transformations
-import Algorithms
+import Enumerations.Transformations as Transformations
+import Enumerations.Algorithms as Algorithms
