@@ -1,6 +1,6 @@
 # import clases.UserActions as user
 # from clases.MoreFunctions import *
-# import clases.ManageOperations as mo
+# import clases.ManageTransformations as mo
 
 # import file "PyTSys/main.py"
 # PyTSys/main.py
@@ -32,7 +32,7 @@
 # print('Creando user')
 # user1 = user.UserActions()
 # print('Creando Operador')
-# tr = mo.ManageOperations()
+# tr = mo.ManageTransformations()
 
 # opc = ''
 # file = 'Ninguno'

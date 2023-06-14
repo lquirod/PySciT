@@ -1,9 +1,9 @@
 import clases.ManageFile as mf
 import clases.ManageData as md
-import clases.ManagePipeline as pip
+import clases.aPipeline as pip
 import clases.UserActions as user
 from clases.MoreFunctions import *
-import clases.ManageOperations as mo
+import clases.ManageTransformations as mo
 
 # Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
 # filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
@@ -21,9 +21,9 @@ import clases.ManageOperations as mo
 # print(myData.getNameCols() )
 # myData.setRenameCols(['111','222','333'])
 
-myPipeline = pip.ManagePipeline('mi Pipelitine')
+myPipeline = pip.aPipeline('mi Pipelitine')
 print('Se viene el pipe iadamo: '+myPipeline.Name+' que puede hacer:')
-tr = mo.ManageOperations()
+tr = mo.ManageTransformations()
 # print(tr.Algorithms)
 fst = 'Linear Regression'
 # print(fst)

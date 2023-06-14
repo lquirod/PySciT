@@ -1,6 +1,5 @@
-import ManageItems.ManagePipeline as mp
-import ManageItems.ManageData as md
-
+import ManageItems as M
+import TypesPipelines as Pip
 
 class UserActions:
     def __init__(self, userName='New User'):
@@ -12,8 +11,8 @@ class UserActions:
 
     ####################################################################################################
     #### Operations with user's Pipelines
-    def createPipeline(self, newNamePipeline='New Pipeline'):
-        self.myPipelines.append(mp.ManagePipeline(newNamePipeline))
+    def addPipeline(self, newPipe):
+        self.myPipelines.append(newPipe)
         return len(self.myPipelines)
     
     def getMyPipelinesNames(self):
@@ -51,11 +50,11 @@ class UserActions:
 
     ####################################################################################################
     ## Operations with the user's actual Pipeline
-    def setAlgorithmPipe(self, theAlgorithm, stepPosition = None):
-        if self.getActualPipe() is None:
-            return None
-        else:
-            return self.getActualPipe().setAlgorithm(theAlgorithm, stepPosition)
+    # def setAlgorithmPipe(self, theAlgorithm, stepPosition = None):
+    #     if self.getActualPipe() is None:
+    #         return None
+    #     else:
+    #         return self.getActualPipe().setAlgorithm(theAlgorithm, stepPosition)
     
     def getSteps(self):
         if self.getActualPipe() is None:
@@ -85,20 +84,24 @@ class UserActions:
         if self.getActualPipe() is None or self.getActualData() is None:
             return None
         else:
-            zipped = zip(self.getActualData()['X_train1'], self.getActualData()['X_train2'])
-            self.getActualPipe.fit(zipped, self.getActualData()['Y_train'])
+            zipped = [[x, y] for x, y in zip(self.getActualData().Data['X_train1'].tolist(), self.getActualData().Data['X_train2'].tolist())]
+            # print(self.getActualPipe())
+            # print(zipped)
+            # self.getActualPipe().fitData(self.getActualData().Data['X_train1'], self.getActualData().Data['X_train2'])
+            # self.getActualPipe().fitData(zipped)
+            self.getActualPipe().fitData(zipped, self.getActualData().Data['y_train'].tolist())
 
     def predict(self):
         if self.getActualPipe() is None or self.getActualData() is None:
             return None
         else:
-            zipped = zip(self.getActualData()['X_train1'], self.getActualData()['X_train2'])
-            self.getActualPipe.score(zipped, self.getActualData()['Y_train'])
+            zipped = [[x, y] for x, y in zip(self.getActualData().Data['X_train1'].tolist(), self.getActualData().Data['X_train2'].tolist())]
+            return self.getActualPipe().score(zipped, self.getActualData().Data['y_train'].tolist())
 
     ####################################################################################################
     #### Operations with user's Datas
     def createData(self, data = None, newNameData='New Data'):
-        self.myDatas.append(md.ManageData(data, newNameData))
+        self.myDatas.append(M.Data.ManageData(data, newNameData))
         return len(self.myDatas)
 
     def selectData(self, select = None):

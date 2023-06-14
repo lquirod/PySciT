@@ -1,19 +1,21 @@
 from sklearn.pipeline import Pipeline
 import pandas as pd
 from abc import abstractmethod, ABC
-from PyTSys.ManageItems import aPipeline
+from TypesPipelines import aPipeline
 from sklearn import linear_model
 
 #   @classmethod
 #   @abstractmethod
-class LinearRegressionPipe(aPipeline):
-    def __init__(self, theAlgorithm, pipeName = 'MyNewPipe'):
+class LinearRegressionPipe(aPipeline.aPipeline):
+    def __init__(self, pipeName = 'MyNewPipe'):
         # self.Name = pipeName
         # self.hasAlgorithm = None
         # self.typeAlgorithm = None
         # self.aPipeline = Pipeline([])
-        super(self, pipeName)
-        self.setAlgorithm(theAlgorithm)
+        super().__init__(pipeName)
+        self.typeAlgorithm = 1
+        self.setAlgorithm()
+
 
     ####################################################################################################
     #### Operations with the Pipeline's structure
@@ -51,11 +53,8 @@ class LinearRegressionPipe(aPipeline):
     #         return True
 
     # ## Operations with the Pipeline's Algorithm
-    def setAlgorithm(self, theAlgorithm, stepPosition = None):
-        if self.hasAlgorithm is not None:
-            self.delStep(self.hasAlgorithm)
-            
-        self.hasAlgorithm = self.addStep(theAlgorithm, stepPosition)
+    def setAlgorithm(self):
+        self.hasAlgorithm = self.addStep( ['Linear Regression', linear_model.LinearRegression()])
         return self.hasAlgorithm
 
     ####################################################################################################
@@ -92,7 +91,10 @@ class LinearRegressionPipe(aPipeline):
         if self.hasAlgorithm is None:
             return None
         else:
-            return self.steps()[self.hasAlgorithm].score(X, y, sample_weight)
+            return self.aPipeline.score(X, y, sample_weight)
+            # return self.steps()[self.hasAlgorithm][1].score(X, y, sample_weight)
+            # return self.steps().tolist()[self.hasAlgorithm].score(X, y, sample_weight)
+            # return self.steps()[self.hasAlgorithm].score(X, y, sample_weight)
     
 
     # def getCoef(self):

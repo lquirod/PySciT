@@ -1,0 +1,2 @@
+from TypesPipelines import aPipeline as aPip
+from TypesPipelines import LinearRegressionPipe as Lineal_Regresion

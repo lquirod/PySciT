@@ -1,6 +1,7 @@
 import UserActions as user
 from MoreFunctions import *
-from ManageItems import ManageOperations as mo
+# from ManageItems import ManageTransformations as mo
+import ManageItems as M
 
 menuOpciones = [
     "Status",
@@ -16,7 +17,7 @@ menuOpciones = [
 pipeOpciones = [
     "Ver Steps",
     "Introducir transformación",
-    "Seleccionar Algoritmo",
+    # "Seleccionar Algoritmo",
     "Cambiar Steps",
     "Eliminar Step",
     "Fit con Data",
@@ -29,7 +30,8 @@ print("--Inicio del programa")
 print('Creando user')
 user1 = user.UserActions()
 print('Creando Operador')
-tr = mo.ManageOperations()
+tr = M.TR.ManageTransformations()
+alg = M.ALG.ManageAlgorithms()
 
 opc = ''
 file = 'Ninguno'
@@ -79,9 +81,22 @@ while opc != "Salir":
             print('No hay Datas')
 
     elif opc == "Crear Pipeline":
+        aux1 = choiceDialog(alg.getAlgorithmsList(), "¿Qué algoritmo desea que opere el pipeline?")
+        pipe = alg.getAlgorithmPipe(aux1, 'pepep')
+        print(pipe)
+
+        # pos = len(steps)
+        # if pos > 0:
+        #     steps[pos] = "Añadir al final"
+        #     pos = choiceDialog(steps, "¿En cuál posición quiere introducir el algoritmo?", 0)
+        # user1.setAlgorithmPipe(aStep, pos)
         print("Creando Pipeline...")
-        aux = user1.createPipeline()
+        aux = user1.addPipeline(pipe)
+        print("Añadido")
+
+        # aux = user1.createPipeline()
         print("Hecho, total de pipelines actuales: ", aux)
+        print(user1.myPipelines)
     
     elif opc == "Operar con un Pipeline":
         aux = user1.getMyPipelinesNames()
@@ -98,7 +113,7 @@ while opc != "Salir":
                     print(user1.getSteps())
 
                 elif opc == "Introducir transformación":
-                    aux1 = choiceDialog(list(tr.Transformations), "¿Qué operación desea introducir?")
+                    aux1 = choiceDialog(tr.getTransformationsList(), "¿Qué operación desea introducir?")
                     aStep = tr.getTransformation(aux1)
                     steps = user1.getSteps().copy()
                     pos = len(steps)
@@ -108,19 +123,19 @@ while opc != "Salir":
                     user1.addStep(aStep, pos)
                     print("Añadido")
         
-                elif opc == "Seleccionar Algoritmo":
-                    aux1 = choiceDialog(list(tr.Algorithms), "¿Qué algoritmo desea que opere el pipeline?")
-                    aStep = tr.getAlgorithm(aux1)
-                    steps = user1.getSteps().copy()
-                    pos = len(steps)
-                    if pos > 0:
-                        steps[pos] = "Añadir al final"
-                        pos = choiceDialog(steps, "¿En cuál posición quiere introducir el algoritmo?", 0)
-                    user1.setAlgorithmPipe(aStep, pos)
-                    print("Añadido")
+                # elif opc == "Seleccionar Algoritmo":
+                #     aux1 = choiceDialog(list(tr.Algorithms), "¿Qué algoritmo desea que opere el pipeline?")
+                #     aStep = tr.getAlgorithm(aux1)
+                #     steps = user1.getSteps().copy()
+                #     pos = len(steps)
+                #     if pos > 0:
+                #         steps[pos] = "Añadir al final"
+                #         pos = choiceDialog(steps, "¿En cuál posición quiere introducir el algoritmo?", 0)
+                #     user1.setAlgorithmPipe(aStep, pos)
+                #     print("Añadido")
 
                 elif opc == "Cambiar de posición los Steps":
-                    aux1 = user1.getSteps().copy()
+                    steps = user1.getSteps().copy()
                     if len(aux) > 0:
                         steps.append("Añadir al final")
                         aux1 = choiceDialog(aux, "Seleccione el Step a eliminar", 2)
@@ -132,7 +147,7 @@ while opc != "Salir":
                 elif opc == "Eliminar Step":
                     aux1 = user1.getSteps().copy()
                     if len(aux) > 0:
-                        steps.append("Añadir al final")
+                        steps.append("Cancelar")
                         aux1 = choiceDialog(aux, "Seleccione el Step a eliminar", 2)
                         print("Se ha seleccionado: "+aux[1])
                         user1.delData(aux[0])

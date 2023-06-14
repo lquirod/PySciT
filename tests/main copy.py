@@ -1,6 +1,6 @@
 import clases.UserActions as user
 from clases.MoreFunctions import *
-import clases.ManageOperations as mo
+import clases.ManageTransformations as mo
 
 # filename = askFileLocation()
 # print("This filename is in: \""+filename+"\" path")
@@ -24,7 +24,7 @@ import clases.ManageOperations as mo
 # print(pipe.steps[1])
 # print(pipe.score(X_test, y_test))
 
-tr = mo.ManageOperations()
+tr = mo.ManageTransformations()
 print(tr.Algorithms)
 fst = 'Linear Regression'
 print(fst)
@@ -46,7 +46,7 @@ print(user1.addStep(got,0))
 print(user1.getActualPipe().steps())
 print(user1.delPipeline(0))
 
-# manager = mo.ManageOperations()
+# manager = mo.ManageTransformations()
 # a=manager.getAlgorithm('Linear Regression')
 # b=manager.getAlgorithm('Linear Regression')
 # print(type(a))

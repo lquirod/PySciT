@@ -1,14 +1,11 @@
 from sklearn.pipeline import Pipeline
 import pandas as pd
 from abc import abstractmethod, ABC
-# from sklearn.preprocessing import MinMaxScaler
-# sc_model = MinMaxScaler ()
-# sc_model.fit_transform (ran_data)
-from sklearn import linear_model
+
 #   @classmethod
 #   @abstractmethod
 class aPipeline(ABC):
-    def __init__(self, theAlgorithm,  pipeName = 'MyNewPipe'):
+    def __init__(self, pipeName = 'MyNewPipe'):
         self.Name = pipeName
         self.hasAlgorithm = None
         self.typeAlgorithm = None
@@ -50,6 +47,7 @@ class aPipeline(ABC):
             return True
 
     ## Operations with the Pipeline's Algorithm
+    @abstractmethod
     def setAlgorithm(self, theAlgorithm, stepPosition = None):
         if self.hasAlgorithm is not None:
             self.delStep(self.hasAlgorithm)

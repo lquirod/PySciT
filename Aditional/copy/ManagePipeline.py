@@ -8,7 +8,7 @@ import Enumerations as Enum
 # sc_model.fit_transform (ran_data)
 from sklearn import linear_model
 
-class ManagePipeline:
+class aPipeline:
     def __init__(self, pipeName = 'MyNewPipe'):
         self.Name = pipeName
         self.hasAlgorithm = None

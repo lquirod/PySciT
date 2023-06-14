@@ -24,8 +24,9 @@ class ManageData:
     def setDataFromFile(self, newFileName, existHeader = 0, newSep = ','):
         self.clear()
         self.Name = newFileName
-        self.dataFile = pd.read_csv(newFileName, header=existHeader, sep=newSep)
-
+        self.Data = pd.read_csv(newFileName, header=existHeader, sep=newSep)
+        print(self.Data)
+        
     def setNewData(self, data = None, dataName = 'New Data'):
         self.clear()
         self.Name = dataName
