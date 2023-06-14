@@ -14,30 +14,19 @@ from sklearn import linear_model
 
 
 class ManageOperations:
-    Algorithms = {'Linear Regression'}
-    Transformations = {'MinMax scaling'}
-
     def __init__(self):
         pass
         # self.Linear_Regression = ['Linear Regression', linear_model.LinearRegression()]
 
     def thereIsAlgorithm(self, nameAlgorithm):
-        return True if nameAlgorithm in self.Algorithms else False
+        return True if nameAlgorithm in Enum.ALG else False
 
     def thereIsTransformation(self, nameTransformation):
-        return True if nameTransformation in self.Transformations else False
-    
-    def thereIs(self, name):
-        if self.thereIsAlgorithm(name):
-            return 'A'
-        elif self.thereIsTransformation(name):
-            return 'T'
-        else:
-            return None
+        return True if nameTransformation in Enum.TR else False
 
     def getAlgorithm(self, nameAlgorithm):
         if self.thereIsAlgorithm(nameAlgorithm):
-            if nameAlgorithm == 'Linear Regression':
+            if nameAlgorithm == Enum.ALG.Algorithms.Linear_Regression:
                 return ['Linear Regression', linear_model.LinearRegression()]
                 # return self.Linear_Regression
         
@@ -45,7 +34,7 @@ class ManageOperations:
     
     def getTransformation(self, nameTransformation):
         if self.thereIsTransformation(nameTransformation):
-            if nameTransformation == 'MinMax scaling':
+            if nameTransformation == Enum.TR.Transformations.MinMax_Scaling:
                 return ['MinMax scaling', MinMaxScaler()]
           
         return None

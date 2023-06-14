@@ -7,8 +7,8 @@ from abc import abstractmethod, ABC
 from sklearn import linear_model
 #   @classmethod
 #   @abstractmethod
-class ManagePipeline(ABC):
-    def __init__(self, pipeName = 'MyNewPipe'):
+class aPipeline(ABC):
+    def __init__(self, theAlgorithm,  pipeName = 'MyNewPipe'):
         self.Name = pipeName
         self.hasAlgorithm = None
         self.typeAlgorithm = None
@@ -62,36 +62,41 @@ class ManagePipeline(ABC):
 
     @abstractmethod
     def get_params(self, deep=True):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.steps()[self.hasAlgorithm].deep(deep)
+        # if self.hasAlgorithm is None:
+        #     return None
+        # else:
+        #     return self.steps()[self.hasAlgorithm].deep(deep)
+        pass
 
     @abstractmethod
     def setParams(self, params):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.steps()[self.hasAlgorithm].set_params(params)
+        # if self.hasAlgorithm is None:
+        #     return None
+        # else:
+        #     return self.steps()[self.hasAlgorithm].set_params(params)
+        pass
 
     @abstractmethod
     def fitData(self, x,y = None, sample_weight=None):
-        # self.aPipeline.fit(x, y, sample_weight)
-        self.aPipeline.fit(x, y)
+        # # self.aPipeline.fit(x, y, sample_weight)
+        # self.aPipeline.fit(x, y)
+        pass
     
     @abstractmethod
     def execute(self, X):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.steps()[self.hasAlgorithm].predict(X)
+        # if self.hasAlgorithm is None:
+        #     return None
+        # else:
+        #     return self.steps()[self.hasAlgorithm].predict(X)
+        pass
         
     @abstractmethod
     def score(self, X, y, sample_weight=None):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.steps()[self.hasAlgorithm].score(X, y, sample_weight)
+    #     if self.hasAlgorithm is None:
+    #         return None
+    #     else:
+    #         return self.steps()[self.hasAlgorithm].score(X, y, sample_weight)
+        pass
     
 
     # def getCoef(self):

@@ -1,17 +1,19 @@
 from sklearn.pipeline import Pipeline
 import pandas as pd
 from abc import abstractmethod, ABC
-from PyTSys.ManageItems import ManagePipeline
+from PyTSys.ManageItems import aPipeline
 from sklearn import linear_model
 
 #   @classmethod
 #   @abstractmethod
-class LinearRegressionPipe(ManagePipeline):
-    # def __init__(self, pipeName = 'MyNewPipe'):
-    #     self.Name = pipeName
-    #     self.hasAlgorithm = None
-    #     self.typeAlgorithm = None
-    #     self.aPipeline = Pipeline([])
+class LinearRegressionPipe(aPipeline):
+    def __init__(self, theAlgorithm, pipeName = 'MyNewPipe'):
+        # self.Name = pipeName
+        # self.hasAlgorithm = None
+        # self.typeAlgorithm = None
+        # self.aPipeline = Pipeline([])
+        super(self, pipeName)
+        self.setAlgorithm(theAlgorithm)
 
     ####################################################################################################
     #### Operations with the Pipeline's structure
@@ -49,12 +51,12 @@ class LinearRegressionPipe(ManagePipeline):
     #         return True
 
     # ## Operations with the Pipeline's Algorithm
-    # def setAlgorithm(self, theAlgorithm, stepPosition = None):
-    #     if self.hasAlgorithm is not None:
-    #         self.delStep(self.hasAlgorithm)
+    def setAlgorithm(self, theAlgorithm, stepPosition = None):
+        if self.hasAlgorithm is not None:
+            self.delStep(self.hasAlgorithm)
             
-    #     self.hasAlgorithm = self.addStep(theAlgorithm, stepPosition)
-    #     return self.hasAlgorithm
+        self.hasAlgorithm = self.addStep(theAlgorithm, stepPosition)
+        return self.hasAlgorithm
 
     ####################################################################################################
     #### Concrete Operations
