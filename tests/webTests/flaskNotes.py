@@ -1,7 +1,7 @@
 # https://j2logo.com/tutorial-flask-espanol/
 # https://scikit-learn.org/stable/user_guide.html
 
-from flask import Flask
+from flask import Flask, url_for
 # Instancia WSGI de la clase Flask llamada app (aplicación)
 # Necesario para que Flask sepa donde encontrar las plantillas de nuestra aplicación o los ficheros estáticos.
 app = Flask(__name__)       # 1º argumento: nombre del módulo o paquete de la aplicación, con palabra reservada __name__.
@@ -13,6 +13,9 @@ def hello_world():
 # El decorador route de la aplicación (app) es el encargado de decirle a Flask qué URL debe ejecutar su correspondiente función.
 # El nombre que le demos a nuestra función será usado para generar internamente URLs a partir de dicha función (esto lo veremos más adelante).
 # Finalmente, la función debe devolver la respuesta que será mostrada en el navegador del usuario.
+
+print(url_for("show_post", slug="leccion-1", preview=True))
+
 
 # En Linux/Mac se encuentra en source env/bin/activate. Al final del fichero añadimos lo siguiente:
 # $ export FLASK_APP="run.py"
