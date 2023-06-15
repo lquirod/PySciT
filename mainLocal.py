@@ -1,8 +1,8 @@
-# import PyTSys.UserActions as user
+import PyTSys.UserActions as user
 # from PyTSys.MoreFunctions import *
 # # from ManageItems import ManageTransformations as mo
-# import PyTSys.ManageItems as M
-from PyTSys import *
+import PyTSys.ManageItems as M
+from PyTSys.MoreFunctions import *
 
 # from PyTSys import UserActions as user
 # from PyTSys.MoreFunctions import *

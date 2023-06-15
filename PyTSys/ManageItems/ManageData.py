@@ -1,5 +1,5 @@
 import pandas as pd
-from Enumerations import Transformations as TR
+# from Enumerations import Transformations as TR
 class ManageData:
     
     def __init__(self, data = None, dataName = 'New Data'):

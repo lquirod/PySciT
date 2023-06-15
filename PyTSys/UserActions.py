@@ -1,5 +1,5 @@
-import ManageItems as M
-import TypesPipelines as Pip
+from PyTSys import ManageItems as M
+from PyTSys import TypesPipelines as Pip
 
 class UserActions:
     def __init__(self, userName='New User'):

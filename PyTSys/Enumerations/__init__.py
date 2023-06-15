@@ -1,2 +1,2 @@
-from Enumerations import Transformations as TR
-from Enumerations import Algorithms as ALG
+from PyTSys.Enumerations import Transformations as TR
+from PyTSys.Enumerations import Algorithms as ALG

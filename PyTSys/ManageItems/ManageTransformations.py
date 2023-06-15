@@ -1,6 +1,7 @@
-import Enumerations as Enum
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+from PyTSys import Enumerations as Enum
+
 # sc_model = MinMaxScaler ()
 # sc_model.fit_transform (ran_data)
 

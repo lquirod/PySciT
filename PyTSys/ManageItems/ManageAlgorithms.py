@@ -1,6 +1,6 @@
-import Enumerations as Enum
+from PyTSys import Enumerations as Enum
+from PyTSys import TypesPipelines as tPip
 import pandas as pd
-import TypesPipelines as tPip
 
 class ManageAlgorithms:
     def __init__(self):

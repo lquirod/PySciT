@@ -1,8 +1,8 @@
 from sklearn.pipeline import Pipeline
 import pandas as pd
 from abc import abstractmethod, ABC
-from TypesPipelines import aPipeline
 from sklearn import linear_model
+from PyTSys.TypesPipelines import aPipeline
 
 #   @classmethod
 #   @abstractmethod
