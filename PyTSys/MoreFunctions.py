@@ -16,7 +16,7 @@ def askFileLocation():
     window = Tk()
     # Creating a button to search the file
     b1 = Button(window, text = "Open File", command = get_file_path).pack()
-    b2 = Button(window, text = "Close", command = window.quit).pack()
+    b2 = Button(window, text = "Close", command = window.destroy).pack()
     window.mainloop()
 
     return file_path

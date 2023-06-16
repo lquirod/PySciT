@@ -1,7 +1,7 @@
 # https://j2logo.com/tutorial-flask-espanol/
 # https://scikit-learn.org/stable/user_guide.html
 
-from flask import Flask, url_for
+from flask import Flask, render_template, url_for
 # Instancia WSGI de la clase Flask llamada app (aplicación)
 # Necesario para que Flask sepa donde encontrar las plantillas de nuestra aplicación o los ficheros estáticos.
 app = Flask(__name__)       # 1º argumento: nombre del módulo o paquete de la aplicación, con palabra reservada __name__.
@@ -16,6 +16,10 @@ def hello_world():
 
 print(url_for("show_post", slug="leccion-1", preview=True))
 
+# para formularios
+@app.route("/signup/", methods=["GET", "POST"])
+def show_signup_form():
+    return render_template("signup_form.html")
 
 # En Linux/Mac se encuentra en source env/bin/activate. Al final del fichero añadimos lo siguiente:
 # $ export FLASK_APP="run.py"

@@ -133,8 +133,23 @@ print(f"{cantidad} pesetas son {round(cantidad / 166.386, 2)} euros")
 #   def person_details(self):
 #     print(f'Person Name: {self.name} \nPerson Age: {self.age} \nPerson Gender: {self.gender}\n')
 
+# Tomar nombre params
+inspect.getfullargspec(a_method)
+# Ejecutar
+# Use the built-in getattr() function:
+class Foo:
+    def bar1(self):
+        print(1)
+    def bar2(self):
+        print(2)
+
+def call_method(o, name):
+    return getattr(o, name)()
 
 
+f = Foo()
+call_method(f, "bar1")  # prints 1
+# You can also use setattr() for setting class attributes by names.
 
 
 

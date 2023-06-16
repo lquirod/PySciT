@@ -20,7 +20,6 @@ class aPipeline(ABC):
     def addStep(self, aStep, position = None):
         if position is None or position < 0 or len(self.steps()) < position:
             self.steps().append(aStep)
-            # ret = len(self.steps()) -1
             return len(self.steps()) -1
         else:
             self.steps().insert(position, aStep)
@@ -49,58 +48,28 @@ class aPipeline(ABC):
     ## Operations with the Pipeline's Algorithm
     @abstractmethod
     def setAlgorithm(self, theAlgorithm, stepPosition = None):
-        if self.hasAlgorithm is not None:
-            self.delStep(self.hasAlgorithm)
-            
-        self.hasAlgorithm = self.addStep(theAlgorithm, stepPosition)
-        return self.hasAlgorithm
+        pass
 
     ####################################################################################################
     #### Concrete Operations
 
     @abstractmethod
     def get_params(self, deep=True):
-        # if self.hasAlgorithm is None:
-        #     return None
-        # else:
-        #     return self.steps()[self.hasAlgorithm].deep(deep)
         pass
 
     @abstractmethod
     def setParams(self, params):
-        # if self.hasAlgorithm is None:
-        #     return None
-        # else:
-        #     return self.steps()[self.hasAlgorithm].set_params(params)
         pass
 
     @abstractmethod
-    def fitData(self, x,y = None, sample_weight=None):
-        # # self.aPipeline.fit(x, y, sample_weight)
-        # self.aPipeline.fit(x, y)
+    def fitData(self, data):
         pass
     
     @abstractmethod
-    def execute(self, X):
-        # if self.hasAlgorithm is None:
-        #     return None
-        # else:
-        #     return self.steps()[self.hasAlgorithm].predict(X)
+    def execute(self, data):
         pass
         
     @abstractmethod
-    def score(self, X, y, sample_weight=None):
-    #     if self.hasAlgorithm is None:
-    #         return None
-    #     else:
-    #         return self.steps()[self.hasAlgorithm].score(X, y, sample_weight)
+    def score(self, data):
         pass
     
-
-    # def getCoef(self):
-    #     if self.hasAlgorithm is None:
-    #         return None
-    #     else:
-    #         return self.steps()[self.hasAlgorithm].coef_
-
-

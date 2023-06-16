@@ -6,21 +6,21 @@ from tkinter import filedialog as fd
 ######## Operations file-related
 #### Ask a path location file
 def askFileLocation():
-    # def get_file_path():
-    #     global file_path
-    #     # Open and return file path
-    #     file_path= fd.askopenfilename(title = "Select A File" )#filetypes = (("mov files", "*.png"), ("mp4", "*.mp4"), ("wmv", "*.wmv"), ("avi", "*.avi")))
-    #     l1 = Label(window, text = "File path: " + file_path).pack()
-    #     return file_path
+    def get_file_path():
+        global file_path
+        # Open and return file path
+        file_path= fd.askopenfilename(title = "Select A File" )#filetypes = (("mov files", "*.png"), ("mp4", "*.mp4"), ("wmv", "*.wmv"), ("avi", "*.avi")))
+        l1 = Label(window, text = "File path: " + file_path).pack()
+        return file_path
 
-    # window = Tk()
-    # # Creating a button to search the file
-    # b1 = Button(window, text = "Open File", command = get_file_path).pack()
-    # b2 = Button(window, text = "Close", command = window.quit).pack()
-    # window.mainloop()
+    window = Tk()
+    # Creating a button to search the file
+    b1 = Button(window, text = "Open File", command = get_file_path).pack()
+    b2 = Button(window, text = "Close", command = window.destroy).pack()
+    window.mainloop()
 
-    return 'C:/Users/Leticia/Documents/GitHub/Pruebas/pruebaCSV/trainPruebas.csv'
-    # return file_path
+    return file_path
+    # return 'C:/Users/Leticia/Documents/GitHub/Pruebas/pruebaCSV/trainPruebas.csv'
 
 ########################################################################################################
 ######## Input-like operations

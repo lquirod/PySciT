@@ -20,37 +20,11 @@ class LinearRegressionPipe(aPipeline.aPipeline):
     ####################################################################################################
     #### Operations with the Pipeline's structure
     ## Operations with the Pipeline's Steps
+    # In Abstract class aPipeline,py
     # def steps(self):
-    #     return self.aPipeline.steps
-
     # def addStep(self, aStep, position = None):
-    #     if position is None or position < 0 or len(self.steps()) < position:
-    #         self.steps().append(aStep)
-    #         # ret = len(self.steps()) -1
-    #         return len(self.steps()) -1
-    #     else:
-    #         self.steps().insert(position, aStep)
-    #         return position
-
     # def delStep(self, position = None):
-    #     if  position is None or position < 0 or len(self.steps()) < position :
-    #         return None
-    #     else:
-    #         self.steps().pop(position)
-    #         if position == self.hasAlgorithm:
-    #             self.hasAlgorithm = None
-    #         return len(self.steps())
-        
     # def moveStep(self, fromPosition, toPosition):
-    #     if (fromPosition < 0 or len(self.steps()) < fromPosition or
-    #         toPosition < 0 or len(self.steps()) < toPosition or
-    #         fromPosition == toPosition):
-    #         return False
-    #     else:
-    #         movStep = self.steps()[fromPosition]
-    #         self.steps().pop(fromPosition)
-    #         self.steps().insert(toPosition, movStep)
-    #         return True
 
     # ## Operations with the Pipeline's Algorithm
     def setAlgorithm(self):
