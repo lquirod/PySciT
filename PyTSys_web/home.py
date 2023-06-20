@@ -1,12 +1,12 @@
-from flask import Flask, app
-from PyTSys.MoreFunctions import *
+# from flask import Flask, app
+# from PyTSys.MoreFunctions import *
+from PyTSys_web import app
 
-class hola():
 
-    @app.route('/')
-    @app.route('/home/')
-    def process():
-        return "hello"
+@app.route('/')
+@app.route('/home/')
+def process():
+    return "hello"
 
 # @app.route("/kill")
 # def kill():

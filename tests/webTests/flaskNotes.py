@@ -44,8 +44,10 @@ def show_signup_form():
 # set "FLASK_ENV=development"
 # export FLASK_APP="tests/webTests/mainTest.py"
 # deactivate
-source venv/bin/activate
-export FLASK_ENV="development"
-export FLASK_APP="mainWeb.py" 
-flask run --debug
-flask run
+# source venv/bin/activate
+# export FLASK_ENV="development"
+# export FLASK_APP="mainWeb.py" 
+# flask run --debug
+# flask run
+# pip install -e .
+flask --app PyTSys run

@@ -1,2 +1,4 @@
-from PyTSys_web import *
-from PyTSys_web.home import *
+from flask import Flask
+app = Flask(__name__)
+
+import PyTSys_web.home
