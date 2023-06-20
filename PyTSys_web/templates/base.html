@@ -1,0 +1,241 @@
+<!-- Portada de la tienda web
+    Rodent Place - Nombre del sitio de promoción de productos.
+    Se anunciarán productos para animales, concretamente, roedores.
+
+    La portada mostrará la foto y el nombre de varios productos de la tienda que
+    llevan cada uno a su respectiva página con más información sobre de éste.
+    Como se entrega una sóla página producto se ha duplicado el producto 
+    "Rueda de madera" que llevan a la misma página para mostrar cómo se vería completa
+
+    Todas las páginas tienen en común la estructura: cabecera, página central,
+    zona auxiliar y pie de página
+    
+    Todos los enlaces que no sea a la página producto a entregar
+    (en este caso es una rueda de ratones) o sea del menú lateral
+    redirige a la portada de la tienda
+ -->
+<!DOCTYPE html>
+<html lang="es">
+{% block CSSyMas %}
+<link rel="stylesheet" href="styles/portada.css">
+{% endblock %}
+<script src="https://kit.fontawesome.com/39c5095239.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="styles/basePlantilla.css">
+<body>
+    <!-- Nombre de la pestaña de la página y el icono de la pestaña -->
+    <head>
+        {% block infoVentana %}
+        <title>Rodent Place - Inicio</title>
+        {% endblock %}
+        <link rel="icon" href="/images/static/logo.png" type="image/icon type">
+    </head>
+
+    <!-- Header de la página
+        Está en la parte superior
+        Contiene el Logo de la tienda, el nombre de la tienda y un menú con las
+        páginas principales.
+    -->
+    {% block Header %}
+    <header id="header">        
+        <div class="Area1">
+            <a href="index.php">
+                <img src="images/static/logo.png" class="imagen"/>
+            </a>
+        </div>
+
+        <div id="NameShop">
+            Rodent Place
+        </div>
+        
+        <nav id="HeadMenu">
+            <div id="Sesion">
+                {% block Sesion %}
+                    {% if not user %}
+                    <p>
+                        <a href="login.php">Iniciar sesión
+                        </a>|
+                        <a href="singup.php">Registrarse</a>
+                    </p>
+                    {% else %}
+                        <p>
+                            <a href="miCuenta.php">Mi cuenta
+                            </a>|
+                            <a href="logout.php">Salir</a>
+                            <a href="miCuenta.php">
+                                <img src="images/perfil/{{ user.imagenPerfil }}" class="icon "/>
+                            </a>
+                        </p>
+                    {% endif %}
+                {% endblock %}
+            </div>
+            <div>
+            </p>
+                <a href="index.php">Novedades</a> |
+                <a href="index.php">Productos</a> |
+                <a href="index.php">Tipos de roedores</a>
+            </p>
+            </div>
+        </nav>
+    </header>
+    {% endblock %}
+
+    <!-- Este es todo el cuerpo central de la página web
+        Tiene un menú lateral a la derecha con enlaces varios de interés relacionados
+        y el bloque principal de la página
+    -->
+    <div id="centralPage">
+        {% block centralPage %}
+
+        <!-- Bloque principal de página
+            Se muestra la foto y el nombre de varios productos de la tienda donde
+            cada uno lleva a su respectiva página con más información sobre el mismo:
+            más detalles, fotos, precio,etc.
+        -->
+        <main id="mainBody">
+            {% block mainBody %}
+            {% endblock %}
+        </main>
+
+        <!-- Menú lateral
+            Zona lateral auxiliar con enlaces de interés relacionados
+            Con las operaciones que pueda realizar el usuario en la páginay
+            más información adicional curiosa sobre algunos roedores
+        -->
+        {% block aside %}
+        <aside id="SideMenu">
+        {% if user.Moderador or user.GestorSitio or user.GestorPermisos %}
+            <div>
+                <h2>Zona de gestión</h2>
+                <!-- <p> -->
+                    {% if user.Moderador %}
+                    <span class="SideMenuAdmin">
+                        <i class="fa-solid fa-comments"></i>
+                        <a href="gestComentario.php">
+                        Comentarios
+                        </a><br>
+                    </span>
+                    {% endif %}
+                    {% if user.GestorSitio %}
+                    <span class="SideMenuAdmin">
+                        <i class="fa-solid fa-table-list"></i>
+                        <a href="gestProducto.php">
+                        Productos
+                        </a><br>
+                    </span>
+                    {% endif %}
+                    {% if user.GestorPermisos %}
+                    <span class="SideMenuAdmin">
+                        <i class="fa-solid fa-users"></i>
+                        <a href="gestUsers.php">
+                        Usuarios
+                        </a><br>
+                    </span>
+                    {% endif %}
+                <!-- </p> -->
+            </div>
+        {% endif %}
+
+            <div>
+                <h2><a href="https://roedoresdomesticos.com/">
+                    Algunos roedores domésticos
+                </a><h2>
+                <p>
+                    <li><a href="https://roedoresdomesticos.com/ardillas/">
+                        Ardillas
+                    </a></li>
+                    <li><a href="https://misanimales.com/que-son-las-capibaras/">
+                        Capibaras
+                    </a></li>
+                    <li><a href="https://roedoresdomesticos.com/chinchillas/">
+                        Chinchillas
+                    </a></li>
+                    <li><a href="https://roedoresdomesticos.com/cobayas/">
+                        Cobayas
+                    </a></li>
+                    <li><a href="https://roedoresdomesticos.com/degus/">
+                        Degús
+                    </a></li>
+                   <li><a href="https://roedoresdomesticos.com/hamsters/">
+                        Hámsters
+                    </a></li>
+                    <li><a href="https://roedoresdomesticos.com/jerbos/">
+                        Jerbos
+                    </a></li>
+                    <li><a href="https://roedoresdomesticos.com/lirones/">
+                        Lirones
+                    </a></li>
+                    <li><a href="https://planetaroedor.com/perritos-pradera/">
+                        Perritos de la praderas
+                    </a></li>
+                    <li><a href="https://roedoresdomesticos.com/ratas/">
+                        Ratas
+                    </a></li>
+                    <li><a href="https://roedoresdomesticos.com/ratones/">
+                        Ratones
+                    </a></li>
+                    <li><a href="https://curiosidadanimal.com/como-cuidar-de-vole/">
+                        Topillos
+                    </a></li>
+                </p>
+                <h2><a href="https://roedoresdomesticos.com/">
+                    Rincón de la monería
+                </a><h2>
+                <p>
+                    <li><a href="https://mymodernmet.com/cute-pet-rat-photos/">
+                        General
+                    </a></li>
+                    <li><a href="https://za.pinterest.com/hereenc/beautiful-squirrel-photos/">
+                        Ardillas
+                    </a></li>
+                    <li><a href="https://www.rd.com/list/cute-hamster-pictures/">
+                        Hámsters
+                    </a></li>
+                    <li><a href="https://www.rd.com/list/chinchilla-pictures/">
+                        Chinchillas
+                    </a></li>
+                    <li><a href="https://www.gettyimages.co.uk/photos/guinea-pig">
+                        Cobayas
+                    </a></li>
+                </p>
+            </div>
+        </aside>
+        {% endblock %}
+        
+
+        {% endblock %}
+    </div>
+
+    <!-- Pie de página
+        Pie de página que contiene más información de la tienda y su contacto y redes sociales
+    -->
+    {% block footer %}
+    <footer id="footer">
+        <section class="object2 objectLine ">
+            <h2>Sobre nosotros</h2>
+            <p>
+                Nos especializamos en el cuidado de los comunes y no tan comunes roedores que pueden
+                convivir en el hogar como uno más de la familia. Nos propondremos ofrecerte la mejor
+                experiencia posible a la hora de buscar los mejores productos para ellos y para ti.
+            </p>
+            <h2>Nuestros productos</h2>
+            <p>
+                Aquí encontrarás una gran variedad de productos como juguetes, accesorios, higiene,
+                alimento e incluso algunos te mostraremos algunos consejos que puedan ayudarte al
+                cuidar de estos curiosos animales.
+            </p>
+        </section>
+        <address class="object2 objectLine ">
+            <h2>Contacto</h2>
+            <p>Teléfono: +34 900 110 378 / 901 758 652 </p>
+            <p>Correo: RodentPlace@gmail.com</p>
+            <p>Redes sociales: Twitter, Instagram y Facebook como @Rodent_Place</p>
+        </address>
+        <div>@Rodent_Place 2022</div>
+    </footer>
+    {% endblock %}
+
+{% block funcionesJS %}
+{% endblock %}
+
+</body>
+</html>
