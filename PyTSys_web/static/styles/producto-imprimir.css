@@ -1,0 +1,39 @@
+/* CSS de producto-imprimir */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuración del Header para imprimir ---- */
+/* Configuración del Header general que ocupe un tamaño fijo en la parte superior
+de la página */
+#headerImpreso {
+    /* width: 94%; */
+    /* height: 150px; */
+    vertical-align:middle;
+    text-align: center;
+    font-size: 60px;
+    border-radius: 20px;
+    border-style: groove;
+    /* overflow: auto; */
+    white-space: nowrap;
+    margin-bottom: 0px;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuración de la página de productos ---- */
+/* Configuración del nombre del producto como título */
+.productTitle{
+    background-color: transparent;
+}
+/* Configuración del pequeño título de información */
+.minititle{
+    background-color: transparent;
+}
+/* Configuración de los párrafos principales de información */
+.productoInfo{
+    background-color: transparent;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuraciones adicionales ---- */
+/* Configuración del icono */
+.logoIcon {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+}

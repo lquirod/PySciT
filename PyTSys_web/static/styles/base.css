@@ -1,0 +1,610 @@
+/* base CSS */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuraciones a parte de las etiquetas globales ---- */
+/* Links color text */
+a {
+    color: black;
+    text-decoration: none;
+}
+
+/* Paragraph format */
+p {
+    text-indent: 15px;
+    text-align: justify;
+}
+
+/* Lists */
+li {
+    font-weight: normal;
+    margin: 8px;
+}
+
+/* Not italic adress text */
+address {
+    font-style: normal;
+}
+/* html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+} */
+body{
+    overflow: scroll;
+}
+body, html{
+    /* height:100vh; */
+    height:101%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: block;
+    /* overflow: hidden; */
+    /* overflow-y: scroll; */
+    align-items:center;
+    top: 0;
+    /* overflow-x: scroll;
+    overflow-y: hidden; */
+    /* min-height:100%; */
+    /* position:relative;     */
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* Header */
+#header {
+    width: 100%;
+    min-width: 670px;
+    /* height: 200px; */
+    /* vertical-align: middle; */
+    margin:0px;
+    text-align: center;
+    border-collapse: collapse;
+    border-top-width: 1px;
+    border-top-width: 1px;
+    border-bottom: thick groove;
+    overflow: hidden;
+    display: block;
+    /* position: -webkit-sticky;
+    position: sticky;
+    top: 0; */
+    display: inline-block;
+}
+#NameWeb {
+    width: 100%;
+    /* height: 90px; */
+    vertical-align: middle;
+    background-color: #6699CC;
+    font-size: 45px;
+    padding: 10px;
+    margin: 0px;
+    /* display: inline */
+}
+#HeadMenu {
+    width: 100%;
+    /* height: 40px; */
+    /* position: right; */
+    vertical-align: middle;
+    background-color: #B4CBE2;
+    /* color: #B4CBE2; */
+    /* font-size: calc(15px + 1vw); */
+    font-size: 28px;
+    /* padding: 10px; */
+    margin: 0px;
+}
+
+#header h1,#header h2,#header p{
+    margin: 0;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuración de la zona central (principal y auxiliar) ---- */
+#centralPage {
+    /* height: calc(100% - 110px); */
+    /* height: calc(100% - 123px); */
+    height: calc(100% - 130px);
+    width: auto;
+    /* height: auto; */
+    /* height: 80vh; */
+    /* height: 100%; */
+    /* height: 100vh; */
+
+    /* padding: 15px;
+    margin: 3%;
+    margin-right: 2%;
+    margin-left: 2%; */
+    display: flex;
+  justify-content: space-between;
+  /* position: -webkit-sticky;
+  position: sticky;
+  top: 50px; */
+  /* overflow-y: scroll; */
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuración de la zona auxiliar ---- */
+/* Zona auxiliar en la parte derecha de la página, de color verde */
+
+#SideMenu {
+    width: 35%;
+    min-width: 190px;
+    max-width: 400px;
+    /* height: auto; */
+    /* height: 300px; */
+    /* height: 80vh; */
+    overflow: hidden;
+    position: center;
+    background-color: #B4CBE2;
+    /* background-color: lightgreen; */
+    font-size: 16px;
+    /* font-family:'Courier New', Courier, monospace; */
+    /* calc(10px + 0.4vw); */
+    /* padding-left: 5%; */
+    padding-top: 0px;
+    padding-bottom: 0px;
+    /* margin-left: 3%; */
+    border: 8px double #6699CC;
+    text-indent: 15px;
+    text-align: center;
+    /* position: -webkit-sticky;
+    position: sticky;
+    top: 0; */
+    /* bottom: 0; */
+    /* top: calc(80px + 1vw); */
+    /* overflow-y: scroll; */
+}
+#SideMenu h1{
+    text-align: left;
+}
+#LogView {
+    background-color: white;
+    /* padding-left: 5%; */
+    /* padding-top: 12px; */
+    /* padding-bottom: 12px; */
+    font-size: 16px;
+    margin: 2%;
+    border: 2px #6699CC;
+    border-style: ridge;
+    text-indent: 15px;
+    overflow-y:scroll;
+}
+#ButtonLog {
+    position: center;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuración de la zona principal ---- */
+#mainBody {
+    width: 100%;
+    min-width: 470px;
+    /* height: auto; */
+    /* height: 8000px; */
+    /* height: 100%; */
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 12px;
+    justify-content: space-around;
+    overflow-y: auto;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuración de la portada de productos ---- */
+/* Configuración de las fotos de los productos */
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuración del pie de página ---- */
+/* Configuración del pie de página en la zona inferior de la página */
+#footer {
+    /* width: auto; */
+    width: 100%;
+    min-width: 640px;
+    height: auto;
+    bottom: 20px;
+    text-align: center;
+    position: center;
+    padding: 10px;
+    background-color: lightcyan;
+    color: orange;
+    /* padding-bottom: 20px;
+    padding: 20px; */
+    padding: 0px;
+    margin: 0px;
+}
+/* #footer p, #footer h2 {
+    padding-left: 20px;
+    padding-right: 20px;
+} */
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuracion de formularios ---- */
+/* Configuración de un formulario */
+input[type="checkbox"] {
+    width: auto;
+    /*Desired width*/
+    min-width: 10px;
+    height: auto;
+    /*Desired height*/
+    padding: 5px;
+    margin: 5px;
+}
+
+.formulario {
+    /* text-align: left; */
+    /* padding: 20px; */
+    padding-bottom: 0px;
+    /* margin-top: 10px; */
+    margin-bottom: 0px;
+}
+
+/* Configuración de formato de los inputs del formulario */
+.formulario input,
+.formulario textarea {
+    width: 75%;
+    max-width: 95%;
+    font: 1em sans-serif;
+    min-width: 250px;
+    box-sizing: border-box;
+    border: 1.5px solid #1d3785;
+    background-color: rgb(247, 255, 255);
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+/* Inputs de búsqueda */
+.buscador {
+    width: 100%;
+    /* max-width: 95%; */
+    min-width: 250px;
+    /* box-sizing: border-box; */
+    /* margin-bottom: 20px; */
+    /* border-radius: 5px; */
+}
+
+.buscador input {
+    /* width: 95%;
+    max-width: 95%; */
+    min-width: 250px;
+    font: 1em sans-serif;
+    /* box-sizing: border-box; */
+    /* margin-bottom: 20px; */
+    /* border-radius: 5px; */
+}
+
+/* Configuración de formato de los inputs del formulario */
+textarea {
+    height: 5em;
+}
+
+input:read-only {
+    background-color: gainsboro;
+    color: rgb(41, 41, 41);
+}
+.autocomplete {
+    position: relative;
+    display: inline-block;
+  }
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+    background-color: #e9e9e9;
+}
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuracion de tablas ---- */
+td.tabSubtitle {
+    /* width: 100%; */
+    max-height: 15px;
+    text-align: left;
+    background-color: rgb(246, 211, 162);
+}
+
+th,
+td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+table {
+    /* font-family: arial, sans-serif; */
+    border-collapse: collapse;
+    width: 100%;
+    /* max-width: 300; */
+    margin-top: 5px;
+    background-color: rgb(202, 255, 255);
+    border: 3px solid rgb(105, 116, 197);
+}
+
+table div {
+    overflow: scroll;
+}
+
+th {
+    background-color: #ffb682;
+}
+
+/*  ---- Configuracion de diseño de tablas ---- */
+/* tr:nth-child(even) {
+    background-color: rgb(203, 232, 232);
+} */
+tr:hover td {
+    background-color: rgba(103, 254, 158, 0.5);
+}
+
+.checkColumn {
+    width: 80px;
+    overflow: visible;
+    max-height: 85px;
+}
+
+.smallColumn {
+    max-width: 45px;
+    text-align: center;
+    max-height: 85px;
+}
+
+.lineColumn {
+    /* width: 30%; */
+    min-width: 110px;
+    max-width: 280px;
+    max-height: 85px;
+}
+
+.largeColumn {
+    min-width: 110px;
+    text-align: left;
+    max-height: 85px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuracion de botones ---- */
+/* Configuración de botones genérico */
+.boton,
+input[type="button"] {
+    margin: 10px;
+    border-style: groove;
+    border-radius: 15px;
+}
+
+.boton:hover,
+input[type="button"] {
+    border-style: groove;
+    border-radius: 15px;
+}
+
+.boton:active,
+input[type="button"] {
+    border-style: groove;
+    border-radius: 5px;
+}
+
+/* Botones personalizados */
+.b1,
+.b1:active {
+    font-size: 25px;
+    background-color: rgb(255, 219, 169);
+}
+
+.b1:hover {
+    background-color: rgb(243, 198, 135);
+}
+
+.b2,
+.b2:active {
+    background-color: rgb(204, 253, 204);
+    font-size: 15px;
+}
+
+.b2:hover {
+    background-color: rgb(170, 241, 170);
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Configuraciones adicionales ---- */
+/* Diseño de seccion */
+.otraSeccion {
+    text-align: center;
+    padding: 10px;
+    padding-right: 5vw;
+    padding-left: 5vw;
+    margin-top: 5px;
+    background-color: lightcyan;
+    border-radius: 20px;
+    border-style: outset;
+    border-color: rgb(150, 164, 255);
+}
+
+.border1 {
+    border-style: groove;
+}
+
+.backGround1 {
+    background-color: rgb(255, 219, 169);
+}
+
+.backGround2 {
+    background-color: rgb(243, 198, 135);
+}
+
+.backGround3 {
+    background-color: rgb(204, 253, 204);
+}
+
+.backGround4 {
+    background-color: rgb(170, 241, 170);
+}
+
+.backGround5 {
+    background-color: rgb(182, 252, 252);
+}
+
+.backGround6 {
+    background-color: rgb(135, 215, 255);
+}
+
+.backGround7 {
+    background-color: rgb(203, 181, 255);
+}
+
+.backGround8 {
+    background-color: rgb(172, 140, 245);
+}
+
+.backGround9 {
+    background-color: rgb(254, 215, 255);
+}
+
+.backGround10 {
+    background-color: rgb(233, 152, 235);
+}
+
+.backGround11 {
+    background-color: rgb(242, 237, 153);
+}
+
+.backGround12 {
+    background-color: rgb(210, 125, 125);
+}
+
+.backGround13 {
+    background-color: rgb(250, 250, 250);
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* Configuración de visualización */
+.noBorder {
+    border: transparent;
+}
+
+.Oscuro {
+    background-color: rgba(50, 50, 50, 0.4);
+}
+
+.animacion {
+    transition: all 0.5s linear;
+}
+
+.hidden {
+    opacity: 0;
+    display: none;
+}
+
+.visuallyHidden {
+    opacity: 0;
+}
+
+.columnasText {
+    -webkit-column-gap: 20px;
+    -moz-column-gap: 20px;
+    column-gap: 20px;
+}
+
+.colText2 {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+}
+
+@media only screen and (min-width: 768px) {
+    .colText3 {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .colText1 {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .colText4 {
+        -webkit-column-count: 4;
+        -moz-column-count: 4;
+        column-count: 4;
+    }
+}
+
+@media only screen and (min-width: 670px) {
+    body, html{
+        overflow: hidden;
+    }
+}
+@media only screen and (min-height: 500px) {
+    body, html{
+        overflow: hidden;
+    }
+}
+/* Para objetos con 1/3 de tamaño dinámico según el espacio */
+.object3 {
+    max-width: 350px;
+    width: 30%;
+    min-width: inherit;
+}
+
+/* Para objetos con 1/2 de tamaño dinámico según el espacio */
+.object2 {
+    width: 45%;
+    min-width: inherit;
+}
+
+/* Para objetos con 2/3 de tamaño dinámico según el espacio */
+.object23 {
+    width: 58%;
+    min-width: inherit;
+}
+
+/* Para que los objetos se alinéen en bloque en la misma línea */
+.objectLine {
+    display: inline-block;
+    justify-content: space-between;
+    vertical-align: middle;
+}
+
+/* Configuración de imagen genérica */
+.imagen {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Configuración de posición de elementos posición */
+.textLeft {
+    text-align: left;
+}
+
+.right {
+    float: right;
+}
+
+/* Para voltear imagen */
+.rotarHorizontal {
+    transform: scaleX(-1);
+}
+
+.err {
+    color: red;
+}
