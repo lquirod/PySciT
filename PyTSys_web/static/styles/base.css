@@ -29,15 +29,30 @@ body {
    padding:0;
    height:100%;
 } */
+html{
+    /* overflow: hidden; */
+    /* overflow: visible; */
+    /* overflow-y: scroll; */
+    overflow-x: scroll;
+    /* height:100vw; */
+
+}
 body{
-    overflow: scroll;
+    /* overflow: visible; */
+    /* overflow-y: scroll;  */
+    overflow-x: scroll;
+    /* overflow-y: hidden; */
+    /* overflow-x: hidden; */
+    height:100%;
+    width:100%;
+    min-width: 670px;
+    min-height: 600px;
 }
 body, html{
     /* height:100vh; */
-    height:101%;
-    border: 0;
-    padding: 0;
-    margin: 0;
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
     display: block;
     /* overflow: hidden; */
     /* overflow-y: scroll; */
@@ -102,8 +117,10 @@ body, html{
 #centralPage {
     /* height: calc(100% - 110px); */
     /* height: calc(100% - 123px); */
-    height: calc(100% - 130px);
+    height: calc(100vh - 109px);
+    /* height:a */
     width: auto;
+    min-height: 490px;
     /* height: auto; */
     /* height: 80vh; */
     /* height: 100%; */
@@ -129,6 +146,7 @@ body, html{
     width: 35%;
     min-width: 190px;
     max-width: 400px;
+    min-height: 30px;
     /* height: auto; */
     /* height: 300px; */
     /* height: 80vh; */
@@ -155,18 +173,22 @@ body, html{
 }
 #SideMenu h1{
     text-align: left;
+    margin:5px
 }
 #LogView {
+    /* height: 85%; */
+    height: calc(100% - 80px);
     background-color: white;
     /* padding-left: 5%; */
     /* padding-top: 12px; */
     /* padding-bottom: 12px; */
-    font-size: 16px;
+    font-size: 15px;
     margin: 2%;
     border: 2px #6699CC;
     border-style: ridge;
     text-indent: 15px;
     overflow-y:scroll;
+    position: relative;
 }
 #ButtonLog {
     position: center;
@@ -549,13 +571,22 @@ input[type="button"] {
 }
 
 @media only screen and (min-width: 670px) {
-    body, html{
-        overflow: hidden;
+    body{
+        overflow-x: hidden;
+    }
+    html{
+        overflow-x: hidden;
     }
 }
-@media only screen and (min-height: 500px) {
-    body, html{
-        overflow: hidden;
+@media only screen and (min-height: 600px) {
+    body{
+        overflow-y: hidden;
+    }
+    html{
+        overflow-y: hidden;
+    }
+    #centralPage{
+    height: calc(100vh - 109px);
     }
 }
 /* Para objetos con 1/3 de tamaño dinámico según el espacio */
