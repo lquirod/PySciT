@@ -18,5 +18,5 @@ export FLASK_APP="mainWeb.py"
 flask run --debug
 flask run
 pip install -e .
-flask --app PyTSys_web run
+flask --app PyTSys_web run --debug
 -->

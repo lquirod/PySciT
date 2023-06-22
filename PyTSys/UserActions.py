@@ -9,6 +9,16 @@ class UserActions:
         self.myDatas = []
         self.actualData = None
 
+    def clearPipes(self):
+        for pip in self.myPipelines:
+            del pip
+        self.actualPipeline = None
+        
+    def clearDatas(self):
+        for dat in self.myDatas:
+            del dat
+        self.actualData = None
+        
     ####################################################################################################
     #### Operations with user's Pipelines
     def addPipeline(self, newPipe):

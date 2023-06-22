@@ -10,8 +10,7 @@
 <link rel="stylesheet" href="styles/base.css">
 
 <body>
-    <!-- Nombre de la pestaña de la página y el icono de la pestaña -->
-
+    <!-- Window -->
     <head>
         {% block infoWindow %}
         <title>PyTSys</title>
@@ -19,114 +18,74 @@
         <!-- <link rel="icon" href="/images/static/logo.png" type="image/icon type"> -->
     </head>
 
-    <!-- Header menu
-     -->
+    <!-- Header menu -->
     {% block Header %}
     <header id="header">
-        <!-- <div class="Area1">
-             <a href="index.php">
-                 <img src="images/static/logo.png" class="imagen"/>
-             </a>
-         </div> -->
-
         <div id="NameWeb"> PyTSys </div>
-
         <nav id="HeadMenu">
-            <!-- <div id="Sesion">
-                 {% block Sesion %}
-                     <p>
-                         <a href="login.php">Iniciar sesión
-                         </a>|
-                         <a href="singup.php">Registrarse</a>
-                     </p>
-                 {% endblock %}
-             </div> -->
-            <!-- <div> -->
             </p>
-            <a href="index.php">Home</a> |
-            <a href="index.php">Datas</a> |
-            <a href="index.php">Pipelines</a> |
-            <a href="index.php">Help</a> |
-            <a href="index.php">Log view (Hidden)</a>
+            <div class="objectLine">
+                <a href="/home/">Home</a> |
+            </div>
+            <div class="objectLine">
+                <a href="/datas/">Datas</a> |
+            </div>
+            <div class="objectLine">
+                <a href="/pipelines/">Pipelines</a> |
+            </div>
+            <div id="LogButtonToggle" class="textLeft right objectLine">|
+                <a href="/">Log view (Hidden)</a>
+            </div>
+            <div class="right objectLine">
+                <a href="/help/">Help</a> |
+            </div>
             </p>
-            <!-- </div> -->
         </nav>
     </header>
     {% endblock %}
 
-    <!-- Central body
-     -->
+    <!-- Central body -->
     <div id="centralPage">
         {% block centralPage %}
 
-        <!-- Main section
-         -->
+        <!-- Main section -->
         <main id="mainBody">
             {% block mainBody %}
             {% endblock %}
         </main>
 
-        <!-- Side section with log
-         -->
+        <!-- Side section with log -->
         {% block aside %}
         <aside id="SideMenu">
             <h1>Log view</h1>
             <div id="LogView">
-                <p>Algo que decir
-                </p>
-                <p>Dos parrafos a escribir ahorita
-                </p><p>Algo que decir
-                </p>
-                <p>Dos parrafos a escribir ahorita
-                </p><p>Algo que decir
-                </p><p>Dos parrafos a escribir ahorita
-                </p><p>
-                    Algo que decir
-                </p><p>                    Dos parrafos a escribir ahorita
-                </p><p>                    Algo que decir
-                </p><p><p>                    Algo que decir
-                </p>                <p>
-                    Dos parrafos a escribir ahorita
-                </p><p>
-                    Algo que decir
-                </p>
-                <p>
-                    Dos parrafos a escribir ahorita
-                </p><p>
-                    Algo que decir
-                </p>
-                <p>
-                    Dos parrafos a escribir ahorita
-                </p><p>
-                    Algo que decir
-                </p>
-                <p>
-                    Dos parrafos a escribir ahorita
-                </p>
-                    Dos parrafos a escribir ahorita
-                </p><p>
-                    Algo que decir
-                </p>
-                <p>
-                    Dos parrafos a escribir ahorita
-                </p><p>
-                    Algo que decir
-                </p>
-                <p>
-                    Dos parrafos a escribir ahorita
-                </p><p>
-                    Algo que decir
-                </p>
-                <p>
-                    Dos parrafos a escribir ahorita
-                </p><p>
-                    Algo que decir
-                </p>
-                <p>
-                    Dos parrafos a escribir ahorita
-                </p>
+                <p>Es el 1 párrafo</p>
+                <p>Es el 2 párrafo</p>
+                <p>Es el 3 párrafo y este tiene más cosas aún</p>
+                <p>Es el 4 párrafo</p>
+                <p>Es el 5 párrafo</p>
+                <p>Es el 6 párrafo</p>
+                <p>Es el 7 párrafo</p>
+                <p>Es el 8 párrafo</p>
+                <p>Es el 9 párrafo</p>
+                <p>Es el 10 párrafo</p>
+                <p>Es el 11 párrafo</p>
+                <p>Es el 12 párrafo</p>
+                <p>Es el 13 párrafo</p>
+                <p>Es el 14 párrafo</p>
+                <p>Es el 15 párrafo</p>
+                <p>Es el 16 párrafo</p>
+                <p>Es el 17 párrafo</p>
+                <p>Es el 18 párrafo</p>
+                <p>Es el 19 párrafo</p>
+                <p>Es el 20 párrafo</p>
+                <p>Es el 21 párrafo</p>
+                <p>Es el 22 párrafo</p>
+                <p>Es el 23 párrafo</p>
+                <p>Es el 24 párrafo</p>
+                <p>Es el 25 párrafo</p>
             </div>
-            <button id="ButtonLog">Save Log</button>
+            <button id="ButtonLog" class="aButton b3">Save Log</button>
         </aside>
         {% endblock %}
 

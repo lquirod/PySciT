@@ -1,88 +1,33 @@
+<!-- Home Page
+    With a summary of the Status and some important buttons links
+ -->
 {% extends "base.html" %}
+{% block infoWindow %}
+<title>PyTSys -Home</title>
+{% endblock %}
+{% block mainBody %}
+<h1>Home menu</h1>
+<div class="textContent">
+    <p>
+        Aqui la ayuda
+    </p>
+</div>
 
-    {% block mainBody %}
-    <div class=" objectLine buscador">
-        <!-- <button onclick="toggleSeccion('seccionFiltros')" class="b1 boton objectLine"> -->
-            <i class="fa-solid fa-filter"></i>
-        <!-- </button> -->
-        <form autocomplete="off" class="objectLine">
-            <div class="autocomplete">
-                <input type="text" id="inputBuscador" placeholder="Buscar en el almacén..." title="Buscar producto">
-            </div>
-        </form>
-        <button id="BotonBusqueda" onclick="buscarIncidencias('PROD');" class="boton objectLine">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <strong>Buscar</strong>
-        </button>
-    </div>
-
-    <!-- <div id="seccionFiltros" class="textLeft columnasText colText2 colText4 backGround7 border1 animacion hidden visuallyHidden">
-        {% for unaEti in todasEtiquetas %}
-            <input type="checkbox" name="checkEtiqueta[]" value="{{unaEti}}" id="{{unaEti}}"
-            {% if unaEti in editProducto.Etiquetas  %}
-            checked
-            {% endif %}
-            >
-            <label for="{{unaEti}}">{{unaEti}}</label><br>
-        {% endfor %}
-    </div> -->
-    <div id="esperaMensaje">Obteniendo datos, espere por favor...</div>
-    <div id="errorMensaje"></div>
-    <div id="muestraProductos">
-            <a class="right" href="gestProducto.php">
-                Lista
-                <i class=" fa-solid fa-table-list"></i>
-            </a><br>
-        <article class="productPhoto object3 objectLine">
-            <div class="Oscuro">
-                <a href="producto.php?producto">
-                <div><img src="images/productos/" class="imagen"/></div>
-                <div class="productText">  unProducto['Nombre'] 
-                    <br>
-                    <a href="gestProducto.php?producto">
-                        <i  class="right fa-solid fa-pen"></i>
-                    </a>
-                </div>
-                </a>
-        </article>
-    </div>
-    <div class="step step1">
-     <!-- style="display:block; height: 100%;" step="1"> -->
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-     Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>Esto es relleno<br>
-    </div>
-    <div class="otraSeccion">
-            <a href="index.php?page">
-                <i class="fa-solid fa-caret-left"></i>
-            </a>
-        Página 
-        <a href="index.php?page=">
-            <i class="fa-solid fa-caret-right"></i>
-            </a>
-    </div>
-    {% endblock %}
+<div class="objectLine allExpand">
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
+        Create Data</button>
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
+        Data List</button>
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
+        Create Pipeline</button>
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
+        Pipeline List</button>
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
+        Transformations List</button>
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/help/'">
+        Help section</button>
+</div>
+{% endblock %}
 
 {% block funcionesJS %}
 <!-- <script src="js/basic.js" defer></script>
