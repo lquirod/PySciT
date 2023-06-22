@@ -34,10 +34,11 @@
                 <a href="/pipelines/">Pipelines</a> |
             </div>
             <div id="LogButtonToggle" class="textLeft right objectLine">|
-                <a href="/">Log view (Hidden)</a>
+                <span onclick="toggleSection('SideLog')" id="buttonSideLog" class="pointer">Log view (Hidden)</span>
             </div>
             <div class="right objectLine">
                 <a href="/help/">Help</a> |
+
             </div>
             </p>
         </nav>
@@ -46,6 +47,8 @@
 
     <!-- Central body -->
     <div id="centralPage">
+
+
         {% block centralPage %}
 
         <!-- Main section -->
@@ -56,7 +59,7 @@
 
         <!-- Side section with log -->
         {% block aside %}
-        <aside id="SideMenu">
+        <aside id="SideLog" class="animacion hidden visuallyHidden">
             <h1>Log view</h1>
             <div id="LogView">
                 <p>Es el 1 párrafo</p>
@@ -107,8 +110,8 @@
     {% endblock %}
 
     {% block funcionesJS %}
-    <script src="{{url_for('static', filename='js/base.js')}}"></script>
     {% endblock %}
+    <script src="{{url_for('static', filename='js/base.js')}}"></script>
 
 </body>
 

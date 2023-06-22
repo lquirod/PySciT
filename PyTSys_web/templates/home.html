@@ -9,24 +9,24 @@
 <h1>Home menu</h1>
 <div class="textContent">
     <p>
-        Aqui la ayuda
+        Aqui la ayuda, hola {{Name}}
     </p>
 </div>
 
 <div class="objectLine allExpand">
-    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
-        Create Data</button>
-    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
-        Data List</button>
-    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/data/new/'">
+    Create Data</button>
+    <!-- <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/ListData/'">
+        Data List</button> -->
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/pipeline/new/'">
         Create Pipeline</button>
-    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
-        Pipeline List</button>
-    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
+    <!-- <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/ListPipeline/'">
+        Pipeline List</button> -->
+    <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/ListTransformations/'">
         Transformations List</button>
     <button class="aButton b3 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/help/'">
         Help section</button>
-</div>
+ </div>
 {% endblock %}
 
 {% block funcionesJS %}

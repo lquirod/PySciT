@@ -1,21 +1,14 @@
-# from flask import Flask, app
+import PyTSys.UserActions as user
 # from PyTSys.MoreFunctions import *
-from flask import render_template
-from PyTSys_web import app
+# # from ManageItems import ManageTransformations as mo
+import PyTSys.ManageItems as M
+from PyTSys.Aditional.MoreFunctions import *
 
+myUser = user.UserActions('Cherished User')
+mTr = M.TR.ManageTransformations()
+mAlg = M.ALG.ManageAlgorithms()
 
-@app.route('/')
-@app.route('/home/')
-def homePage():
-    return render_template("home.html")
-
-@app.route('/index.php/')
-def aa():
-    return "Hello leti"
-# @app.route("/kill")
-# def kill():
-#     id = request.args.get("id")
-#     x = registrar.get(id)
-#     x.close()
-#     registrar.remove(id)
-#     return render_template("killed.html")
+opc = ''
+file = 'Ninguno'
+aux = ''
+aux1 = ''

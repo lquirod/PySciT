@@ -5,24 +5,28 @@ a {
     color: black;
     text-decoration: none;
 }
+
 p {
     text-indent: 15px;
     text-align: justify;
 }
+
 li {
     font-weight: normal;
     margin: 8px;
 }
+
 address {
     font-style: normal;
 }
+
 /* html,
 body {
    margin:0;
    padding:0;
    height:100%;
 } */
-html{
+html {
     /* overflow: hidden; */
     /* overflow: visible; */
     /* overflow-y: scroll; */
@@ -30,18 +34,21 @@ html{
     /* height:100vw; */
 
 }
-body{
+
+body {
     /* overflow: visible; */
     /* overflow-y: scroll;  */
     overflow-x: scroll;
     /* overflow-y: hidden; */
     /* overflow-x: hidden; */
-    height:100%;
-    width:100%;
+    height: 100%;
+    width: 100%;
     min-width: 670px;
     min-height: 600px;
 }
-body, html{
+
+body,
+html {
     /* height:100vh; */
     border: 0px;
     padding: 0px;
@@ -49,7 +56,7 @@ body, html{
     display: block;
     /* overflow: hidden; */
     /* overflow-y: scroll; */
-    align-items:center;
+    align-items: center;
     top: 0;
     /* overflow-x: scroll;
     overflow-y: hidden; */
@@ -64,7 +71,7 @@ body, html{
     min-width: 670px;
     /* height: 200px; */
     /* vertical-align: middle; */
-    margin:0px;
+    margin: 0px;
     text-align: center;
     border-collapse: collapse;
     border-top-width: 1px;
@@ -77,6 +84,7 @@ body, html{
     top: 0; */
     display: inline-block;
 }
+
 #NameWeb {
     width: 100%;
     /* height: 90px; */
@@ -87,6 +95,7 @@ body, html{
     margin: 0px;
     /* display: inline */
 }
+
 #HeadMenu {
     width: 100%;
     /* height: 40px; */
@@ -99,12 +108,16 @@ body, html{
     /* padding: 10px; */
     margin: 0px;
 }
-#LogButtonToggle{
+
+#LogButtonToggle {
     width: 35%;
     min-width: 190px;
     max-width: 400px;
 }
-#header h1,#header h2,#header p{
+
+#header h1,
+#header h2,
+#header p {
     margin: 0;
 }
 
@@ -128,16 +141,16 @@ body, html{
     margin-right: 2%;
     margin-left: 2%; */
     display: flex;
-  justify-content: space-between;
-  /* position: -webkit-sticky;
+    justify-content: space-between;
+    /* position: -webkit-sticky;
   position: sticky;
   top: 50px; */
-  /* overflow-y: scroll; */
+    /* overflow-y: scroll; */
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Side Log settings ---- */
-#SideMenu {
+#SideLog {
     width: 35%;
     min-width: 190px;
     max-width: 400px;
@@ -166,10 +179,12 @@ body, html{
     /* top: calc(80px + 1vw); */
     /* overflow-y: scroll; */
 }
-#SideMenu h1{
+
+#SideLog h1 {
     text-align: left;
-    margin:5px
+    margin: 5px
 }
+
 #LogView {
     /* height: 85%; */
     height: calc(100% - 80px);
@@ -182,18 +197,21 @@ body, html{
     border: 2px #6699CC;
     border-style: ridge;
     text-indent: 15px;
-    overflow-y:scroll;
+    overflow-y: scroll;
     position: relative;
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     flex-direction: column-reverse;
-    display:flex;
+    display: flex;
 }
-#LogView p{
+
+#LogView p {
     margin: 6px;
 }
+
 #ButtonLog {
     position: center;
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Main settings ---- */
 #mainBody {
@@ -209,18 +227,21 @@ body, html{
     overflow-y: auto;
     font-size: 18px;
 }
-#mainBody h1{
-    margin:5px;
+
+#mainBody h1 {
+    margin: 5px;
     color: #4175a9;
 }
+
 /* #mainBody p{
     font-size: 16px;
 } */
-.textContent{
+.textContent {
     padding: 6%;
     padding-top: 0;
     padding-bottom: 3%;
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Form settings ---- */
 input[type="checkbox"] {
@@ -284,10 +305,12 @@ input:read-only {
     background-color: gainsboro;
     color: rgb(41, 41, 41);
 }
+
 .autocomplete {
     position: relative;
     display: inline-block;
-  }
+}
+
 .autocomplete-items {
     position: absolute;
     border: 1px solid #d4d4d4;
@@ -299,16 +322,19 @@ input:read-only {
     left: 0;
     right: 0;
 }
+
 .autocomplete-items div {
     padding: 10px;
     cursor: pointer;
     background-color: #fff;
     border-bottom: 1px solid #d4d4d4;
 }
+
 /*when hovering an item:*/
 .autocomplete-items div:hover {
     background-color: #e9e9e9;
 }
+
 /*when navigating through the items using the arrow keys:*/
 .autocomplete-active {
     background-color: DodgerBlue !important;
@@ -421,6 +447,7 @@ input[type="button"] {
 .b2:hover {
     background-color: rgb(170, 241, 170);
 }
+
 .b3,
 .b3:active {
     background-color: #e3f1fd;
@@ -501,37 +528,47 @@ input[type="button"] {
 .backGround13 {
     background-color: rgb(250, 250, 250);
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* Size Fonts settings */
 .s15 {
     font-size: 15px;
 }
+
 .s16 {
     font-size: 16px;
 }
+
 .s18 {
     font-size: 18px;
 }
+
 .s20 {
     font-size: 20px;
 }
+
 .s24 {
     font-size: 24px;
 }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* Visual settings */
 .noBorder {
     border: transparent;
 }
+
 .roundBorder {
     border-radius: 20px;
 }
-.yesPadding{
+
+.yesPadding {
     padding: 8px;
 }
-.yesMargin{
+
+.yesMargin {
     margin: 8px;
 }
+
 .Darker {
     background-color: rgba(50, 50, 50, 0.4);
 }
@@ -587,46 +624,56 @@ input[type="button"] {
 }
 
 @media only screen and (min-width: 670px) {
-    body{
+    body {
         overflow-x: hidden;
     }
-    html{
+
+    html {
         overflow-x: hidden;
     }
 }
+
 @media only screen and (min-height: 600px) {
-    body{
+    body {
         overflow-y: hidden;
     }
-    html{
+
+    html {
         overflow-y: hidden;
     }
-    #centralPage{
-    height: calc(100vh - 109px);
+
+    #centralPage {
+        height: calc(100vh - 109px);
     }
 }
+
 /* Align settings */
 .object3 {
     max-width: 350px;
     width: 30%;
     min-width: inherit;
 }
+
 .object2 {
     width: 45%;
     min-width: inherit;
 }
+
 .object23 {
     width: 58%;
     min-width: inherit;
 }
+
 .objectLine {
     display: inline-block;
     justify-content: space-between;
     vertical-align: middle;
 }
-.allExpand{
+
+.allExpand {
     width: 100%;
 }
+
 /* Img settings */
 .imagen {
     width: 100%;
@@ -643,6 +690,10 @@ input[type="button"] {
     float: right;
 }
 
+.left {
+    float: left;
+}
+
 .fill {
     flex-grow: 1;
 }
@@ -654,4 +705,8 @@ input[type="button"] {
 
 .err {
     color: red;
+}
+
+.pointer {
+    cursor: pointer;
 }
