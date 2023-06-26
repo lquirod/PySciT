@@ -2,6 +2,9 @@
     With a summary of the Status and some important buttons links
  -->
 {% extends "base.html" %}
+{% block CSSs %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/tables.css')}}">
+{% endblock %}
 {% block infoWindow %}
 <title>PyTSys -Pipelines</title>
 {% endblock %}
