@@ -1,0 +1,82 @@
+<!-- Create a pipeline Page
+    With a summary of the Status and some important buttons links
+ -->
+{% extends "base.html" %}
+{% block infoWindow %}
+<title>PyTSys -Pipelines</title>
+{% endblock %}
+{% block mainBody %}
+<div class="objectLine allExpand">
+    <button class="left aButton b3 s16 yesPadding yesMargin" onclick="location.href='/pipelines/'">
+        <div class="objectLine">
+            &#8617;
+            <div class="objectLine">
+                Back to <br /> Pipeline Menu
+            </div>
+        </div>
+    </button>
+    <h1>Create a new Pipelines</h1>
+</div>
+<div class="allExpand">
+    <form action="/pipelines/new/" method="post" class="aform">
+        <div class=" objectLine alingTop object23 textLeft">
+            <span> Total Pipelines Types: {{ allALG|length }} </span>
+            <table id="" class=" textCenter">
+                <thead>
+                    <tr class="s20">
+                        <th>Select Algorithm</th>
+                        <th class="noBorder"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <div>
+                        {% for anAlg in allALG %}
+                        <tr>
+                            <td class="cellExpand textCenter">
+                                {{ anAlg }}
+                            </td>
+                            <td className="smallColumn">
+                                <input type="radio" value="{{anAlg}}" name="selectAlg" required {# -- <input
+                                    type="radio" value="{{anAlg}}" name="selectAlg" />
+                                    checked={(this.state.selectAlum.split('##SEP##')[0]) === item.nombre} onChange={() =>
+                                    this.toggleAlum(item.nombre)}
+
+                                    #}
+                                    />
+                            </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+        </div>
+        </table>
+</div>
+<div class="yesMargin objectLine alingTop object3 textLeft">
+    <div>
+        <label for="newName">New pipeline's name:</label> <br>
+        <input type="text" name="newName" value="{{newName}}">
+    </div>
+
+    <div class="err">
+        {% if errors %}
+        <p> Error adding a new Pipeline:
+            {% for e in errors %}
+            <br>- {{e}}
+            {% endfor %}
+        </p>
+        {% endif %}
+    </div>
+    <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
+        Create pipeline
+    </button>
+</div>
+</form>
+</div>
+
+
+{% endblock %}
+
+{% block funcionesJS %}
+<!-- <script src="js/basic.js" defer></script>
+  <script src="js/busqueda.js" defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+{% endblock %}

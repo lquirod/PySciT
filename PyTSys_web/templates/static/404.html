@@ -1,0 +1,23 @@
+<!-- Home Page
+    With a summary of the Status and some important buttons links
+ -->
+ {% extends "base.html" %}
+
+ {% block mainBody %}
+ <h1>Oops, something went wrong!</h1>
+ <div class="textContent">
+     <p>404 Page Not Found.What you were looking for is just not there.</p>
+        <p>You can use the upper navigation bar or the buttons below with more interesting links:
+     </p>
+ </div>
+
+<button class="aButton b4 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
+    Home menu</button>
+{% include "static/mainButtons.html" %}
+ {% endblock %}
+ 
+ {% block funcionesJS %}
+ <!-- <script src="js/basic.js" defer></script>
+ <script src="js/busqueda.js" defer></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+ {% endblock %}

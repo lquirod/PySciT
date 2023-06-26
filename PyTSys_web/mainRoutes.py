@@ -10,11 +10,25 @@ from PyTSys_web.mainWeb import *
 @app.route('/')
 @app.route('/home/')
 def homePage():
-    myUser.Name
-    
     return render_template("home.html", Name = myUser.Name)
 
-@app.route('/ListTransformations/')
+@app.route('/ConfigurationList/')
 def List():
     allTr = mTr.getTransformationsList()
-    return render_template("ListTransformations.html", allTr = allTr)
+    return render_template("static/ConfigurationList.html", 
+                           allTr = mTr.getTransformationsList(), allALG= mAlg.getAlgorithmsList())
+
+@app.route('/datas/')
+def mainData():
+    allTr = mTr.getTransformationsList()
+    return render_template("mainDatas.html", Datas = myUser.myDatas)
+
+@app.route('/pipelines/')
+def mainPipeline():
+    allTr = mTr.getTransformationsList()
+    return render_template("mainPipelines.html", Pipelines = myUser.myPipelines)
+
+@app.route('/pipelines/new/')
+def addAPipeline():
+    allTr = mTr.getTransformationsList()
+    return render_template("createPipeline.html",  allALG= mAlg.getAlgorithmsList(), Pipelines = myUser.myPipelines)

@@ -5,10 +5,8 @@ from abc import abstractmethod, ABC
 #   @classmethod
 #   @abstractmethod
 class aPipeline(ABC):
-    def __init__(self, pipeName = 'MyNewPipe'):
+    def __init__(self, pipeName):
         self.Name = pipeName
-        self.hasAlgorithm = None
-        self.typeAlgorithm = None
         self.aPipeline = Pipeline([])
 
     ####################################################################################################
@@ -16,6 +14,12 @@ class aPipeline(ABC):
     ## Operations with the Pipeline's Steps
     def steps(self):
         return self.aPipeline.steps
+
+    def getASteps(self, position=None):
+        if position is None or position < 0 or len(self.steps()) < position:
+            return None
+        else:
+            return self.aPipeline.steps[position]
 
     def addStep(self, aStep, position = None):
         if position is None or position < 0 or len(self.steps()) < position:

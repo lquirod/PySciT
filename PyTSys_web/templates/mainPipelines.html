@@ -1,0 +1,90 @@
+<!-- Pipelines main menu Page
+    With a summary of the Status and some important buttons links
+ -->
+{% extends "base.html" %}
+{% block infoWindow %}
+<title>PyTSys -Pipelines</title>
+{% endblock %}
+{% block mainBody %}
+<div class="objectLine allExpand">
+    <button class="left aButton b3 s16 yesPadding yesMargin " onclick="location.href='/home/'">
+        &#8617; Back Home</button>
+    <h1>Manage Pipelines Menu</h1>
+</div>
+<div class="allExpand">
+    <div class="textContent">
+        <div class=" allExpand  textLeft">
+            <span> Total Pipelines: {{ Pipelines|length }} </span>
+            {% if Pipelines|length == 0 %}
+        </div>
+        <span> Is seems there are nothing </span>
+        </br>
+        <button class="aButton b3 s18 roundBorder yesPadding yesMargin"
+            onclick="window.location.href='/pipelines/new/'">
+            <i class="fa-solid fa-plus"></i>
+            <strong>Create your first new pipeline</strong>
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+</div>
+            {% else %}
+            <button class="aButton b3 right" onclick="window.location.href='/pipelines/new/'">
+                <strong>Create a new pipeline</strong>
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <table id="" class="textCenter">
+            <thead>
+                <tr class="s20">
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>Algorithm</th>
+                    <th>Type</th>
+                    <th>Steps</th>
+                    <th>Access</th>
+                </tr>
+            </thead>
+            <tbody class="bodyTable">
+                {% for aPipe in Pipelines %}
+                <tr>
+                    <td class="">
+                        {{loop.index0}}
+                    </td>
+                    <td>
+                        <div>
+                            {{ aPipe.Name }}
+                        </div>
+                    </td>
+                    <td>
+                        <div>{{ aPipe.steps()[aPipe.hasAlgorithm][1] }}</div>
+                    </td>
+                    <td class="">
+                        {{aPipe.typeAlgorithm}}
+                        <!-- <div class="smallColumn">{{aPipe.typeAlgorithm}}</div> -->
+                    </td>
+                    <td class="">
+                        {{aPipe.steps()|length}}
+                    </td>
+                    <td>
+                        <div class="">
+                            <a href="pipelines/get{{loop.index0}}/">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+            {% endif %}
+
+
+{% endblock %}
+
+{% block funcionesJS %}
+<!-- <script src="js/basic.js" defer></script>
+ <script src="js/busqueda.js" defer></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+{% endblock %}

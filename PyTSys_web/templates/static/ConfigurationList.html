@@ -9,18 +9,29 @@
 <div class="objectLine allExpand">
 	<button class="left aButton b3 s16 yesPadding yesMargin " onclick="location.href='/home/'">
 		&#8617; Back Home</button>
-	<h1>Transformation List</h1>
+	<h1>Configuration List</h1>
 </div>
 <div class="textContent textLeft">
 	<p>
 		This is the list of transformations available to apply
 		them on the Data items or add them as steps of a Pipeline
-	</p>
-	<p>
+	<div class="colText1 colText1">
 		{% for aTr in allTr %}
 		<li>{{aTr}}</li>
 		{% endfor %}
+	</div>
+	</p>
+	<p>
+		And this is the list of the algorithms available to apply
+		them on the Data items or add them as steps of a Pipeline
+	<div class="colText1 colText1">
+		{% for aTr in allTr %}
+		<li>{{aTr}}</li>
+		{% endfor %}
+	</div>
 	</p>
 
 </div>
+{% include "static/mainButtons.html" %}
+
 {% endblock %}

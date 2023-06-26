@@ -108,7 +108,10 @@ html {
     /* padding: 10px; */
     margin: 0px;
 }
-
+#HeadMenu a:hover,
+#HeadMenu span:hover {
+    font-weight: bold;
+}
 #LogButtonToggle {
     width: 35%;
     min-width: 190px;
@@ -244,14 +247,15 @@ html {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Form settings ---- */
+input[type="radio"],
 input[type="checkbox"] {
+    cursor: pointer;
     width: auto;
-    /*Desired width*/
-    min-width: 10px;
+    min-width: 15px;
     height: auto;
-    /*Desired height*/
-    padding: 5px;
-    margin: 5px;
+    min-height: 15px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .aform {
@@ -263,12 +267,12 @@ input[type="checkbox"] {
 }
 
 /* Input settings */
-.aform input,
+.aform input[type="text"],
 .aform textarea {
-    width: 75%;
-    max-width: 95%;
+    width: 100%;
+    /* max-width: 95%; */
     font: 1em sans-serif;
-    min-width: 250px;
+    min-width: 200px;
     box-sizing: border-box;
     border: 1.5px solid #1d3785;
     background-color: rgb(247, 255, 255);
@@ -280,7 +284,7 @@ input[type="checkbox"] {
 .search {
     width: 100%;
     /* max-width: 95%; */
-    min-width: 250px;
+    min-width: 200px;
     /* box-sizing: border-box; */
     /* margin-bottom: 20px; */
     /* border-radius: 5px; */
@@ -289,7 +293,7 @@ input[type="checkbox"] {
 .search input {
     /* width: 95%;
     max-width: 95%; */
-    min-width: 250px;
+    min-width: 200px;
     font: 1em sans-serif;
     /* box-sizing: border-box; */
     /* margin-bottom: 20px; */
@@ -347,7 +351,7 @@ td.tabSubtitle {
     /* width: 100%; */
     max-height: 15px;
     text-align: left;
-    background-color: rgb(246, 211, 162);
+    background-color: #d5e0e9;
 }
 
 th,
@@ -362,49 +366,57 @@ table {
     width: 100%;
     /* max-width: 300; */
     margin-top: 5px;
-    background-color: rgb(202, 255, 255);
+    background-color: #e3f1fd;
     border: 3px solid rgb(105, 116, 197);
+    display: flex;
 }
 
 table div {
-    overflow: scroll;
+    max-height: 85px;
+    overflow: auto;
 }
 
 th {
-    background-color: #ffb682;
+    background-color: #abc9e8;
+}
+.bodyTable {
+    max-height: calc(20vh - 80px);
+    scroll-behavior: auto;
+    overflow-x: auto 
 }
 
 /*  ---- Table design settings ---- */
-/* tr:nth-child(even) {
-    background-color: rgb(203, 232, 232);
-} */
+tr:nth-child(even) {
+    background-color: #d5e0e9;
+}
 tr:hover td {
-    background-color: rgba(103, 254, 158, 0.5);
+    background-color: #b4e4f7;
 }
 
 .checkColumn {
     width: 80px;
     overflow: visible;
-    max-height: 85px;
 }
 
 .smallColumn {
     max-width: 45px;
     text-align: center;
-    max-height: 85px;
 }
 
 .lineColumn {
     /* width: 30%; */
     min-width: 110px;
     max-width: 280px;
-    max-height: 85px;
+    scroll-behavior:smooth;
 }
 
 .largeColumn {
     min-width: 110px;
     text-align: left;
-    max-height: 85px;
+}
+
+.cellExpand {
+    width:100%
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -432,20 +444,22 @@ input[type="button"] {
 /* Personalized buttons */
 .b1,
 .b1:active {
-    background-color: rgb(239, 182, 182);
+    background-color: #efb6b6;
 }
 
 .b1:hover {
-    background-color: rgb(232, 147, 147);
+    background-color: #e89393;
 }
 
 .b2,
 .b2:active {
-    background-color: rgb(204, 253, 204);
+    background-color: #ccfdcc;
+    border-radius: 0;
 }
 
 .b2:hover {
-    background-color: rgb(170, 241, 170);
+    background-color: #aaf1aa;
+    border-radius: 0;
 }
 
 .b3,
@@ -456,6 +470,17 @@ input[type="button"] {
 
 .b3:hover {
     background-color: #d5e0e9;
+}
+.b4,
+.b4:active {
+    background-color: #093672;
+    color: white;
+    border-radius: 0;
+}
+
+.b4:hover {
+    background-color: #022859;
+    color: white;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -554,9 +579,8 @@ input[type="button"] {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* Visual settings */
 .noBorder {
-    border: transparent;
+    border: none;
 }
-
 .roundBorder {
     border-radius: 20px;
 }
@@ -682,6 +706,10 @@ input[type="button"] {
 }
 
 /* Position settings */
+.alingTop{
+    vertical-align: top;
+}
+
 .textLeft {
     text-align: left;
 }
@@ -710,3 +738,4 @@ input[type="button"] {
 .pointer {
     cursor: pointer;
 }
+
