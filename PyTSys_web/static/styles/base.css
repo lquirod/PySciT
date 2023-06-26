@@ -108,10 +108,12 @@ html {
     /* padding: 10px; */
     margin: 0px;
 }
+
 #HeadMenu a:hover,
 #HeadMenu span:hover {
     font-weight: bold;
 }
+
 #LogButtonToggle {
     width: 35%;
     min-width: 190px;
@@ -242,7 +244,7 @@ html {
 .textContent {
     padding: 6%;
     padding-top: 0;
-    padding-bottom: 3%;
+    padding-bottom: 20px;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -364,11 +366,12 @@ table {
     /* font-family: arial, sans-serif; */
     border-collapse: collapse;
     width: 100%;
-    /* max-width: 300; */
     margin-top: 5px;
     background-color: #e3f1fd;
     border: 3px solid rgb(105, 116, 197);
-    display: flex;
+    display: block;
+    overflow-y: auto;
+    /* max-height: calc(100vh - 230px); */
 }
 
 table div {
@@ -379,16 +382,26 @@ table div {
 th {
     background-color: #abc9e8;
 }
-.bodyTable {
-    max-height: calc(20vh - 80px);
-    scroll-behavior: auto;
-    overflow-x: auto 
+
+.fixTable tbody {
+    display: block;
+    overflow: auto;
+    max-height: calc(100vh - 270px);
+    width: 100%;
 }
+
+.fixTable thead tr {
+    /* display: block; */
+    display: table-row;
+    /* display:table-header-group; */
+}
+
 
 /*  ---- Table design settings ---- */
 tr:nth-child(even) {
     background-color: #d5e0e9;
 }
+
 tr:hover td {
     background-color: #b4e4f7;
 }
@@ -407,7 +420,7 @@ tr:hover td {
     /* width: 30%; */
     min-width: 110px;
     max-width: 280px;
-    scroll-behavior:smooth;
+    scroll-behavior: smooth;
 }
 
 .largeColumn {
@@ -416,7 +429,7 @@ tr:hover td {
 }
 
 .cellExpand {
-    width:100%
+    width: 100%
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -471,6 +484,7 @@ input[type="button"] {
 .b3:hover {
     background-color: #d5e0e9;
 }
+
 .b4,
 .b4:active {
     background-color: #093672;
@@ -581,6 +595,7 @@ input[type="button"] {
 .noBorder {
     border: none;
 }
+
 .roundBorder {
     border-radius: 20px;
 }
@@ -706,7 +721,7 @@ input[type="button"] {
 }
 
 /* Position settings */
-.alingTop{
+.alingTop {
     vertical-align: top;
 }
 
@@ -738,4 +753,3 @@ input[type="button"] {
 .pointer {
     cursor: pointer;
 }
-
