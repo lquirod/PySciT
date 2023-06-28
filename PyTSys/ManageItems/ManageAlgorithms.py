@@ -13,6 +13,8 @@ class ManageAlgorithms:
         return True if nameAlgorithm in Enum.ALG.Algorithms.__members__ else False
 
     def getAlgorithmPipe(self, theAlgorithm, pipeName = 'MyNewPipe'):
+        if(pipeName.strip()==''):
+            pipeName = 'MyNewPipe'
         if self.thereIsAlgorithm(theAlgorithm):
             if theAlgorithm == Enum.ALG.Algorithms.Linear_Regression.name:
                 return tPip.Lineal_Regresion.LinearRegressionPipe(pipeName)

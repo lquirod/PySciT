@@ -1,5 +1,5 @@
-<!-- Home Page
-    With a summary of the Status and some important buttons links
+<!-- Configuration List Page
+	With a list of all transformation and algorithms the system has 
  -->
 {% extends "base.html" %}
 {% block infoWindow %}
@@ -15,7 +15,7 @@
 	<p>
 		This is the list of transformations available to apply
 		them on the Data items or add them as steps of a Pipeline
-	<div class="colText1 colText1">
+	<div class="colText1 colText2 colText3">
 		{% for aTr in allTr %}
 		<li>{{aTr}}</li>
 		{% endfor %}
@@ -24,9 +24,9 @@
 	<p>
 		And this is the list of the algorithms available to apply
 		them on the Data items or add them as steps of a Pipeline
-	<div class="colText1 colText1">
-		{% for aTr in allTr %}
-		<li>{{aTr}}</li>
+	<div class="colText1 colText2 colText3">
+		{% for aAlg in allALG %}
+		<li>{{aAlg}}</li>
 		{% endfor %}
 	</div>
 	</p>

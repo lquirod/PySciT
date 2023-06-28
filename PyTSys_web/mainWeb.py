@@ -17,10 +17,10 @@ aux1 = ''
 print('creando user')
 print(myUser.Name)
 print(myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression')))
-
 print(myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2')))
 print(myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo ')))
-print(myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2')))
+
+print(myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', '    ')))
 print(myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo ')))
 print(myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2')))
 print(myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo ')))

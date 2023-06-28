@@ -1,12 +1,14 @@
-<!-- Home Page
-    With a summary of the Status and some important buttons links
+<!-- Error Page
+    With an error message and some important buttons links
  -->
  {% extends "base.html" %}
-
+ {% block infoWindow %}
+ <title>PyTSys - Message</title>
+ {% endblock %}
  {% block mainBody %}
  <h1>Oops, something went wrong!</h1>
  <div class="textContent">
-     <p>404 Page Not Found.What you were looking for is just not there.</p>
+     <p> {{ MSG }}</p>
         <p>You can use the upper navigation bar or the buttons below with more interesting links:
      </p>
  </div>

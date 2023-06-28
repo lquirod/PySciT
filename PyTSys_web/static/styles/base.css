@@ -116,7 +116,7 @@ html {
 
 #LogButtonToggle {
     width: 35%;
-    min-width: 190px;
+    min-width: 240px;
     max-width: 400px;
 }
 
@@ -263,9 +263,9 @@ input[type="checkbox"] {
 .aform {
     /* text-align: left; */
     /* padding: 20px; */
-    padding-bottom: 0px;
+    padding: 0px;
     /* margin-top: 10px; */
-    margin-bottom: 0px;
+    margin: 0px;
 }
 
 /* Input settings */
@@ -507,6 +507,9 @@ input[type="button"] {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* Visual settings */
+.boldText{
+    font-weight: bold;
+}
 .noBorder {
     border: none;
 }
@@ -553,7 +556,7 @@ input[type="button"] {
 }
 
 /* If screen settings */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 900px) {
     .colText3 {
         -webkit-column-count: 3;
         -moz-column-count: 3;
@@ -656,7 +659,7 @@ input[type="button"] {
     flex-grow: 1;
 }
 
-/* Para voltear imagen */
+/* Other */
 .rotateH {
     transform: scaleX(-1);
 }

@@ -3,11 +3,10 @@
  -->
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='/styles/base.css')}}">
 {% block CSSs %}
 {% endblock %}
 <script src="https://kit.fontawesome.com/39c5095239.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="styles/base.css">
 
 <body>
     <!-- Window -->
@@ -15,7 +14,6 @@
         {% block infoWindow %}
         <title>PyTSys</title>
         {% endblock %}
-        <!-- <link rel="icon" href="/images/static/logo.png" type="image/icon type"> -->
     </head>
 
     <!-- Header menu -->

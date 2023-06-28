@@ -7,7 +7,9 @@ td.tabSubtitle {
     text-align: left;
     background-color: #d5e0e9;
 }
-
+tr, thead{
+    width: 100%;
+}
 th,
 td {
     border: 1px solid black;
@@ -18,12 +20,16 @@ table {
     /* font-family: arial, sans-serif; */
     border-collapse: collapse;
     width: 100%;
-    margin-top: 5px;
+    min-width: 300px;
+    /* margin-top: 5px; */
+    margin: 0px;
     background-color: #e3f1fd;
     border: 3px solid rgb(105, 116, 197);
     display: block;
     overflow-y: auto;
+    /* min-height: 360px; */
     /* max-height: calc(100vh - 230px); */
+    text-align: center;
 }
 
 table div {
@@ -33,13 +39,16 @@ table div {
 
 th {
     background-color: #abc9e8;
+    border-right: transparent;
+    border-left: transparent;
 }
-
 .fixTable tbody {
     display: block;
     overflow: auto;
     max-height: calc(100vh - 270px);
     width: 100%;
+    /* min-height: 325px; */
+
 }
 
 .fixTable thead tr {
@@ -63,13 +72,24 @@ tr:hover td {
     overflow: visible;
 }
 
-.smallColumn {
-    max-width: 45px;
-    text-align: center;
+.minCol {
+    min-width: 35px;
+    /* text-align: center; */
+}
+.minSmallCol {
+    min-width: 65px;
+    /* text-align: center; */
+}
+.minMediumCol {
+    min-width: 115px;
+    /* text-align: center; */
+}
+.minLargeCol {
+    min-width: 150px;
+    /* text-align: center; */
 }
 
 .lineColumn {
-    /* width: 30%; */
     min-width: 110px;
     max-width: 280px;
     scroll-behavior: smooth;
@@ -80,6 +100,44 @@ tr:hover td {
     text-align: left;
 }
 
-.cellExpand {
+.finalHeaderCell{
+    border-right: transparent;
+    min-width: 83px;
+    /* column-span: 2; */
+    /* padding-right: 18px; */
+}
+
+
+.cell1 {
     width: 100%
+}
+.cell910{
+    width: 90%;
+}
+.cell45{
+    width: 80%;
+}
+.cell23{
+    width: 63%;
+}
+.cell12{
+    width: 50%;
+}
+.cell25{
+    width: 40%;
+}
+.cell13{
+    width: 30%;
+}
+.cell14{
+    width: 25%;
+}
+.cell15{
+    width: 20%;
+}
+.cell18{
+    width: 12.5%;
+}
+.cell110{
+    width: 10%;
 }
