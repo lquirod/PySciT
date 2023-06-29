@@ -18,11 +18,20 @@
             </div>
         </div>
     </button>
-    <h1>Pipeline: {{numPipe}}</h1>
+    <h1>Pipeline {{numPipe}}: {{thePipeline.Name}}</h1>
 </div>
 <form action="/pipelines/new/" method="post" class="aform allExpand">
-    <div class=" objectLine alingTop   yes yesMargin">
-        <span> Total Steps: {{ thePipeline.steps()|length }} </span>
+    <div class=" objectLine alingTop yes yesMargin">
+        <div class=" allExpand  textLeft">
+            <span> Total Steps: {{ thePipeline.steps()|length }} </span>
+
+            <div class="objectLine right">
+                <span class="err"> Steps changed! </span>
+                <button class="aButton b4 right" onclick="window.location.href='/pipelines/new/'">
+                    <strong>Save changes</strong>
+                </button>
+            </div>
+        </div>
         <table id="" class="fixTable textCenter ">
             <thead>
                 <tr class="s20">
@@ -34,13 +43,14 @@
             </thead>
             <tbody>
                 {% for aStep in thePipeline.steps() %}
+                {% if loop.index0==thePipeline.hasAlgorithm %}
+                <tr class="boldText">
+                    {% else %}
                 <tr>
+                    {% endif %}
+
                     <td class="minCol cell110">{{loop.index}}</td>
-                    <td class="cell1  textCenter
-                        {% if loop.index0 == thePipeline.hasAlgorithm %}
-                        boldText
-                        {% endif %}
-                        ">
+                    <td class="cell1 textCenter">
                         {{ aStep[0] }}</td>
                     <td class="minSmallCol">
                         <a href="get{{loop.index0}}/">
@@ -63,21 +73,11 @@
     <div class="yesMargin objectLine alingTop textLeft">
         <div class="yesMargin objectLine object2">
             <div>
-                <label for="newName">New pipeline's name:</label> <br>
-                <input type="text" name="newName" value="{{newName}}">
+                <label for="newName">Pipeline's name:</label> <br>
+                <input type="text" name="newName" value="{{ thePipeline.Name}}" maxlength="100">
             </div>
-
-            <div class="err">
-                {% if errors %}
-                <p> Error adding a new Pipeline:
-                    {% for e in errors %}
-                    <br>- {{e}}
-                    {% endfor %}
-                </p>
-                {% endif %}
-            </div>
-            <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
-                Create pipeline
+            <button class="aButton b3 right roundBorder yesPadding" type="submit">
+                Change name
             </button>
         </div>
         <div class="yesMargin objectLine object2">
@@ -104,8 +104,20 @@
 
 {% endblock %}
 
+
 {% block funcionesJS %}
-<!-- <script src="js/basic.js" defer></script>
-   <script src="js/busqueda.js" defer></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="{{url_for('static', filename='js/pipelines.js')}}" defer>
+
+    // thePipe = {{thePipeline.Name}};
+</script>
+
+<!-- <script type="text/javascript"> -->
+<script>
+    // var thePipe = {{ thePipeline.Name }};
+    var thePipe = JSON.parse('{{ thePipeline|tojson|safe }}');
+    // var thePipe = JSON.eval('{{ thePipeline.Name|safe  }}');
+
+    // const jsArrayOfItems = JSON.parse('{{ content|tojson|safe }}');
+
+</script>
 {% endblock %}

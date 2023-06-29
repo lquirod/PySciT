@@ -33,6 +33,7 @@ class UserActions:
     
     def selectPipeline(self, select = None):
         if  len(self.myPipelines) == 0 or select is None or select < 0 or len(self.myPipelines) < select:
+            self.actualPipeline = None
             return None
         else:
             self.actualPipeline = select
@@ -72,7 +73,9 @@ class UserActions:
         else:
             return self.getActualPipe().steps()
         
-    def addStep(self, aStep, position = None):
+    def addStep(self, aStep, position = None, thePipe = None):
+        if thePipe is not None:
+            self.selectPipeline(thePipe)
         if self.getActualPipe() is None:
             return None
         else:

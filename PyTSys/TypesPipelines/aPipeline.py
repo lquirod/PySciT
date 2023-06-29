@@ -27,6 +27,8 @@ class aPipeline(ABC):
             return len(self.steps()) -1
         else:
             self.steps().insert(position, aStep)
+            if position <= self.hasAlgorithm:
+                self.hasAlgorithm +=1
             return position
 
     def delStep(self, position = None):

@@ -3,4 +3,3 @@ from flask import Flask
 app = Flask(__name__)
 
 import PyTSys_web.mainRoutes
-import PyTSys_web.staticRoutes
