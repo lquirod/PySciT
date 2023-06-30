@@ -26,9 +26,9 @@
             <span> Total Steps: {{ thePipeline.steps()|length }} </span>
 
             <div class="objectLine right">
-                <span class="err"> Steps changed! </span>
-                <button class="aButton b4 right" onclick="window.location.href='/pipelines/new/'">
-                    <strong>Save changes</strong>
+                <!-- <span class="err"> Steps changed! </span> -->
+                <button id="toggleModify" class="aButton b4 right" value="Modify disabled" onclick="toggleModify()">
+                    <!-- <strong>Save changes</strong> -->
                 </button>
             </div>
         </div>
@@ -52,18 +52,22 @@
                     <td class="minCol cell110">{{loop.index}}</td>
                     <td class="cell1 textCenter">
                         {{ aStep[0] }}</td>
-                    <td class="minSmallCol">
-                        <a href="get{{loop.index0}}/">
+                    <td id="movStep" class="Darker minSmallCol">
+                        {% if loop.index0 != 0 %} |
+                        <span onclick="operateStep('MOVUP', '{{loop.index0}}' )" id="'MoveUp{{loop.index0}}" class="pointer">
                             &#8657;
-                        </a> |
-                        <a href="get{{loop.index0}}/">
+                        </span> |
+                        {% endif %}
+                        {% if loop.index != ( thePipeline.steps()|length ) %} |
+                        <span onclick="operateStep('MOVDOWN', '{{loop.index0}}' )" id="'MoveDown{{loop.index0}}" class="pointer">
                             &#8659;
-                        </a>
+                        </span> |
+                        {% endif %}
                     </td>
-                    <td class="minSmallCol">
-                        <a href="get{{loop.index0}}/">
+                    <td id="delStep" class="Darker minSmallCol">
+                        <span onclick="operateStep('DEL', '{{loop.index0}}' )" id="'del{{loop.index0}}" class="pointer">
                             &#128465;
-                        </a>
+                        </span>
                     </td>
                 </tr>
                 {% endfor %}
@@ -86,14 +90,8 @@
                 <input type="text" name="newName" value="{{newName}}">
             </div>
 
-            <div class="err">
-                {% if errors %}
-                <p> Error adding a new Pipeline:
-                    {% for e in errors %}
-                    <br>- {{e}}
-                    {% endfor %}
-                </p>
-                {% endif %}
+            <div id="errPipeSection" class="textLeft right objectLine">|
+                <span onclick="toggleSection('SideLog')" id="buttonSideLog" class="pointer">Log view (Hidden)</span>
             </div>
             <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
                 Create pipeline

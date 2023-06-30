@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('checkLog').checked = true;
     }
 }, false);
-
+/*  ---- Log block check toggle ---- */
 function checkBlock(element) {
     // window.alert(element.checked)
     if (element.checked) {
@@ -34,7 +34,7 @@ function toggleSection(section) {
         setTimeout(function () {
             section.classList.remove('visuallyHidden');
         }, 5);
-        text.textContent = 'Log view (Shown)'
+        text.textContent = 'Log view (Shown)';
     } else {
         section.classList.add('visuallyHidden');
         section.addEventListener('transitionend', function (e) {
@@ -44,6 +44,6 @@ function toggleSection(section) {
             passive: false
         });
         section.classList.add('hidden');
-        text.textContent = 'Log view (Hidden)'
+        text.textContent = 'Log view (Hidden)';
     }
 }
