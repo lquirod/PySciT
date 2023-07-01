@@ -20,15 +20,16 @@
     </button>
     <h1>Pipeline {{numPipe}}: {{thePipeline.Name}}</h1>
 </div>
-<form action="/pipelines/new/" method="post" class="aform allExpand">
+<div class="aform allExpand">
+<!-- <form action="/pipelines/new/" method="post" class="aform allExpand"> -->
     <div class=" objectLine alingTop yes yesMargin">
         <div class=" allExpand  textLeft">
             <span> Total Steps: {{ thePipeline.steps()|length }} </span>
-
+    
             <div class="objectLine right">
                 <!-- <span class="err"> Steps changed! </span> -->
-                <button id="toggleModify" class="aButton b4 right" value="Modify disabled" onclick="toggleModify()">
-                    <!-- <strong>Save changes</strong> -->
+                <button id="toggleModify" class="aButton b4 right" onclick="toggleModify()">
+                    Modify disabled {{thePipeline.hasAlgorithm }}
                 </button>
             </div>
         </div>
@@ -52,8 +53,8 @@
                     <td class="minCol cell110">{{loop.index}}</td>
                     <td class="cell1 textCenter">
                         {{ aStep[0] }}</td>
-                    <td id="movStep" class="Darker minSmallCol">
-                        {% if loop.index0 != 0 %} |
+                    <td name="movStep" class="Darker minSmallCol">
+                        {% if loop.index0 != 0 %}
                         <span onclick="operateStep('MOVUP', '{{loop.index0}}' )" id="'MoveUp{{loop.index0}}" class="pointer">
                             &#8657;
                         </span> |
@@ -61,10 +62,10 @@
                         {% if loop.index != ( thePipeline.steps()|length ) %} |
                         <span onclick="operateStep('MOVDOWN', '{{loop.index0}}' )" id="'MoveDown{{loop.index0}}" class="pointer">
                             &#8659;
-                        </span> |
+                        </span>
                         {% endif %}
                     </td>
-                    <td id="delStep" class="Darker minSmallCol">
+                    <td name="delStep" class="Darker minSmallCol">
                         <span onclick="operateStep('DEL', '{{loop.index0}}' )" id="'del{{loop.index0}}" class="pointer">
                             &#128465;
                         </span>
@@ -80,9 +81,11 @@
                 <label for="newName">Pipeline's name:</label> <br>
                 <input type="text" name="newName" value="{{ thePipeline.Name}}" maxlength="100">
             </div>
-            <button class="aButton b3 right roundBorder yesPadding" type="submit">
+            <!-- <button class="aButton b3 right roundBorder yesPadding" type="submit">
                 Change name
-            </button>
+            </button> -->
+            <div class="err" id="errPipeSection">
+            </div>
         </div>
         <div class="yesMargin objectLine object2">
             <div>
@@ -93,29 +96,23 @@
             <div id="errPipeSection" class="textLeft right objectLine">|
                 <span onclick="toggleSection('SideLog')" id="buttonSideLog" class="pointer">Log view (Hidden)</span>
             </div>
-            <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
+            <!-- <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
                 Create pipeline
-            </button>
+            </button> -->
         </div>
     </div>
-</form>
+</div>
 
 {% endblock %}
 
 
 {% block funcionesJS %}
 <script src="{{url_for('static', filename='js/pipelines.js')}}" defer>
-
-    // thePipe = {{thePipeline.Name}};
 </script>
-
-<!-- <script type="text/javascript"> -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-    // var thePipe = {{ thePipeline.Name }};
-    var thePipe = JSON.parse('{{ thePipeline|tojson|safe }}');
-    // var thePipe = JSON.eval('{{ thePipeline.Name|safe  }}');
+    var numPipe = '{{ numPipe }}';
+  </script>
+<!-- <script type="text/javascript"> -->
 
-    // const jsArrayOfItems = JSON.parse('{{ content|tojson|safe }}');
-
-</script>
 {% endblock %}

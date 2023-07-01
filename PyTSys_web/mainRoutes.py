@@ -3,10 +3,6 @@ from PyTSys_web import app
 from PyTSys_web.mainWeb import *
 from PyTSys_web.staticRoutes import *
 
-@app.context_processor
-def logFuction():
-    return dict(LOG=logs)
-
 @app.route('/')
 @app.route('/home/')
 def homePage():
@@ -29,7 +25,6 @@ def mainPipeline():
 def addAPipeline():
     name = ''
     err = []
-
     if request.method == 'POST':
         name = request.form['newName']
         alg = request.form['selectAlg']

@@ -5,23 +5,16 @@ import PyTSys.UserActions as user
 import PyTSys.ManageItems as M
 from PyTSys.Aditional.MoreFunctions import *
 
-from datetime import datetime
 
 myUser = user.UserActions('Cherished User')
 mTr = M.TR.ManageTransformations()
 mAlg = M.ALG.ManageAlgorithms()
 
-logs = []
 
 opc = ''
 file = 'Ninguno'
 aux = ''
 aux1 = ''
-
-def addLog(msg):
-    date = datetime.now().strftime("%m/%d/%Y-%H:%M: ")
-    newLog = "<span class=\"boldText\">"+ date + "</span></br>" + msg
-    logs.insert(0, Markup(newLog))
 
 
 print('creando user')

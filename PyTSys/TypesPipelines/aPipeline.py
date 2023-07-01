@@ -7,6 +7,7 @@ from abc import abstractmethod, ABC
 class aPipeline(ABC):
     def __init__(self, pipeName):
         self.Name = pipeName
+        self.hasAlgorithm = None
         self.aPipeline = Pipeline([])
 
     ####################################################################################################
@@ -33,7 +34,7 @@ class aPipeline(ABC):
 
     def delStep(self, position = None):
         if  position is None or position < 0 or len(self.steps()) < position :
-            return None
+            return False
         else:
             self.steps().pop(position)
             if position == self.hasAlgorithm:
@@ -49,6 +50,10 @@ class aPipeline(ABC):
             movStep = self.steps()[fromPosition]
             self.steps().pop(fromPosition)
             self.steps().insert(toPosition, movStep)
+            if fromPosition == self.hasAlgorithm:
+                self.hasAlgorithm = toPosition
+            if toPosition == self.hasAlgorithm:
+                self.hasAlgorithm = fromPosition
             return True
 
     ## Operations with the Pipeline's Algorithm

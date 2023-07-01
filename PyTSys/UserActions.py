@@ -25,6 +25,12 @@ class UserActions:
         self.myPipelines.append(newPipe)
         return len(self.myPipelines)
     
+    def existPipeline(self, num):
+       if  len(self.myPipelines) == 0 or num is None or num < 0 or len(self.myPipelines) < num:
+            return False
+       else:
+           return True
+           
     def getMyPipelinesNames(self):
         ret = {}
         for count, aPip in enumerate(self.myPipelines):
@@ -32,7 +38,7 @@ class UserActions:
         return ret
     
     def selectPipeline(self, select = None):
-        if  len(self.myPipelines) == 0 or select is None or select < 0 or len(self.myPipelines) < select:
+        if  self.existPipeline(select):
             self.actualPipeline = None
             return None
         else:
@@ -46,10 +52,7 @@ class UserActions:
             return self.myPipelines[self.actualPipeline]
 
     def delPipeline(self, pipePosition = None):
-        lenPip = len(self.myPipelines)
-        if lenPip == 0 or pipePosition is None or pipePosition < 0 or lenPip < pipePosition :
-            return None
-        else:
+        if self.existPipeline(pipePosition):
             removeItem = self.myPipelines.pop(pipePosition)
             del removeItem
             lenPip = len(self.myPipelines)
@@ -57,52 +60,59 @@ class UserActions:
                 pipePosition = None
             elif pipePosition < self.actualPipeline or self.actualPipeline == lenPip:
                 self.actualPipeline -= 1
-            return len(self.myPipelines)
+            return lenPip
+        else:
+            return None
 
     ####################################################################################################
     ## Operations with the user's actual Pipeline
-    # def setAlgorithmPipe(self, theAlgorithm, stepPosition = None):
-    #     if self.getActualPipe() is None:
-    #         return None
-    #     else:
-    #         return self.getActualPipe().setAlgorithm(theAlgorithm, stepPosition)
-    
-    def getSteps(self):
-        if self.getActualPipe() is None:
-            return None
-        else:
+    # Steps
+    def getSteps(self, pip=None):
+        if self.existPipeline(pip):
+            return self.myPipelines[pip].steps()
+        elif self.getActualPipe() is not None:
             return self.getActualPipe().steps()
+        else:
+            return None
         
     def addStep(self, aStep, position = None, thePipe = None):
-        if thePipe is not None:
-            self.selectPipeline(thePipe)
-        if self.getActualPipe() is None:
-            return None
-        else:
+        if self.existPipeline(thePipe):
+            return self.myPipelines[thePipe].addStep(aStep, position)
+        elif self.getActualPipe() is not None:
             return self.getActualPipe().addStep(aStep, position)
-
-    def delStep(self, position = None):
-        if self.getActualPipe() is None:
-            return None
         else:
+            return None
+
+    def delStep(self, position = None, thePipe = None):
+        if self.existPipeline(thePipe):
+            return self.myPipelines[thePipe].delStep(position)
+        elif self.getActualPipe() is not None:
             return self.getActualPipe().delStep(position)
+        else:
+            return False
         
-    def moveStep(self, fromPosition, toPosition):
-        if self.getActualPipe() is None:
-            return None
-        else:
+    def moveStep(self, fromPosition, toPosition, thePipe = None):
+        if self.existPipeline(thePipe):
+            return self.myPipelines[thePipe].moveStep(fromPosition, toPosition)
+        elif self.getActualPipe() is not None:
             return self.getActualPipe().moveStep(fromPosition, toPosition)
-
-    def fitSelectData(self):
-        if self.getActualPipe() is None or self.getActualData() is None:
-            return None
         else:
+            return False
+        
+    # Common operations
+    def fitSelectData(self, thePipe = None, theData = None):
+        if self.existPipeline(thePipe) and self.existData(theData):
+            return self.myPipelines[thePipe].moveStep(fromPosition, toPosition)
+        elif True:
+        # elif self.getActualPipe() is not None:
             zipped = [[x, y] for x, y in zip(self.getActualData().Data['X_train1'].tolist(), self.getActualData().Data['X_train2'].tolist())]
             # print(self.getActualPipe())
             # print(zipped)
             # self.getActualPipe().fitData(self.getActualData().Data['X_train1'], self.getActualData().Data['X_train2'])
             # self.getActualPipe().fitData(zipped)
             self.getActualPipe().fitData(zipped, self.getActualData().Data['y_train'].tolist())
+        else:
+            return None
 
     def predict(self):
         if self.getActualPipe() is None or self.getActualData() is None:
@@ -117,12 +127,18 @@ class UserActions:
         self.myDatas.append(M.Data.ManageData(data, newNameData))
         return len(self.myDatas)
 
-    def selectData(self, select = None):
+    def existData(self, num):
         if  len(self.myDatas) == 0 or select is None or select < 0 or len(self.myDatas) < select:
-            return None
+            return False
         else:
+            return True
+        
+    def selectData(self, select = None):
+        if  self.existData(select):
             self.actualData = select
             return select
+        else:
+            return None
 
     def getActualData(self):
         if self.actualData is None:
@@ -145,10 +161,7 @@ class UserActions:
         return ret
     
     def delData(self, dataPosition = None):
-        lenData = len(self.myDatas)
-        if lenData == 0 or dataPosition is None or dataPosition < 0 or lenData < dataPosition :
-            return None
-        else:
+        if  self.existData(dataPosition):
             removeItem = self.myDatas.pop(dataPosition)
             del removeItem
             lenData = len(self.myDatas)
@@ -156,7 +169,9 @@ class UserActions:
                 dataPosition = None
             elif dataPosition < self.actualData or self.actualData == lenData:
                 self.actualData -= 1
-            return len(self.myDatas)
+            return lenData
+        else:
+            return None
 
     ####################################################################################################
     ## Operations with the user's actual Data

@@ -18,18 +18,30 @@ function toggleModify(element) {
     }
 }
 function toggleModify() {
-    var mov = document.getElementById('movStep');
-    var del = document.getElementById('delStep');
+    var mov = document.getElementsByName('movStep');
+    var del = document.getElementsByName('delStep');
     var buttonModify = document.getElementById('toggleModify');
-    if (mov.classList.contains('Darker')) {
-        mov.classList.remove('Darker');
-        del.classList.remove('Darker');
-        buttonModify.value = 'Modify enabled';
+    if (mov[0].classList.contains('Darker')) {
+        for (var i = 0; i < mov.length; i++)
+            mov[i].classList.remove('Darker');
+
+        for (var i = 0; i < del.length; i++)
+            del[i].classList.remove('Darker');
+
+        buttonModify.classList.remove('b4');
+        buttonModify.classList.add('b3');
+        buttonModify.textContent = 'Modify enabled';
         modify = true;
     } else {
-        mov.classList.add('Darker');
-        del.classList.add('Darker');
-        buttonModify.value = 'Modify disabled';
+        for (var i = 0; i < mov.length; i++)
+            mov[i].classList.add('Darker');
+
+        for (var i = 0; i < del.length; i++)
+            del[i].classList.add('Darker');
+
+        buttonModify.classList.remove('b3');
+        buttonModify.classList.add('b4');
+        buttonModify.textContent = 'Modify disabled';
         modify = false;
     }
 }
@@ -42,25 +54,30 @@ function operateStep(operation, arg) {
     }
 }
 function operateStep(operation, arg) {
+    // window.alert(operation+", "+arg)
     if (modify == true) {
         $.ajax({
-            data: { operation: operation, arg: arg }, //, etiquetas: etiquetasCheck},
-            url: 'BD/getProductosBusqueda.php',
+            // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
+            data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
+            
+            contentType: 'application/json',
+            url: '/operate/pipeline/'+numPipe+'/steps/',
             type: 'post',
             beforeSend: function () {
                 toggleModify();
             },
-            success: function (respuesta) {
+            success: function (respuesta, msg) {
                 toggleModify();
-                if (respuesta != true) {
+                if (respuesta) {
+                }else{
                     var text = document.getElementById('errPipeSection');
-                    text.textContent = respuesta;
+                    text.textContent = msg;
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toggleModify();
                 var text = document.getElementById('errPipeSection');
-                text.textContent = " Status: " + textStatus + "<br>Error: " + errorThrown;
+                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
             }
         });
     }
