@@ -13,32 +13,32 @@ def operatePipelineStep(numberPipeline=None):
         try:
             nPipe = int(numberPipeline)
             if total == 0 or nPipe < 0 and total < nPipe :
-                ret = {'respuesta': False, 'err': 'Not valid pipeline to operate'}
+                ret = {'response': False, 'err': 'Not valid pipeline to operate'}
                 return jsonify(ret)
 
         except Exception:
-            ret = {'respuesta': False, 'err': 'Not valid pipeline to operate'}
+            ret = {'response': False, 'err': 'Not valid pipeline to operate'}
             return jsonify(ret)
 
         op = request.json.get('op')
         arg = int(request.json.get('arg'))
         if op == 'MOVUP':
-            respuesta = myUser.moveStep(arg, (arg-1), nPipe)
+            response = myUser.moveStep(arg, (arg-1), nPipe)
         elif op == 'MOVDOWN':
-            respuesta = myUser.moveStep(arg, (arg+1), nPipe)
+            response = myUser.moveStep(arg, (arg+1), nPipe)
         elif op == 'DEL':
-            respuesta = myUser.moveStep(arg, nPipe)
+            response = myUser.delStep(arg, nPipe)
         else:
-            ret = {'respuesta': False, 'err': 'Operation not found'}
+            ret = {'response': False, 'err': 'Operation not found'}
             addLog('Error: '+op+' failed')
             return jsonify(ret)
 
-        if respuesta:
+        if response:
             addLog(op+' Pipe '+str(nPipe)+' step '+str(arg))
         else:
             addLog('Error, denied operation: '+op+' Pipe '+str(nPipe)+' step '+str(arg))
 
-        ret = {'respuesta': respuesta, 'err': 'Operation denied'}
+        ret = {'response': response, 'err': 'Operation denied'}
         return jsonify(ret)
     
     else:

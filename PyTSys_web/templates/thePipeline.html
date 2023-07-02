@@ -45,13 +45,14 @@
             <tbody>
                 {% for aStep in thePipeline.steps() %}
                 {% if loop.index0==thePipeline.hasAlgorithm %}
-                <tr class="boldText">
-                    {% else %}
-                <tr>
-                    {% endif %}
+                <tr id="TR-{{loop.index0}}" class="boldText">
+                {% else %}
+                <tr id="TR-{{loop.index0}}">
+                {% endif %}
 
-                    <td class="minCol cell110">{{loop.index}}</td>
-                    <td class="cell1 textCenter">
+                    <td class="minCol cell110">{{loop.index0}}</td>
+                    <td id="COL-{{loop.index0}}" class="cell1 textCenter">
+                        {{loop.index0}}
                         {{ aStep[0] }}</td>
                     <td name="movStep" class="Darker minSmallCol">
                         {% if loop.index0 != 0 %}
@@ -79,7 +80,7 @@
         <div class="yesMargin objectLine object2">
             <div>
                 <label for="newName">Pipeline's name:</label> <br>
-                <input type="text" name="newName" value="{{ thePipeline.Name}}" maxlength="100">
+                <input type="text" name="newName" id="newName" value="{{ thePipeline.Name}}" maxlength="100">
             </div>
             <!-- <button class="aButton b3 right roundBorder yesPadding" type="submit">
                 Change name
@@ -89,8 +90,8 @@
         </div>
         <div class="yesMargin objectLine object2">
             <div>
-                <label for="newName">New pipeline's name:</label> <br>
-                <input type="text" name="newName" value="{{newName}}">
+                <label>New pipeline's name:</label> <br>
+                <input type="text" name="pep" value="{{newName}}">
             </div>
 
             <div id="errPipeSection" class="textLeft right objectLine">|
@@ -112,6 +113,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
     var numPipe = '{{ numPipe }}';
+    // var hasAlgorithm = parseInt('{{ thePipeline.hasAlgorithm }}');
   </script>
 <!-- <script type="text/javascript"> -->
 

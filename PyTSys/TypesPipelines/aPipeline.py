@@ -33,12 +33,12 @@ class aPipeline(ABC):
             return position
 
     def delStep(self, position = None):
-        if  position is None or position < 0 or len(self.steps()) < position :
+        if  position is None or position < 0 or len(self.steps()) < position or position == self.hasAlgorithm:
             return False
         else:
+            if position < self.hasAlgorithm:
+                self.hasAlgorithm = self.hasAlgorithm- 1
             self.steps().pop(position)
-            if position == self.hasAlgorithm:
-                self.hasAlgorithm = None
             return len(self.steps())
         
     def moveStep(self, fromPosition, toPosition):
@@ -47,13 +47,13 @@ class aPipeline(ABC):
             fromPosition == toPosition):
             return False
         else:
+            if fromPosition == self.hasAlgorithm:
+                self.hasAlgorithm = toPosition
+            elif toPosition == self.hasAlgorithm:
+                self.hasAlgorithm = fromPosition
             movStep = self.steps()[fromPosition]
             self.steps().pop(fromPosition)
             self.steps().insert(toPosition, movStep)
-            if fromPosition == self.hasAlgorithm:
-                self.hasAlgorithm = toPosition
-            if toPosition == self.hasAlgorithm:
-                self.hasAlgorithm = fromPosition
             return True
 
     ## Operations with the Pipeline's Algorithm
