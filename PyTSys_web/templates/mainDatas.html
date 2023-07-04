@@ -14,12 +14,68 @@
         &#8617; Back Home</button>
     <h1>Manage Datas Menu</h1>
 </div>
-<div class="textContent">
-    <p>
-        Aqui la ayuda, hola sean {{Name}}
-    </p>
+
+<div class="allExpand">
+    <div class="textContent">
+        <div class=" allExpand  textLeft">
+            <span> Total Datas: {{ Datas|length }} </span>
+            {% if Datas|length == 0 %}
+        </div>
+        <span> Is seems there are no datas </span>
+        </br>
+        <button class="aButton b3 s18 roundBorder yesPadding yesMargin"
+            onclick="window.location.href='/datas/new/'">
+            <i class="fa-solid fa-plus"></i>
+            <strong>Create your first new data</strong>
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
 </div>
-{% include "static/mainButtons.html" %}
+            {% else %}
+            <button class="aButton b3 right" onclick="window.location.href='/datas/new/'">
+                <strong>Create a new data</strong>
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <table id="" class="fixTable textCenter">
+            <thead>
+                <tr class="s20">
+                    <th class="minCol cell110">Nº</th>
+                    <th class="minLargeCol cell12">Name</th>
+                    <th class="minMediumCol cell12">Columns</th>
+                    <th class="minSmallCol cell25">Rows</th>
+                    <th class="cell110 minSmallCol finalHeaderCell">Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aData in Datas %}
+                <tr>
+                    <td class="minCol cell110">{{loop.index0}}</td>
+                    <td class="minLargeCol cell12">
+                        <div class="">{{ aData.Name }}</div>
+                    </td>
+                    <td class="minMediumCol cell12">
+                        <!-- <div class="minMediumCol cell13"> -->
+                        {{ aData.getNameCols() }}
+                        <!-- </div> -->
+                    </td>
+                    <td class="minSmallCol cell25">
+                        {{aData.Data.index|length}}
+                    </td>
+                    <td class="minSmallCol cell110">
+                        <!-- <div class="minSmallCol"> -->
+                            <a href="get{{loop.index0}}/">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        <!-- </div> -->
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
 
 {% endblock %}
 

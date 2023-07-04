@@ -107,6 +107,10 @@ tr:hover td {
     /* padding-right: 18px; */
 }
 
+.dataframe {
+    display: table;
+    min-width: none;
+}
 
 .cell1 {
     width: 100%

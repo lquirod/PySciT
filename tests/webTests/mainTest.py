@@ -30,16 +30,16 @@ if __name__ == '__main__':
 
 
 
-@app.route("/process")
-def process():
-    obj = process_obj()
-    registrar.add("some-unique-id", obj)
-    return render_template("results.html", id="some-unique-id")
+# @app.route("/process")
+# def process():
+#     obj = process_obj()
+#     registrar.add("some-unique-id", obj)
+#     return render_template("results.html", id="some-unique-id")
 
-@app.route("/kill")
-def kill():
-    id = request.args.get("id")
-    x = registrar.get(id)
-    x.close()
-    registrar.remove(id)
-    return render_template("killed.html")
+# @app.route("/kill")
+# def kill():
+#     id = request.args.get("id")
+#     x = registrar.get(id)
+#     x.close()
+#     registrar.remove(id)
+#     return render_template("killed.html")

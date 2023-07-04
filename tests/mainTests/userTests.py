@@ -1,6 +1,6 @@
-import clases.UserActions as user
-from clases.MoreFunctions import *
-import clases.ManageTransformations as mo
+import PyTSys.UserActions as user
+from PyTSys.MoreFunctions import *
+import PyTSys.ManageItems.ManageTransformations as mo
 
 # filename = askFileLocation()
 # print("This filename is in: \""+filename+"\" path")
