@@ -20,7 +20,7 @@ table {
     /* font-family: arial, sans-serif; */
     border-collapse: collapse;
     width: 100%;
-    min-width: 300px;
+    min-width: 250px;
     /* margin-top: 5px; */
     margin: 0px;
     background-color: #e3f1fd;
@@ -30,6 +30,15 @@ table {
     /* min-height: 360px; */
     /* max-height: calc(100vh - 230px); */
     text-align: center;
+}
+
+.smallTable tbody {
+    display: block;
+    overflow: auto;
+    max-height: calc(80vh);
+    width: 100%;
+    min-height: 150px;
+
 }
 
 table div {
@@ -47,7 +56,7 @@ th {
     overflow: auto;
     max-height: calc(100vh - 270px);
     width: 100%;
-    /* min-height: 325px; */
+    min-height: 250px;
 
 }
 

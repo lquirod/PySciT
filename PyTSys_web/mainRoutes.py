@@ -19,51 +19,51 @@ def mainData():
 
 @app.route('/datas/new/',  methods=["GET", "POST"])
 def addAData():
-    name = ''
+    err = []    
+    if request.method == 'POST':
+        print('inside')
+        checkCols = 'checkCols' in request.form
+        theFile = request.files.get('loadFile')
+        return addADataLoad(theFile, checkCols)
+
+    return render_template("createData.html", loaded = False, errors = err)
+
+@app.route('/datas/new/load/',  methods=["GET", "POST"])
+def addADataLoad(theFile = None, checkCols = True):
+    if theFile is None:
+        redirect(url_for('addAData'))
+    if checkCols:
+        checkCols = 0
+    else:
+        checkCols = None
+
     err = []
-    previewData = None
-    loadNameFile=None
-    # if request.method == 'GET':
+    print('there')
+    
+    # name = request.form['newName']
+    # theFile = request.files.get('loadFile')
+    previewData = pd.read_csv(theFile, header=checkCols)
+    # loadNameFile = request.form['loadFile']
+    # theFile = request.files.get('loadFile')
+    loadNameFile = theFile.filename
+    # previewData = pd.read_csv(loadNameFile)
+    # alg = request.form['selectAlg']
+    # return redirect(url_for('success',name = user))
+    # err =['nombre es '+name,
+    #     'alg es '+alg
+    # ]
+    # newPipe = mAlg.getAlgorithmPipe(alg, name)
+    # if request.method == 'POST':
     #     name = request.form['newName']
     #     # loadNameFile = request.form['loadFile']
-    #     loadNameFile = request.files.get('loadFile')
-    #     previewData = pd.read_csv(loadNameFile)
+    #     # loadNameFile = request.files.get('loadFile')
+    #     # previewData = pd.read_csv(loadNameFile)
     #     # mimetype = loadNameFile.content_type
 
-    
-    if request.method == 'POST':
-        name = request.form['newName']
-        # alg = request.form['selectAlg']
-        # return redirect(url_for('success',name = user))
-        # err =['nombre es '+name,
-        #     'alg es '+alg
-        # ]
-        # newPipe = mAlg.getAlgorithmPipe(alg, name)
-        newPipe = str(myUser.addPipeline(mAlg.getAlgorithmPipe(alg, name))-1)
-        addLog("Created pipeline "+newPipe+", "+alg+": "+name)
-        return redirect(url_for('theDataPage',numberPipeline = newPipe))
+    # else:
+    #     return redirect(url_for('addAData'))
 
-    return render_template("createData.html", previewData = previewData, loadNameFile = loadNameFile, newName = name, errors = err)
-
-@app.route('/datas/new/load',  methods=["GET", "POST"])
-def addADataLoad():
-    name = ''
-    err = []
-    previewData = None
-    loadNameFile=None
-
-    
-    if request.method == 'POST':
-        name = request.form['newName']
-        # loadNameFile = request.form['loadFile']
-        loadNameFile = request.files.get('loadFile')
-        previewData = pd.read_csv(loadNameFile)
-        # mimetype = loadNameFile.content_type
-
-    else:
-        return redirect(url_for('addAData'))
-
-    return render_template("createData.html", previewData = previewData, loadNameFile = loadNameFile, newName = name, errors = err)
+    return render_template("createData.html", loaded = True, previewData = previewData, newName = loadNameFile, errors = err)
 
 
 @app.route('/datas/get<numberData>/',  methods=["GET", "POST"])
@@ -97,11 +97,6 @@ def addAPipeline():
     if request.method == 'POST':
         name = request.form['newName']
         alg = request.form['selectAlg']
-        # return redirect(url_for('success',name = user))
-        # err =['nombre es '+name,
-        #     'alg es '+alg
-        # ]
-        # newPipe = mAlg.getAlgorithmPipe(alg, name)
         newPipe = str(myUser.addPipeline(mAlg.getAlgorithmPipe(alg, name))-1)
         addLog("Created pipeline "+newPipe+", "+alg+": "+name)
         return redirect(url_for('thePipelinePage',numberPipeline = newPipe))

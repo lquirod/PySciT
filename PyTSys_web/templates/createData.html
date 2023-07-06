@@ -21,66 +21,78 @@
     <h1>Create a new Data</h1>
 </div>
 <div class="allExpand">
-    <form action="/datas/new/" method="post" class="aform">
-        <div class=" objectLine alingTop object23 textLeft">
-            <span> Total Pipelines Types: {{ allALG|length }} </span>
-            <table id="" class="fixTable textCenter">
-                <thead>
-                    <tr class="s20">
-                        <th class="cell1">Algorithms</th>
-                        <th class="minSmallCol finalHeaderCell">Select</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for anAlg in allALG %}
-                    <tr>
-                        <!-- <td class="minCol cell110">{{loop.index0}}</td> -->
-                        <td class="cell1  textCenter">{{ anAlg }}</td>
-                        <td class="minSmallCol">
-                            <input type="radio" value="{{anAlg}}" name="selectAlg" required />
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="yesMargin objectLine alingTop object3 textLeft">
-            <div>
+    <!-- <span> Total Pipelines Types: {{ allALG|length }} </span> -->
+    <div>
 
-                <form method="POST" enctype="multipart/form-data" action="/datas/new/load/">
-                    <label for="loadFile">Load file:</label> <br>
-                    <input type="file" id="loadFile" name="loadFile" accept=".csv">>
-                    <input type="submit" value="Upload file">
-                </form>
+        <form method="POST" enctype="multipart/form-data" action="/datas/new/">
+            <label for="loadFile">File:</label>
+            <input required type="file" id="loadFile" name="loadFile" accept=".csv">
+            <button type="submit" class="aButton b4">Load</button>
+            <label class="pointer" for="checkCols">
+                <input checked class="" type="checkbox" id="checkCols" name="checkCols" />
+                Data have name columns
+            </label>
+        </form>
 
+        <form action="/datas/new/load" method="post" class="aform">
+            <div class=" objectLine alingTop object23 textLeft">
+                {% if loaded and (previewData.index|length) != 0 %}
+                <table id="" class="fixTable textCenter">
+                    <thead>
+                        <tr class="s20">
+                            <th class="cell1">Algorithms</th>
+                            <th class="minSmallCol finalHeaderCell">Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i, j in previewData.iterrows() %}
+                        <tr>
+                            <td class="minCol cell110">{{loop.index0}}</td>
+                <td class="cell1  textCenter">{{ anAlg }}</td>
+                            <td class="minSmallCol">
+                                <input type="radio" value="{{anAlg}}" name="selectAlg" required />
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+
+
+
+
+                {% else %}
+                Load a file first: .csv
+                {% endif %}
             </div>
-            </br>
-            <div>
-                <label for="newName">New data's name:</label> <br>
-                <input type="text" name="newName" value="{{newName}}">
+            {% if loaded %}
+            <div class="yesMargin objectLine alingTop object3 textLeft">
+                <div>
+                    <label for="newName">New data's name:</label> <br>
+                    <input type="text" name="newName" id="newName" value="{{newName}}">
+                </div>
+      
             </div>
-            <div>
-                <label class="pointer" for="checkCols">
-                    <input class="" type="checkbox" onchange="checkBlock(this)" id="checkCols" name="checkCols"/>
-                    Data have name columns
-                </label>
-            </br>
-            </div>
+            {% endif %}
 
             <div class="err">
                 {% if errors %}
                 <p> Error adding a new Data:
-                    {% for e in errors %}
+                    {% for e in º %}
                     <br>- {{e}}
                     {% endfor %}
                 </p>
                 {% endif %}
             </div>
+            {% if loaded %}
             <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
                 Create data
             </button>
-        </div>
+            {% endif %}
+    </div>
     </form>
+</div>
 </div>
 
 

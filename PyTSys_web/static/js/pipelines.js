@@ -70,7 +70,7 @@ function moveupName(arg) {
 }
 
 function applyChangesStep(op, arg) {
-    var msg = "En applyChanges, op: " + op + " y arg: " + arg + " / "
+    // var msg = "En applyChanges, op: " + op + " y arg: " + arg + " / "
     if (op === "MOVUP" || op === "MOVDOWN") {
         if (op.valueOf() == "MOVUP") {
             var from = arg.toString();
@@ -87,28 +87,6 @@ function applyChangesStep(op, arg) {
         switchAlg(from, to);
     }
     else if (op == 'DEL') {
-        // // text.textContent = 'DEL';
-        // var rowDel = document.getElementById("TR-" + arg);
-        // var parent = rowDel.parentNode;
-        // var total = parent.childElementCount;
-        // if (rowDel != parent.lastElementChild) {
-        //     var i;
-        //     for (i = (parseInt(arg) + 1); i < (total - 1); i++) {
-        //         moveupName(i)
-        //     }
-        //     rowDel = parent.childNodes.item(i);
-        // } else {
-        //     // text.textContent = 'else';
-        //     rowDel = parent.childNodes.item(parseInt(arg) - 1);
-        // }
-        // text.textContent = Array.from(rowDel.parentNode.children).indexOf(rowDel)
-        // // rowDel.remove();
-        // // text.textContent = i+'<- i and '+(parent.childElementCount-1);
-        // // var newNum = 
-        // // parent.lastElementChild.id = 'TR-';
-        // // parent.lastElementChild.onclick = function () { Foo(param); };
-        // // document.getElementById("a").onclick = function () { Foo(param); };
-
         location.reload();
     }
     else {
@@ -128,6 +106,37 @@ function operateStep(operation, arg) {
             data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
             contentType: 'application/json',
             url: '/operate/pipeline/' + numPipe + '/steps/',
+            type: 'post',
+            beforeSend: function () {
+                toggleModify();
+                text.textContent = 'Operating, wait please...';
+            },
+            success: function (ret) {
+                if (ret.response) {
+                    text.textContent = '';
+                    applyChangesStep(operation, arg);
+                } else {
+                    text.textContent = ret.err;
+                }
+                toggleModify();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toggleModify();
+                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+            }
+        });
+    }
+}
+function operatePipeline(operation, arg) {
+    // window.alert(operation+", "+arg)
+    if (modify == true) {
+        if( operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines "+numPipe+"?"))) 
+
+        $.ajax({
+            // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
+            data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
+            contentType: 'application/json',
+            url: '/operate/pipeline/' + numPipe + '/operate/',
             type: 'post',
             beforeSend: function () {
                 toggleModify();

@@ -54,7 +54,7 @@ class LinearRegressionPipe(aPipeline.aPipeline):
         self.aPipeline.fit(x, y)
     
     # @abstractmethod
-    def execute(self, X):
+    def predict(self, X):
         if self.hasAlgorithm is None:
             return None
         else:

@@ -77,7 +77,7 @@ class aPipeline(ABC):
         pass
     
     @abstractmethod
-    def execute(self, data):
+    def predict(self, data):
         pass
         
     @abstractmethod

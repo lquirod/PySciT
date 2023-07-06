@@ -21,11 +21,11 @@
     <h1>Pipeline {{numPipe}}: {{thePipeline.Name}}</h1>
 </div>
 <div class="aform allExpand">
-<!-- <form action="/pipelines/new/" method="post" class="aform allExpand"> -->
+    <!-- <form action="/pipelines/new/" method="post" class="aform allExpand"> -->
     <div class=" objectLine alingTop yes yesMargin">
         <div class=" allExpand  textLeft">
             <span> Total Steps: {{ thePipeline.steps()|length }} </span>
-    
+
             <div class="objectLine right">
                 <!-- <span class="err"> Steps changed! </span> -->
                 <button id="toggleModify" class="aButton b4 right" onclick="toggleModify()">
@@ -46,22 +46,22 @@
                 {% for aStep in thePipeline.steps() %}
                 {% if loop.index0==thePipeline.hasAlgorithm %}
                 <tr id="TR-{{loop.index0}}" class="boldText">
-                {% else %}
+                    {% else %}
                 <tr id="TR-{{loop.index0}}">
-                {% endif %}
-
+                    {% endif %}
                     <td class="minCol cell110">{{loop.index0}}</td>
                     <td id="COL-{{loop.index0}}" class="cell1 textCenter">
-                        {{loop.index0}}
                         {{ aStep[0] }}</td>
                     <td name="movStep" class="Darker minSmallCol">
                         {% if loop.index0 != 0 %}
-                        <span onclick="operateStep('MOVUP', '{{loop.index0}}' )" id="'MoveUp{{loop.index0}}" class="pointer">
+                        <span onclick="operateStep('MOVUP', '{{loop.index0}}' )" id="'MoveUp{{loop.index0}}"
+                            class="pointer">
                             &#8657;
                         </span> |
                         {% endif %}
                         {% if loop.index != ( thePipeline.steps()|length ) %} |
-                        <span onclick="operateStep('MOVDOWN', '{{loop.index0}}' )" id="'MoveDown{{loop.index0}}" class="pointer">
+                        <span onclick="operateStep('MOVDOWN', '{{loop.index0}}' )" id="'MoveDown{{loop.index0}}"
+                            class="pointer">
                             &#8659;
                         </span>
                         {% endif %}
@@ -77,29 +77,90 @@
         </table>
     </div>
     <div class="yesMargin objectLine alingTop textLeft">
-        <div class="yesMargin objectLine object2">
-            <div>
-                <label for="newName">Pipeline's name:</label> <br>
-                <input type="text" name="newName" id="newName" value="{{ thePipeline.Name}}" maxlength="100">
-            </div>
-            <button class="aButton b3 right roundBorder yesPadding">
+        <div class="yesMargin">
+            <label for="newName">Pipeline's name:</label> <br>
+            <input type="text" name="newName" id="newName" value="{{ thePipeline.Name}}" maxlength="100">
+            <button class="aButton b3  roundBorder yesPadding">
                 Change name
             </button>
-            <div class="err" id="errPipeSection">
-            </div>
         </div>
         <div class="yesMargin objectLine object2">
-            <div>
-                <label>New pipeline's name:</label> <br>
-                <input type="text" name="pep" value="{{newName}}">
+            <div class="err" id="errPipeSection">
             </div>
-
-            <div id="errPipeSection" class="textLeft right objectLine">|
-                <span onclick="toggleSection('SideLog')" id="buttonSideLog" class="pointer">Log view (Hidden)</span>
+            <div class="objectLine">
+                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                    Save Setup
+                </button>
+                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                    Add Step
+                </button>
+                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                    Get parameters
+                </button>
+                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                    Set parameters
+                </button>
+                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                    Fit
+                </button>
+                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                    Transform
+                </button>
+                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                    Score
+                </button>
             </div>
-            <!-- <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
-                Create pipeline
-            </button> -->
+            <button class="right aButton b1 s16 yesPadding yesMargin object2">
+                Delete pipeline
+            </button>
+        </div>
+        <div class="yesMargin objectLine object2">
+            <table id="" class="textCenter smallTable">
+                <thead>
+                    <tr class="s20">
+                        <th class="cell1">Other operations</th>
+                        <th class="cell13"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -114,7 +175,7 @@
 <script>
     var numPipe = '{{ numPipe }}';
     // var hasAlgorithm = parseInt('{{ thePipeline.hasAlgorithm }}');
-  </script>
+</script>
 <!-- <script type="text/javascript"> -->
 
 {% endblock %}
