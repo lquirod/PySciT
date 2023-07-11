@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // window.alert( sessionStorage.getItem("BlockLog"))
     if (sessionStorage.getItem("BlockLog")) {
         // window.alert("A true!!")
-        toggleSection('SideLog')
+        toggleLogSection()
         document.getElementById('checkLog').checked = true;
     }
 }, false);
@@ -24,10 +24,9 @@ function checkBlock(element) {
     }
     // window.alert( sessionStorage.getItem("BlockLog"))
 }
-
 /*  ---- Log toggle button ---- */
-function toggleSection(section) {
-    var section = document.getElementById(section);
+function toggleLogSection() {
+    var section = document.getElementById('SideLog');
     var text = document.getElementById('buttonSideLog');
     if (section.classList.contains('hidden')) {
         section.classList.remove('hidden');
@@ -47,3 +46,12 @@ function toggleSection(section) {
         text.textContent = 'Log view (Hidden)';
     }
 }
+/*  ---- Add log ---- */
+function addViewLog(text) {
+    var theLog = document.getElementById('LogView');
+    var addlog = document.createElement('p');
+    addlog.innerHTML = text;
+    // window.alert(text)
+    theLog.appendChild(addlog);
+}
+

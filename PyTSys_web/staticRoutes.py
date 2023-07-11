@@ -9,6 +9,7 @@ def addLog(msg):
     date = datetime.now().strftime("%m/%d/%Y-%H:%M: ")
     newLog = "<span class=\"boldText\">"+ date + "</span></br>" + msg
     logs.insert(0, Markup(newLog))
+    return newLog
 
 @app.context_processor
 def logFuction():

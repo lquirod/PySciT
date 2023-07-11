@@ -5,19 +5,46 @@ from PyTSys_web.mainRoutes import *
 
     # addLog("Created pipeline "+newPipe+", "+alg+": "+name)
 
-@app.route('/operate/pipeline/<numberPipeline>/steps/',  methods=["GET", "POST"])
-def operatePipelineStep(numberPipeline=None):
-    print (request.method )
+
+@app.route('/operate/pipeline/<numberPipeline>/name/',  methods=["GET", "POST"])
+def operatePipelineNewName(numberPipeline=None):
     if request.method == 'POST':
+        nlog = ''
         total = len(myUser.myPipelines)
         try:
             nPipe = int(numberPipeline)
             if total == 0 or nPipe < 0 and total < nPipe :
-                ret = {'response': False, 'err': 'Not valid pipeline to operate'}
+                ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
                 return jsonify(ret)
 
         except Exception:
-            ret = {'response': False, 'err': 'Not valid pipeline to operate'}
+            ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
+            return jsonify(ret)
+
+        newName = request.json.get('newName')
+        myUser.myPipelines[nPipe].Name = newName
+        nlog = addLog('Renamed Pipe '+str(nPipe)+' to '+newName)
+        ret = {'response': True, 'err': 'Operation denied', 'newLog': nlog}
+        return jsonify(ret)
+    
+    else:
+        return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
+
+
+@app.route('/operate/pipeline/<numberPipeline>/steps/',  methods=["GET", "POST"])
+def operatePipelineStep(numberPipeline=None):
+    # print (request.method )
+    if request.method == 'POST':
+        nlog = ''
+        total = len(myUser.myPipelines)
+        try:
+            nPipe = int(numberPipeline)
+            if total == 0 or nPipe < 0 and total < nPipe :
+                ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
+                return jsonify(ret)
+
+        except Exception:
+            ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
             return jsonify(ret)
 
         op = request.json.get('op')
@@ -29,16 +56,16 @@ def operatePipelineStep(numberPipeline=None):
         elif op == 'DEL':
             response = myUser.delStep(arg, nPipe)
         else:
-            ret = {'response': False, 'err': 'Operation not found'}
-            addLog('Error: '+op+' failed')
+            nlog = addLog('Error: '+op+' failed')
+            ret = {'response': False, 'err': 'Operation not found', 'newLog': nlog}
             return jsonify(ret)
 
         if response:
-            addLog(op+' Pipe '+str(nPipe)+' step '+str(arg))
+            nlog = addLog(op+' Pipe '+str(nPipe)+' step '+str(arg))
         else:
-            addLog('Error, denied operation: '+op+' Pipe '+str(nPipe)+' step '+str(arg))
+            nlog = addLog('Error, denied operation: '+op+' Pipe '+str(nPipe)+' step '+str(arg))
 
-        ret = {'response': response, 'err': 'Operation denied'}
+        ret = {'response': response, 'err': 'Operation denied', 'newLog': nlog}
         return jsonify(ret)
     
     else:

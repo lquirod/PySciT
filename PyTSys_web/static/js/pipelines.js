@@ -47,6 +47,36 @@ function toggleModify() {
     }
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Pipeline operations ---- */
+function changeNamePipeline() {
+    newName = document.getElementById('newName').value.trim()
+    if (newName != '') {
+        $.ajax({
+            data: JSON.stringify({ newName: newName }),
+            contentType: 'application/json',
+            url: '/operate/pipeline/' + numPipe + '/name/',
+            type: 'post',
+            beforeSend: function () {
+                text.textContent = 'Renaming pipeline...';
+            },
+            success: function (ret) {
+                if (ret.response) {
+                    text.textContent = '';
+                    document.getElementById('thePipeName').textContent = newName
+                } else {
+                    text.textContent = ret.err;
+                }
+                addViewLog(ret.newLog);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toggleModify();
+                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+            }
+        });
+    }else{
+        text.textContent = "The new name can't be empty";
+    }
+}
 /*  ---- Step operations ---- */
 function switchAlg(from, to) {
     var fromTR = document.getElementById("TR-" + from);
@@ -131,7 +161,6 @@ function operatePipeline(operation, arg) {
     // window.alert(operation+", "+arg)
     if (modify == true) {
         if( operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines "+numPipe+"?"))) 
-
         $.ajax({
             // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
             data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
@@ -149,6 +178,7 @@ function operatePipeline(operation, arg) {
                 } else {
                     text.textContent = ret.err;
                 }
+                addViewLog(ret.newLog);
                 toggleModify();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

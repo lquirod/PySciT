@@ -18,7 +18,7 @@
             </div>
         </div>
     </button>
-    <h1>Pipeline {{numPipe}}: {{thePipeline.Name}}</h1>
+    <h1>Pipeline {{numPipe}}: <span id="thePipeName">{{thePipeline.Name}}</span></h1>
 </div>
 <div class="aform allExpand">
     <!-- <form action="/pipelines/new/" method="post" class="aform allExpand"> -->
@@ -76,17 +76,17 @@
             </tbody>
         </table>
     </div>
+    <div class="yesMargin objectLine">
+        <label for="newName">Pipeline's name:</label> <br>
+        <input type="text" name="newName" id="newName" value="{{ thePipeline.Name}}" maxlength="100">
+        <button class="aButton b3  roundBorder yesPadding">
+            Change name
+        </button>
+    </div>
+    <div class="err" id="errPipeSection">
+    </div>
     <div class="yesMargin objectLine alingTop textLeft">
-        <div class="yesMargin">
-            <label for="newName">Pipeline's name:</label> <br>
-            <input type="text" name="newName" id="newName" value="{{ thePipeline.Name}}" maxlength="100">
-            <button class="aButton b3  roundBorder yesPadding">
-                Change name
-            </button>
-        </div>
         <div class="yesMargin objectLine object2">
-            <div class="err" id="errPipeSection">
-            </div>
             <div class="objectLine">
                 <button class="aButton b4 s16 yesPadding yesMargin object2">
                     Save Setup
