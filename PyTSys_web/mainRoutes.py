@@ -3,6 +3,15 @@ from PyTSys_web import app
 from PyTSys_web.mainWeb import *
 from PyTSys_web.staticRoutes import *
 
+# if __name__ == "__main__":
+#     from waitress import serve
+#     serve(app, host="0.0.0.0", port=8080)
+# Now you can start your production-ready server with python app.py.
+
+# shell
+# python app.py
+# The server will be accessible at http://localhost:8080.
+
 @app.route('/')
 @app.route('/home/')
 def homePage():
