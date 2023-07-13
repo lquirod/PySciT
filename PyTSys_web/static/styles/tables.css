@@ -42,7 +42,7 @@ table {
 }
 
 table div {
-    max-height: 85px;
+    max-height: 60px;
     overflow: auto;
 }
 
@@ -64,6 +64,11 @@ th {
     /* display: block; */
     display: table-row;
     /* display:table-header-group; */
+}
+
+.tableEditCols th,
+.tableEditCols tr{
+    min-width: 200px;
 }
 
 

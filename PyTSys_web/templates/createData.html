@@ -40,14 +40,13 @@
 
                 {% for i in theData.columns %}
                 {% endfor %}
-
-                <table id="" class="fixTable textCenter">
+                <table id="" class="textCenter tableEditCols">
                     <thead>
                         <tr class="">
                             {% for nameCol in theData.columns %}
                             <th class="">
                                 <div class="objectLine">
-                                    <input checked class="" type="checkbox" name="checkColss" />
+                                    <input checked class="" type="checkbox" name="checkColss" onchange="checkSaveColumn(this, '{{loop.index0}}')" />
                                     <input required class="rowInput" type="text" name="reNameCol" value="{{nameCol}}"
                                         maxlength="40">
                                 </div>
@@ -59,23 +58,12 @@
                         {% for iRow in range(0, maxLen) %}
                         <tr>
                             {% for aDat in theData.iloc[iRow] %}
-                            <!-- <td class="minCol cell110">{{loop.index0}}</td> -->
                             <td class="">{{ aDat }}</td>
-                            <!-- <td class="cell1  textCenter">{{ anAlg }}</td> -->
-                            <!-- <td class="minSmallCol">
-                                <input type="radio" value="{{anAlg}}" name="selectAlg" required />
-                            </td> -->
                             {% endfor %}
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-
-
-
-
-
-
                 {% else %}
                 Load a file first: .csv
                 {% endif %}
@@ -83,10 +71,19 @@
             <div class="yesMargin objectLine alingTop object3 aform textLeft">
                 {% if loaded %}
                 <div>
-                    <label for="newName">New data's name:</label> <br>
-                    <input type="text" name="newName" id="newName" value="{{newName}}">
-                </div>
+                    <p>Preview file {{newName}}:
+                        <ul>
+                            <li>{{maxLen}} rows (of {{theData.index|length}})</li>
+                            <li>{{theData.columns|length}} columns</li>
+                            </ul>
+                    </p>
+                    <div>
+                        <label for="newName">New data's name:</label> <br>
+                        <input type="text" name="newName" id="newName" value="{{newName}}">
+                    </div>
 
+                    <p>Select and rename the columns you want to save.</p>
+                </div>
                 {% endif %}
 
                 <div class="err">
@@ -113,6 +110,8 @@
 {% endblock %}
 
 {% block funcionesJS %}
+<script src="{{url_for('static', filename='js/datas.js')}}" defer>
+</script>
 <!-- <script src="js/basic.js" defer></script>
   <script src="js/busqueda.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->

@@ -55,7 +55,7 @@ def addADataLoad(theFile = None, checkHasCols = True):
     theData = pd.read_csv(theFile, header=checkHasCols)
     if theData.empty:
         return render_template("createData.html", loaded = False, errors = 'The data file is empty')
-    maxLen = min(50, len(df. index))
+    maxLen = min(25, len(theData.index))
     # loadNameFile = request.form['loadFile']
     # theFile = request.files.get('loadFile')
     loadNameFile = theFile.filename
