@@ -116,6 +116,22 @@ tr:hover td {
     /* padding-right: 18px; */
 }
 
+.rowInput,
+.rowInput input[type="text"]{
+    width:     150px;
+    max-width: 150px;
+    min-width: 150px;
+    
+
+    font: 20px;
+    /* min-width: 200px; */
+    box-sizing: border-box;
+    border: 1px solid #1d3785;
+    background-color: rgb(247, 255, 255);
+    /* margin-bottom: 20px;
+    border-radius: 5px; */
+}
+
 .dataframe {
     display: table;
     min-width: none;

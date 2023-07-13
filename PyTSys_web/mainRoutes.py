@@ -15,7 +15,7 @@ from PyTSys_web.staticRoutes import *
 @app.route('/')
 @app.route('/home/')
 def homePage():
-    return render_template("home.html", Name = myUser.Name)
+    return render_template("home.html", Name = myUser.Name, numPipes = len(myUser.myPipelines), numDatas = len(myUser.myDatas))
 
 @app.route('/ConfigurationList/', methods=["GET", "POST"])
 def List():
@@ -30,28 +30,32 @@ def mainData():
 def addAData():
     err = []    
     if request.method == 'POST':
-        print('inside')
-        checkCols = 'checkCols' in request.form
+        if request.form.get('checkHasCols'):
+            checkHasCols = True
+        else:
+            checkHasCols = False
         theFile = request.files.get('loadFile')
-        return addADataLoad(theFile, checkCols)
+        return addADataLoad(theFile, checkHasCols)
 
     return render_template("createData.html", loaded = False, errors = err)
 
 @app.route('/datas/new/load/',  methods=["GET", "POST"])
-def addADataLoad(theFile = None, checkCols = True):
+def addADataLoad(theFile = None, checkHasCols = True):
     if theFile is None:
         redirect(url_for('addAData'))
-    if checkCols:
-        checkCols = 0
+    if checkHasCols:
+        checkHasCols = 0
     else:
-        checkCols = None
+        checkHasCols = None
 
     err = []
-    print('there')
     
     # name = request.form['newName']
     # theFile = request.files.get('loadFile')
-    previewData = pd.read_csv(theFile, header=checkCols)
+    theData = pd.read_csv(theFile, header=checkHasCols)
+    if theData.empty:
+        return render_template("createData.html", loaded = False, errors = 'The data file is empty')
+    maxLen = min(50, len(df. index))
     # loadNameFile = request.form['loadFile']
     # theFile = request.files.get('loadFile')
     loadNameFile = theFile.filename
@@ -72,7 +76,7 @@ def addADataLoad(theFile = None, checkCols = True):
     # else:
     #     return redirect(url_for('addAData'))
 
-    return render_template("createData.html", loaded = True, previewData = previewData, newName = loadNameFile, errors = err)
+    return render_template("createData.html", loaded = True, theData = theData, newName = loadNameFile, maxLen = maxLen, errors = err)
 
 
 @app.route('/datas/get<numberData>/',  methods=["GET", "POST"])

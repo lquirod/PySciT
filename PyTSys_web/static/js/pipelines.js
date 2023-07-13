@@ -50,7 +50,8 @@ function toggleModify() {
 /*  ---- Pipeline operations ---- */
 function changeNamePipeline() {
     newName = document.getElementById('newName').value.trim()
-    if (newName != '') {
+    window.alert("Hey "+newName)
+    if (newName != '' && newName != document.getElementById('thePipeName').innerHTML.trim()) {
         $.ajax({
             data: JSON.stringify({ newName: newName }),
             contentType: 'application/json',
@@ -73,7 +74,7 @@ function changeNamePipeline() {
                 text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
             }
         });
-    }else{
+    } else {
         text.textContent = "The new name can't be empty";
     }
 }
@@ -129,62 +130,62 @@ function applyChangesStep(op, arg) {
 function operateStep(operation, arg) {
     // window.alert(operation+", "+arg)
     if (modify == true) {
-        if( operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete step "+arg+"?"))) 
+        if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete step " + arg + "?")))
 
-        $.ajax({
-            // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
-            data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
-            contentType: 'application/json',
-            url: '/operate/pipeline/' + numPipe + '/steps/',
-            type: 'post',
-            beforeSend: function () {
-                toggleModify();
-                text.textContent = 'Operating, wait please...';
-            },
-            success: function (ret) {
-                if (ret.response) {
-                    text.textContent = '';
-                    applyChangesStep(operation, arg);
-                } else {
-                    text.textContent = ret.err;
+            $.ajax({
+                // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
+                data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
+                contentType: 'application/json',
+                url: '/operate/pipeline/' + numPipe + '/steps/',
+                type: 'post',
+                beforeSend: function () {
+                    toggleModify();
+                    text.textContent = 'Operating, wait please...';
+                },
+                success: function (ret) {
+                    if (ret.response) {
+                        text.textContent = '';
+                        applyChangesStep(operation, arg);
+                    } else {
+                        text.textContent = ret.err;
+                    }
+                    toggleModify();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    toggleModify();
+                    text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
                 }
-                toggleModify();
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toggleModify();
-                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
-            }
-        });
+            });
     }
 }
 function operatePipeline(operation, arg) {
     // window.alert(operation+", "+arg)
     if (modify == true) {
-        if( operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines "+numPipe+"?"))) 
-        $.ajax({
-            // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
-            data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
-            contentType: 'application/json',
-            url: '/operate/pipeline/' + numPipe + '/operate/',
-            type: 'post',
-            beforeSend: function () {
-                toggleModify();
-                text.textContent = 'Operating, wait please...';
-            },
-            success: function (ret) {
-                if (ret.response) {
-                    text.textContent = '';
-                    applyChangesStep(operation, arg);
-                } else {
-                    text.textContent = ret.err;
+        if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines " + numPipe + "?")))
+            $.ajax({
+                // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
+                data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
+                contentType: 'application/json',
+                url: '/operate/pipeline/' + numPipe + '/operate/',
+                type: 'post',
+                beforeSend: function () {
+                    toggleModify();
+                    text.textContent = 'Operating, wait please...';
+                },
+                success: function (ret) {
+                    if (ret.response) {
+                        text.textContent = '';
+                        applyChangesStep(operation, arg);
+                    } else {
+                        text.textContent = ret.err;
+                    }
+                    addViewLog(ret.newLog);
+                    toggleModify();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    toggleModify();
+                    text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
                 }
-                addViewLog(ret.newLog);
-                toggleModify();
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toggleModify();
-                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
-            }
-        });
+            });
     }
 }

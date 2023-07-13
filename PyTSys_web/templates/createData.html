@@ -28,30 +28,44 @@
             <label for="loadFile">File:</label>
             <input required type="file" id="loadFile" name="loadFile" accept=".csv">
             <button type="submit" class="aButton b4">Load</button>
-            <label class="pointer" for="checkCols">
-                <input checked class="" type="checkbox" id="checkCols" name="checkCols" />
+            <label class="pointer" for="checkHasCols">
+                <input checked class="" type="checkbox" id="checkHasCols" name="checkHasCols" />
                 Data have name columns
             </label>
         </form>
 
-        <form action="/datas/new/load" method="post" class="aform">
+        <form action="/datas/new/load" method="post" class="">
             <div class=" objectLine alingTop object23 textLeft">
-                {% if loaded and (previewData.index|length) != 0 %}
+                {% if loaded %}
+
+                {% for i in theData.columns %}
+                {% endfor %}
+
                 <table id="" class="fixTable textCenter">
                     <thead>
-                        <tr class="s20">
-                            <th class="cell1">Algorithms</th>
-                            <th class="minSmallCol finalHeaderCell">Select</th>
+                        <tr class="">
+                            {% for nameCol in theData.columns %}
+                            <th class="">
+                                <div class="objectLine">
+                                    <input checked class="" type="checkbox" name="checkColss" />
+                                    <input required class="rowInput" type="text" name="reNameCol" value="{{nameCol}}"
+                                        maxlength="40">
+                                </div>
+                            </th>
+                            {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i, j in previewData.iterrows() %}
+                        {% for iRow in range(0, maxLen) %}
                         <tr>
-                            <td class="minCol cell110">{{loop.index0}}</td>
-                <td class="cell1  textCenter">{{ anAlg }}</td>
-                            <td class="minSmallCol">
+                            {% for aDat in theData.iloc[iRow] %}
+                            <!-- <td class="minCol cell110">{{loop.index0}}</td> -->
+                            <td class="">{{ aDat }}</td>
+                            <!-- <td class="cell1  textCenter">{{ anAlg }}</td> -->
+                            <!-- <td class="minSmallCol">
                                 <input type="radio" value="{{anAlg}}" name="selectAlg" required />
-                            </td>
+                            </td> -->
+                            {% endfor %}
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -66,32 +80,32 @@
                 Load a file first: .csv
                 {% endif %}
             </div>
-            {% if loaded %}
-            <div class="yesMargin objectLine alingTop object3 textLeft">
+            <div class="yesMargin objectLine alingTop object3 aform textLeft">
+                {% if loaded %}
                 <div>
                     <label for="newName">New data's name:</label> <br>
                     <input type="text" name="newName" id="newName" value="{{newName}}">
                 </div>
-      
-            </div>
-            {% endif %}
 
-            <div class="err">
-                {% if errors %}
-                <p> Error adding a new Data:
-                    {% for e in º %}
-                    <br>- {{e}}
-                    {% endfor %}
-                </p>
+                {% endif %}
+
+                <div class="err">
+                    {% if errors %}
+                    <p> Error adding a new Data:
+                        {% for e in º %}
+                        <br>- {{e}}
+                        {% endfor %}
+                    </p>
+                    {% endif %}
+                </div>
+                {% if loaded %}
+                <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
+                    Create data
+                </button>
                 {% endif %}
             </div>
-            {% if loaded %}
-            <button class="aButton b2 s18 right roundBorder yesPadding" type="submit">
-                Create data
-            </button>
-            {% endif %}
+        </form>
     </div>
-    </form>
 </div>
 </div>
 
@@ -102,4 +116,7 @@
 <!-- <script src="js/basic.js" defer></script>
   <script src="js/busqueda.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script>
+    var theData = '{{ theData }}';
+</script>
 {% endblock %}
