@@ -41,42 +41,49 @@ def addAData():
 
 @app.route('/datas/new/load/',  methods=["GET", "POST"])
 def addADataLoad(theFile = None, checkHasCols = True):
-    if theFile is None:
-        redirect(url_for('addAData'))
-    if checkHasCols:
-        checkHasCols = 0
+    if request.method == 'POST':
+        print('f')
+        name = request.form['newName']
+
+        getChecks = request.form.get('checkCols')
+
+        
     else:
-        checkHasCols = None
+        if theFile is None:
+            redirect(url_for('addAData'))
+        if checkHasCols:
+            checkHasCols = 0
+        else:
+            checkHasCols = None
 
-    err = []
-    
-    # name = request.form['newName']
-    # theFile = request.files.get('loadFile')
-    theData = pd.read_csv(theFile, header=checkHasCols)
-    if theData.empty:
-        return render_template("createData.html", loaded = False, errors = 'The data file is empty')
-    maxLen = min(25, len(theData.index))
-    # loadNameFile = request.form['loadFile']
-    # theFile = request.files.get('loadFile')
-    loadNameFile = theFile.filename
-    # previewData = pd.read_csv(loadNameFile)
-    # alg = request.form['selectAlg']
-    # return redirect(url_for('success',name = user))
-    # err =['nombre es '+name,
-    #     'alg es '+alg
-    # ]
-    # newPipe = mAlg.getAlgorithmPipe(alg, name)
-    # if request.method == 'POST':
-    #     name = request.form['newName']
-    #     # loadNameFile = request.form['loadFile']
-    #     # loadNameFile = request.files.get('loadFile')
-    #     # previewData = pd.read_csv(loadNameFile)
-    #     # mimetype = loadNameFile.content_type
+        err = []
+        
+        # theFile = request.files.get('loadFile')
+        theData = pd.read_csv(theFile, header=checkHasCols)
+        if theData.empty:
+            return render_template("createData.html", loaded = False, errors = 'The data file is empty')
+        maxLen = min(25, len(theData.index))
+        # loadNameFile = request.form['loadFile']
+        # theFile = request.files.get('loadFile')
+        loadNameFile = theFile.filename
+        # previewData = pd.read_csv(loadNameFile)
+        # alg = request.form['selectAlg']
+        # return redirect(url_for('success',name = user))
+        # err =['nombre es '+name,
+        #     'alg es '+alg
+        # ]
+        # newPipe = mAlg.getAlgorithmPipe(alg, name)
+        # if request.method == 'POST':
+        #     name = request.form['newName']
+        #     # loadNameFile = request.form['loadFile']
+        #     # loadNameFile = request.files.get('loadFile')
+        #     # previewData = pd.read_csv(loadNameFile)
+        #     # mimetype = loadNameFile.content_type
 
-    # else:
-    #     return redirect(url_for('addAData'))
+        # else:
+        #     return redirect(url_for('addAData'))
 
-    return render_template("createData.html", loaded = True, theData = theData, newName = loadNameFile, maxLen = maxLen, errors = err)
+        return render_template("createData.html", loaded = True, theData = theData, newName = loadNameFile, maxLen = maxLen, errors = err)
 
 
 @app.route('/datas/get<numberData>/',  methods=["GET", "POST"])

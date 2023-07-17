@@ -34,7 +34,8 @@
             </label>
         </form>
 
-        <form action="/datas/new/load" method="post" class="">
+    if request.method == 'POST':
+    <form action="/datas/new/load" method="post" class="" >
             <div class=" objectLine alingTop object23 textLeft">
                 {% if loaded %}
 
@@ -46,7 +47,8 @@
                             {% for nameCol in theData.columns %}
                             <th class="">
                                 <div class="objectLine">
-                                    <input checked class="" type="checkbox" name="checkColss" onchange="checkSaveColumn(this, '{{loop.index0}}')" />
+                                    <input checked class="" type="checkbox" name="checkCols"
+                                        onchange="checkSaveColumn(this, '{{loop.index0}}')" />
                                     <input required class="rowInput" type="text" name="reNameCol" value="{{nameCol}}"
                                         maxlength="40">
                                 </div>
@@ -58,7 +60,7 @@
                         {% for iRow in range(0, maxLen) %}
                         <tr>
                             {% for aDat in theData.iloc[iRow] %}
-                            <td class="">{{ aDat }}</td>
+                            <td class="" name="COL-{{loop.index0}}">{{ aDat }}</td>
                             {% endfor %}
                         </tr>
                         {% endfor %}
@@ -72,10 +74,10 @@
                 {% if loaded %}
                 <div>
                     <p>Preview file {{newName}}:
-                        <ul>
-                            <li>{{maxLen}} rows (of {{theData.index|length}})</li>
-                            <li>{{theData.columns|length}} columns</li>
-                            </ul>
+                    <ul>
+                        <li>{{maxLen}} rows (of {{theData.index|length}})</li>
+                        <li>{{theData.columns|length}} columns</li>
+                    </ul>
                     </p>
                     <div>
                         <label for="newName">New data's name:</label> <br>
@@ -103,7 +105,6 @@
             </div>
         </form>
     </div>
-</div>
 </div>
 
 

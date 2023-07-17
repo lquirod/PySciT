@@ -1,4 +1,4 @@
-/* Pipelines JS functions */
+/* Datas JS functions */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Initial settings ---- */
 document.addEventListener('DOMContentLoaded', function () {
@@ -6,32 +6,32 @@ document.addEventListener('DOMContentLoaded', function () {
     modify = false;
     text = document.getElementById('errPipeSection');
 }, false);
-
-/*  ---- Modify toggle button ---- */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Save Data settings ---- */
+/*  ---- Modify column checkbox ---- */
 function checkSaveColumn(element, num) {
     // window.alert(num)
-    window.alert('dROW-'+num)
-    var section = document.getElementById('dROW-'+num).value.trim()
+    var section = document.getElementsByName('COL-' + num)
+    // window.alert('got ' + element.checked + ' COL-' + num+'and size is '+section.length)
     if (element.checked) {
-
-        // window.alert("Cambiado a true")
-        section.classList.remove('Darker');
+        for (var i = 0; i < section.length; i++)
+            section[i].classList.remove('Darker');
     }
     else {
-        section.classList.add('Darker');
+        for (var i = 0; i < section.length; i++)
+            section[i].classList.add('Darker');
     }
     // window.alert( sessionStorage.getItem("BlockLog"))
 }
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*  ---- Pipeline operations ---- */
-function changeNameData() {
-    newName = document.getElementById('newName').value.trim()
-    window.alert("Hey "+newName)
-    if (newName != '' && newName != document.getElementById('thePipeName').innerHTML.trim()) {
+/*  ---- Data operations ---- */
+function aaaaa() {
+    newName = document.getElementsById('newName').value.trim()
+    // window.alert("Hey " + newName)
+    if (newName != '' && newName != document.getElementById('theDataName').innerHTML.trim()) {
         $.ajax({
             data: JSON.stringify({ newName: newName }),
             contentType: 'application/json',
-            url: '/operate/pipeline/' + numPipe + '/name/',
+            url: '/operate/data/' + numData + '/name/',
             type: 'post',
             beforeSend: function () {
                 text.textContent = 'Renaming pipeline...';
@@ -39,7 +39,39 @@ function changeNameData() {
             success: function (ret) {
                 if (ret.response) {
                     text.textContent = '';
-                    document.getElementById('thePipeName').textContent = newName
+                    document.getElementById('theDataName').textContent = newName
+                } else {
+                    text.textContent = ret.err;
+                }
+                addViewLog(ret.newLog);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toggleModify();
+                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+            }
+        });
+    } else {
+        text.textContent = "The new name can't be empty";
+    }
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Data operations ---- */
+function changeNameData() {
+    newName = document.getElementsById('newName').value.trim()
+    // window.alert("Hey " + newName)
+    if (newName != '' && newName != document.getElementById('theDataName').innerHTML.trim()) {
+        $.ajax({
+            data: JSON.stringify({ newName: newName }),
+            contentType: 'application/json',
+            url: '/operate/data/' + numData + '/name/',
+            type: 'post',
+            beforeSend: function () {
+                text.textContent = 'Renaming pipeline...';
+            },
+            success: function (ret) {
+                if (ret.response) {
+                    text.textContent = '';
+                    document.getElementById('theDataName').textContent = newName
                 } else {
                     text.textContent = ret.err;
                 }
