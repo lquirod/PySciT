@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // window.alert( sessionStorage.getItem("BlockLog"))
     modify = false;
-    text = document.getElementById('errPipeSection');
+    text = document.getElementById('errDataSection');
 }, false);
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Save Data settings ---- */
@@ -24,36 +24,44 @@ function checkSaveColumn(element, num) {
     // window.alert( sessionStorage.getItem("BlockLog"))
 }
 /*  ---- Data operations ---- */
-function aaaaa() {
-    newName = document.getElementsById('newName').value.trim()
-    // window.alert("Hey " + newName)
-    if (newName != '' && newName != document.getElementById('theDataName').innerHTML.trim()) {
-        $.ajax({
-            data: JSON.stringify({ newName: newName }),
-            contentType: 'application/json',
-            url: '/operate/data/' + numData + '/name/',
-            type: 'post',
-            beforeSend: function () {
-                text.textContent = 'Renaming pipeline...';
-            },
-            success: function (ret) {
-                if (ret.response) {
-                    text.textContent = '';
-                    document.getElementById('theDataName').textContent = newName
-                } else {
-                    text.textContent = ret.err;
-                }
-                addViewLog(ret.newLog);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toggleModify();
-                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
-            }
-        });
-    } else {
-        text.textContent = "The new name can't be empty";
+let loginForm = document.getElementById("saveDataForm");
+
+
+loginForm.addEventListener("submit", (e) => {
+// $('#saveDataForm').on('submit', function (e) {
+    e.preventDefault();
+    // var data = $(this).serializeArray();
+    // data.push({ theData: theData });
+    var checkCols = [];
+    var allCheckCols = document.getElementsByName('checkCols');
+    for (var i = 0 ; i<allCheckCols.length ; i++) {
+        if (allCheckCols[i].checked)
+        checkCols.push(i);
     }
-}
+    var newName = document.getElementById('newName').value.trim()
+    $.ajax({
+        contentType: 'application/json',
+        url: '/datas/new/load',
+        data: JSON.stringify({theData: theData, newName: newName,checkCols: checkCols}),
+        type: 'post',
+        beforeSend: function () {
+            text.textContent = 'Saving new data...';
+        },
+        success: function (ret) {
+            if (ret.response) {
+                text.textContent = 'good '+ ret.numData;
+                // window.location.replace("/get" + ret.numData);
+            } else {
+                text.textContent = ret.err;
+            }
+            addViewLog(ret.newLog);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            toggleModify();
+            text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+        }
+    });
+});
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Data operations ---- */
 function changeNameData() {
@@ -66,7 +74,7 @@ function changeNameData() {
             url: '/operate/data/' + numData + '/name/',
             type: 'post',
             beforeSend: function () {
-                text.textContent = 'Renaming pipeline...';
+                text.textContent = 'Renaming data...';
             },
             success: function (ret) {
                 if (ret.response) {

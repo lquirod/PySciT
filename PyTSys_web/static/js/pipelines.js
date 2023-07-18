@@ -50,7 +50,7 @@ function toggleModify() {
 /*  ---- Pipeline operations ---- */
 function changeNamePipeline() {
     newName = document.getElementById('newName').value.trim()
-    window.alert("Hey "+newName)
+    // window.alert("Hey "+newName)
     if (newName != '' && newName != document.getElementById('thePipeName').innerHTML.trim()) {
         $.ajax({
             data: JSON.stringify({ newName: newName }),

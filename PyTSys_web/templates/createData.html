@@ -33,9 +33,8 @@
                 Data have name columns
             </label>
         </form>
-
-    if request.method == 'POST':
-    <form action="/datas/new/load" method="post" class="" >
+    <form action="" class="" id="saveDataForm">
+        <!-- <form action="/datas/new/load" method="post" class="" id="saveDataForm"> -->
             <div class=" objectLine alingTop object23 textLeft">
                 {% if loaded %}
 
@@ -47,7 +46,7 @@
                             {% for nameCol in theData.columns %}
                             <th class="">
                                 <div class="objectLine">
-                                    <input checked class="" type="checkbox" name="checkCols"
+                                    <input checked class="" type="checkbox" name="checkCols" value="{{loop.index0}}"
                                         onchange="checkSaveColumn(this, '{{loop.index0}}')" />
                                     <input required class="rowInput" type="text" name="reNameCol" value="{{nameCol}}"
                                         maxlength="40">
@@ -88,7 +87,7 @@
                 </div>
                 {% endif %}
 
-                <div class="err">
+                <div class="err" id="errDataSection">
                     {% if errors %}
                     <p> Error adding a new Data:
                         {% for e in º %}

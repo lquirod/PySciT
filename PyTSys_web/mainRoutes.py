@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for
+from flask import jsonify, redirect, render_template, request, url_for
 from PyTSys_web import app
 from PyTSys_web.mainWeb import *
 from PyTSys_web.staticRoutes import *
@@ -35,20 +35,16 @@ def addAData():
         else:
             checkHasCols = False
         theFile = request.files.get('loadFile')
-        return addADataLoad(theFile, checkHasCols)
+        return addADataLoad(theFile, checkHasCols, True)
 
     return render_template("createData.html", loaded = False, errors = err)
 
-@app.route('/datas/new/load/',  methods=["GET", "POST"])
-def addADataLoad(theFile = None, checkHasCols = True):
-    if request.method == 'POST':
-        print('f')
-        name = request.form['newName']
+@app.route('/datas/new/load',  methods=["GET", "POST"])
+def addADataLoad(theFile = None, checkHasCols = True, SaveData = False):
+    # if request.method == 'POST':
+    if SaveData:
+        print('gasp')
 
-        getChecks = request.form.get('checkCols')
-
-        
-    else:
         if theFile is None:
             redirect(url_for('addAData'))
         if checkHasCols:
@@ -84,6 +80,26 @@ def addADataLoad(theFile = None, checkHasCols = True):
         #     return redirect(url_for('addAData'))
 
         return render_template("createData.html", loaded = True, theData = theData, newName = loadNameFile, maxLen = maxLen, errors = err)
+
+
+        
+    else:
+        print('f')
+        # name = request.form['newName']
+
+        # getChecks = request.form.getlist('checkCols')
+        getChecks = request.json.get('checkCols')
+        newName = request.json.get('newName')
+        theData = request.json.get('theData')
+        
+        df2 = df.iloc[: , [1, 2]].copy()
+
+        # nlog = addLog('Renamed Pipe '+str(nPipe)+' to '+newName)
+        nlog = 'hi'
+        err = 'getChecks'
+        ret = {'response': False, 'err': err, 'numData': '', 'newLog': nlog}
+        # ret = {'response': False, 'err': 'Operation denied', 'numData': '', 'newLog': nlog}
+        return jsonify(ret)
 
 
 @app.route('/datas/get<numberData>/',  methods=["GET", "POST"])
