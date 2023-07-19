@@ -523,6 +523,11 @@ input[type="button"] {
 .noBorder {
     border: none;
 }
+.yesBorder {
+    border:black;
+    border-width: 1px ;
+    border-style: ridge;
+}
 
 .roundBorder {
     border-radius: 20px;

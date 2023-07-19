@@ -124,6 +124,8 @@ class UserActions:
     ####################################################################################################
     #### Operations with user's Datas
     def createData(self, data = None, newNameData='New Data'):
+        if newNameData=='':
+            newNameData='New Data'
         self.myDatas.append(M.Data.ManageData(data, newNameData))
         return len(self.myDatas)
 

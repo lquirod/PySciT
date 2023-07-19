@@ -43,8 +43,6 @@ def addAData():
 def addADataLoad(theFile = None, checkHasCols = True, SaveData = False):
     # if request.method == 'POST':
     if SaveData:
-        print('gasp')
-
         if theFile is None:
             redirect(url_for('addAData'))
         if checkHasCols:
@@ -55,10 +53,13 @@ def addADataLoad(theFile = None, checkHasCols = True, SaveData = False):
         err = []
         
         # theFile = request.files.get('loadFile')
+        # df2 = df.to_json(orient = 'split')
         theData = pd.read_csv(theFile, header=checkHasCols)
+        theDataJSON = theData.to_json(orient = 'split')
         if theData.empty:
             return render_template("createData.html", loaded = False, errors = 'The data file is empty')
-        maxLen = min(25, len(theData.index))
+        # maxLen = min(25, len(theData.index))
+        maxLen = len(theData.index)
         # loadNameFile = request.form['loadFile']
         # theFile = request.files.get('loadFile')
         loadNameFile = theFile.filename
@@ -78,27 +79,34 @@ def addADataLoad(theFile = None, checkHasCols = True, SaveData = False):
 
         # else:
         #     return redirect(url_for('addAData'))
-
-        return render_template("createData.html", loaded = True, theData = theData, newName = loadNameFile, maxLen = maxLen, errors = err)
+        return render_template("createData.html", loaded = True, theData = theData.head(min(20, len(theData.index))), theDataJSON=theDataJSON, newName = loadNameFile, maxLen = maxLen, errors = err)
 
 
         
     else:
-        print('f')
         # name = request.form['newName']
-
         # getChecks = request.form.getlist('checkCols')
         getChecks = request.json.get('checkCols')
-        newName = request.json.get('newName')
-        theData = request.json.get('theData')
-        
-        df2 = df.iloc[: , [1, 2]].copy()
-
-        # nlog = addLog('Renamed Pipe '+str(nPipe)+' to '+newName)
-        nlog = 'hi'
-        err = 'getChecks'
-        ret = {'response': False, 'err': err, 'numData': '', 'newLog': nlog}
-        # ret = {'response': False, 'err': 'Operation denied', 'numData': '', 'newLog': nlog}
+        nData = ''
+        nlog = ''
+        err = ''
+        if len(getChecks):
+            newName = request.json.get('newName')
+            nameCols = request.json.get('nameCols')
+            theDataJSON = request.json.get('theData')
+            # print (theData)
+            # theData = pd.read_json(theDataJSON, orient ='split')
+            theData = pd.read_json(theDataJSON, orient ='split').iloc[: , getChecks].copy()
+            # renameCols = dict(zip(theData.columns, nameCols))
+            # theData.rename()
+            theData.columns = nameCols
+            nData = myUser.createData(theData, newName) -1
+            nlog = addLog('Created data '+str(nData)+': '+newName)
+            res = True
+        else:
+            err = 'No columns selected'
+            res = False
+        ret = {'response': res, 'err': err, 'numData': nData, 'newLog': nlog}
         return jsonify(ret)
 
 
