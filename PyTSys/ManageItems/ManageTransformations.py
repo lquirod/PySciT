@@ -18,7 +18,7 @@ class ManageTransformations:
     def getTransformation(self, nameTransformation):
         if self.thereIsTransformation(nameTransformation):
             if nameTransformation == Enum.TR.Transformations.MinMax_Scaling.name:
-                return ['MinMax scaling', MinMaxScaler()]
+                return ['MinMax_Scaling', MinMaxScaler()]
           
         return None
             

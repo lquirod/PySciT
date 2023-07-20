@@ -1,15 +1,31 @@
-from flask import redirect, render_template, url_for
+from flask import redirect, render_template, url_for, make_response
 from PyTSys_web import app
 from markupsafe import Markup
 from datetime import datetime
 
+def download(text, name, type, err = ''):
+    try:
+        response = make_response(text)
+        cd = 'attachment; filename='+name
+        response.headers['Content-Disposition'] = cd
+        response.mimetype = type
+        return response
+    except Exception:
+        return messagePage(('Error saving '+err))
+
 logs = []
 
 def addLog(msg):
-    date = datetime.now().strftime("%m/%d/%Y-%H:%M: ")
-    newLog = "<span class=\"boldText\">"+ date + "</span></br>" + msg
-    logs.insert(0, Markup(newLog))
+    date = datetime.now().strftime("%m/%d/%Y, %H:%M- ")
+    newLog = [date, msg]
+    logs.insert(0, newLog)
     return newLog
+
+@app.route('/download/logs/', methods=["GET", "POST"])
+def downloadLogs():
+    downloadName = datetime.now().strftime("%m-%d-%Y_%H-%M")
+    logText = [' '.join(elem) for elem in logs]
+    return download( "\n".join(reversed(logText)), 'log_'+downloadName, 'text/plain', 'the logs')
 
 @app.context_processor
 def logFuction():
@@ -19,9 +35,13 @@ def logFuction():
 def helpPage():
     return render_template("static/help.html")
 
-@app.route('/help/', methods=["GET", "POST"])
-def messagePage(msg):
-    return render_template("static/messagePage.html", MSG = msg)
+@app.route('/msg/', methods=["GET", "POST"])
+def messagePage(msg=None, err = True):
+    print('baia '+msg+' y err is '+str(err))
+    if msg == None or msg == '':
+        return redirect(url_for('homePage'))
+    else:
+        return render_template("static/messagePage.html", MSG = msg, errMSG = err)
 
 
 @app.errorhandler(404)

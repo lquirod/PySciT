@@ -44,14 +44,17 @@ function toggleLogSection() {
         });
         section.classList.add('hidden');
         text.textContent = 'Log view (Hidden)';
+        sessionStorage.setItem("BlockLog", false);
     }
 }
 /*  ---- Add log ---- */
-function addViewLog(text) {
-    var theLog = document.getElementById('LogView');
-    var addlog = document.createElement('p');
-    addlog.innerHTML = text;
-    // window.alert(text)
-    theLog.appendChild(addlog);
+function addViewLog(text = null) {
+    if (text != '' || text != null) {
+        var theLog = document.getElementById('LogView');
+        var addlog = document.createElement('p');
+        addlog.innerHTML = text[0]+text[1];
+        // window.alert(text)
+        theLog.appendChild(addlog);
+    }
 }
 

@@ -6,19 +6,19 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/tables.css')}}">
 {% endblock %}
 {% block infoWindow %}
-<title>PyTSys -A Pipelines</title>
+<title>PyTSys -Pipeline {{numPipe}} params</title>
 {% endblock %}
 {% block mainBody %}
 <div class="objectLine allExpand">
-    <button class="left aButton b3 s16 yesPadding yesMargin" onclick="location.href='/pipelines/'">
+    <button class="left aButton b3 s16 yesPadding yesMargin" onclick="location.href='/pipelines/get{{numPipe}}'">
         <div class="objectLine">
             &#8617;
             <div class="objectLine">
-                Back to <br /> Pipeline Menu
+                Back to <br /> Pipeline {{numPipe}}
             </div>
         </div>
     </button>
-    <h1>Pipeline {{numPipe}}: <span id="thePipeName">{{thePipeline.Name}}</span></h1>
+    <h1>Pipeline parameters nº {{numPipe}}: <span id="thePipeName">{{thePipeline.Name}}</span></h1>
 </div>
 <div class="aform allExpand">
     <!-- <form action="/pipelines/new/" method="post" class="aform allExpand"> -->
@@ -88,7 +88,7 @@
         </br>
         and
         </br>
-        {{thePipeline.aPipeline.atributes}}
+        {{thePipeline.aPipeline.}}
     </div>
     <div class="yesMargin objectLine alingTop textLeft">
         <div class="yesMargin objectLine object2">
@@ -99,7 +99,7 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2">
                     Add Step
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="location.href='parameters/'">
+                <button class="aButton b4 s16 yesPadding yesMargin object2">
                     Parameters
                 </button>
                 <button class="aButton b4 s16 yesPadding yesMargin object2">

@@ -1,9 +1,54 @@
-from flask import jsonify, redirect, render_template, request, url_for
+from flask import jsonify, redirect, request, url_for
 from PyTSys_web import app
 from PyTSys_web.mainRoutes import *
 # import json, o
 
     # addLog("Created pipeline "+newPipe+", "+alg+": "+name)
+
+@app.route('/download/data/<numberData>/',  methods=["GET", "POST"])
+def downloadData(numberData=-1):
+    done = True
+    total = len(myUser.myDatas)
+    try:
+        nData = int(numberData)
+        if total == 0 or nData < 0 and total < nData :
+            done = False
+    except Exception:
+        return messagePage(('Error saving data '+str(nData)))
+
+    if done == True:
+        downloadCSVName = myUser.myDatas[nData].Name
+        downloadCSV = myUser.myDatas[nData]
+        downloadCSV = downloadCSV.Data.to_csv(index=False)
+        return download(downloadCSV, downloadCSVName, 'text/csv', 'data nº'+str(nData))
+    else:
+        return messagePage(('Error saving data '+str(nData)))
+
+
+@app.route('/operate/data/<numberData>/name/',  methods=["GET", "POST"])
+def operateDataNewName(numberData=None):
+    if request.method == 'POST':
+        nlog = ''
+        total = len(myUser.myDatas)
+        try:
+            nData = int(numberData)
+            if total == 0 or nData < 0 and total < nData :
+                ret = {'response': False, 'err': 'Not valid data to operate', 'newLog': nlog}
+                return jsonify(ret)
+
+        except Exception:
+            ret = {'response': False, 'err': 'Not valid data to operate', 'newLog': nlog}
+            return jsonify(ret)
+
+        newName = request.json.get('newName')
+        myUser.myDatas[nData].Name = newName
+        nlog = addLog('Renamed Data '+str(nData)+' to '+newName)
+        ret = {'response': True, 'err': 'Operation denied', 'newLog': nlog}
+        return jsonify(ret)
+    
+    else:
+        return redirect(url_for('theDataPage',numberData = numberData))
+
 
 
 @app.route('/operate/pipeline/<numberPipeline>/name/',  methods=["GET", "POST"])

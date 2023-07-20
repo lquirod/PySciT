@@ -71,10 +71,14 @@
             </div>
             <div id="LogView">
                 {% for alog in LOG %}
-                <p>{{alog}}</p>
+                <p>
+                    <span class="boldText">{{alog[0]}}</span></br>{{alog[1]}}
+                </p>
                 {% endfor %}
             </div>
-            <button id="ButtonLog" class="aButton b3">Save Log</button>
+            <button id="ButtonLog" class="aButton b3" onclick="location.href='/download/logs/'">
+                Save Log
+            </button>
         </aside>
         {% endblock %}
 

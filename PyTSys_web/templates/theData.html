@@ -18,33 +18,40 @@
             </div>
         </div>
     </button>
-    <h1>Data {{numData}}: {{theData.Name}}</h1>
+    <h1>Data {{numData}}: <span id="theDataName">{{theData.Name}}</span></h1>
 </div>
 <div class="aform allExpand">
     <!-- <form action="/datas/new/" method="post" class="aform allExpand"> -->
-    <div class=" objectLine alingTop yes yesMargin">
-        <div class=" allExpand  textLeft">
-            <span> Data preview (Max. 50 rows) </span>
-        </div>
+    <div class=" objectLine alingTop preview yesMargin">
         {% if (theData.Data.index|length) != 0 %}
-        {{theData.Data[:51].to_html() | safe}}
-        {% else %}
-        This data is empty
-        {% endif %}
+        <div class=" allExpand  textLeft">
+            <span> Data preview (total: {{theData.Data.index|length}} rows) </span>
+        </div>
+        <div class="dataframe">
+            {{theData.Data[:31].to_html() | safe}}
+            {% else %}
+            This data is empty
+            {% endif %}
+        </div>
     </div>
     <div class="yesMargin objectLine alingTop textCenter">
         <div class="yesMargin objectLine ">
             <div class="objectLine">
                 <label for="newName">Data's name:</label> <br>
-                <input type="text" name="newName" id="newName" value="{{ theData.Name}}" maxlength="100">
-                <button class="aButton b3 right roundBorder yesPadding">
+                <input type="text" name="newName" id="newName" value="{{theData.Name}}" maxlength="100">
+                <button class="aButton b3 right roundBorder yesPadding" onclick="changeNameData()">
                     Change name
                 </button>
             </div>
             <div class="err" id="errDataSection"></div>
+            <div class="yesMargin">
+                <button class="aButton b2 roundBorder yesPadding yesMargin s16" onclick="location.href='/download/data/{{numData}}'">
+                    Download CSV
+                </button>
+            </div>
         </div>
-        <div class="yesPadding objectLine">
-            <div class=" allExpand  textLeft">        
+        <div class="yesPadding ">
+            <div class=" allExpand  textLeft">
                 <div class="objectLine right">
                     <button id="toggleModify" class="aButton b3 right" onclick="toggleModify()">
                         Add Transformation
@@ -55,7 +62,7 @@
                 <thead>
                     <tr class="s18">
                         <th class="minCol cell110">Tr</th>
-                        <th class="minSmallCol cell1">Transformation' history</th>
+                        <th class="minSmallCol cell1">Transformation's history</th>
                     </tr>
                 </thead>
                 <tbody>

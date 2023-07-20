@@ -51,41 +51,14 @@ def addADataLoad(theFile = None, checkHasCols = True, SaveData = False):
             checkHasCols = None
 
         err = []
-        
-        # theFile = request.files.get('loadFile')
-        # df2 = df.to_json(orient = 'split')
         theData = pd.read_csv(theFile, header=checkHasCols)
         theDataJSON = theData.to_json(orient = 'split')
         if theData.empty:
             return render_template("createData.html", loaded = False, errors = 'The data file is empty')
-        # maxLen = min(25, len(theData.index))
         maxLen = len(theData.index)
-        # loadNameFile = request.form['loadFile']
-        # theFile = request.files.get('loadFile')
         loadNameFile = theFile.filename
-        # previewData = pd.read_csv(loadNameFile)
-        # alg = request.form['selectAlg']
-        # return redirect(url_for('success',name = user))
-        # err =['nombre es '+name,
-        #     'alg es '+alg
-        # ]
-        # newPipe = mAlg.getAlgorithmPipe(alg, name)
-        # if request.method == 'POST':
-        #     name = request.form['newName']
-        #     # loadNameFile = request.form['loadFile']
-        #     # loadNameFile = request.files.get('loadFile')
-        #     # previewData = pd.read_csv(loadNameFile)
-        #     # mimetype = loadNameFile.content_type
-
-        # else:
-        #     return redirect(url_for('addAData'))
-        return render_template("createData.html", loaded = True, theData = theData.head(min(20, len(theData.index))), theDataJSON=theDataJSON, newName = loadNameFile, maxLen = maxLen, errors = err)
-
-
-        
+        return render_template("createData.html", loaded = True, theData = theData.head(min(20, len(theData.index))), theDataJSON=theDataJSON, newName = loadNameFile, maxLen = maxLen, errors = err)       
     else:
-        # name = request.form['newName']
-        # getChecks = request.form.getlist('checkCols')
         getChecks = request.json.get('checkCols')
         nData = ''
         nlog = ''
@@ -94,11 +67,7 @@ def addADataLoad(theFile = None, checkHasCols = True, SaveData = False):
             newName = request.json.get('newName')
             nameCols = request.json.get('nameCols')
             theDataJSON = request.json.get('theData')
-            # print (theData)
-            # theData = pd.read_json(theDataJSON, orient ='split')
             theData = pd.read_json(theDataJSON, orient ='split').iloc[: , getChecks].copy()
-            # renameCols = dict(zip(theData.columns, nameCols))
-            # theData.rename()
             theData.columns = nameCols
             nData = myUser.createData(theData, newName) -1
             nlog = addLog('Created data '+str(nData)+': '+newName)
@@ -157,15 +126,28 @@ def thePipelinePage(numberPipeline=None):
             return messagePage('It seems that the pipeline you want to access does not exist, '+
                                'pipeline not in range.')
         else:
-            thePipelinePage = myUser.myPipelines[nPipe]
+            thePipeline = myUser.myPipelines[nPipe]
 
     except Exception:
-        # return redirect(url_for('messagePage', 'It seems that the pipeline you want to access does not exist'))
-        # return "gas"
-        # msg=''
-        # return render_template("static/messagePage.html", MSG = msg)
         return messagePage('It seems that the pipeline you want to access does not exist, '+
                                'not valid pipeline.')
     
-    return render_template("thePipeline.html", thePipeline = thePipelinePage, numPipe = numberPipeline)
+    return render_template("thePipeline.html", thePipeline = thePipeline, numPipe = numberPipeline)
+
+@app.route('/pipelines/get<numberPipeline>/parameters/',  methods=["GET", "POST"])
+def thePipelineParametersPage(numberPipeline=None):
+    total = len(myUser.myPipelines)
+    try:
+        nPipe = int(numberPipeline)
+        if total == 0 or nPipe < 0 and total < nPipe :
+            return messagePage('It seems that the pipeline you want to access does not exist, '+
+                               'pipeline not in range.')
+        else:
+            thePipeline = myUser.myPipelines[nPipe]
+
+    except Exception:
+        return messagePage('It seems that the pipeline you want to access does not exist, '+
+                               'not valid pipeline.')
+    
+    return render_template("thePipelineParameters.html", thePipeline = thePipeline, numPipe = numberPipeline)
 

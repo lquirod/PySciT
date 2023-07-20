@@ -68,7 +68,7 @@ function saveDataLoaded() {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Data operations ---- */
 function changeNameData() {
-    newName = document.getElementsById('newName').value.trim()
+    newName = document.getElementById('newName').value.trim()
     // window.alert("Hey " + newName)
     if (newName != '' && newName != document.getElementById('theDataName').innerHTML.trim()) {
         $.ajax({
@@ -97,6 +97,27 @@ function changeNameData() {
         text.textContent = "The new name can't be empty";
     }
 }
+function saveDataFile(allFile, num) {
+    $.ajax({
+        contentType: 'application/json',
+        url: '/download/data/'+num,
+        type: 'post',
+        beforeSend: function () {
+            text.textContent = 'Saving new data...';
+        },
+        success: function (ret) {
+            if (ret.response) {
+                text.textContent = 'Done, save you data file';
+            } else {
+                text.textContent = ret.err;
+            }
+            addViewLog(ret.newLog);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+        }
+    });
+};
 // /*  ---- Step operations ---- */
 // function switchAlg(from, to) {
 //     var fromTR = document.getElementById("TR-" + from);

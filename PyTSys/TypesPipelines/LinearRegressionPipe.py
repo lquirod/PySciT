@@ -28,7 +28,7 @@ class LinearRegressionPipe(aPipeline.aPipeline):
 
     # ## Operations with the Pipeline's Algorithm
     def setAlgorithm(self):
-        self.hasAlgorithm = self.addStep( ['Linear Regression', linear_model.LinearRegression()])
+        self.hasAlgorithm = self.addStep( ['Linear_Regression', linear_model.LinearRegression()])
         return self.hasAlgorithm
 
     ####################################################################################################

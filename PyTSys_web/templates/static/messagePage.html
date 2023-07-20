@@ -6,7 +6,13 @@
  <title>PyTSys - Message</title>
  {% endblock %}
  {% block mainBody %}
+ 
+ {% if errMSG %}
  <h1>Oops, something went wrong!</h1>
+ {% else %}
+ <h1>Page message</h1>
+ {% endif %}
+
  <div class="textContent">
      <p> {{ MSG }}</p>
         <p>You can use the upper navigation bar or the buttons below with more interesting links:
