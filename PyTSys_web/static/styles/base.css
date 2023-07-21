@@ -20,27 +20,12 @@ address {
     font-style: normal;
 }
 
-/* html,
-body {
-   margin:0;
-   padding:0;
-   height:100%;
-} */
 html {
-    /* overflow: hidden; */
-    /* overflow: visible; */
-    /* overflow-y: scroll; */
     overflow-x: scroll;
-    /* height:100vw; */
-
 }
 
 body {
-    /* overflow: visible; */
-    /* overflow-y: scroll;  */
     overflow-x: scroll;
-    /* overflow-y: hidden; */
-    /* overflow-x: hidden; */
     height: 100%;
     width: 100%;
     min-width: 670px;
@@ -49,19 +34,12 @@ body {
 
 body,
 html {
-    /* height:100vh; */
     border: 0px;
     padding: 0px;
     margin: 0px;
     display: block;
-    /* overflow: hidden; */
-    /* overflow-y: scroll; */
     align-items: center;
     top: 0;
-    /* overflow-x: scroll;
-    overflow-y: hidden; */
-    /* min-height:100%; */
-    /* position:relative;     */
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -69,8 +47,6 @@ html {
 #header {
     width: 100%;
     min-width: 670px;
-    /* height: 200px; */
-    /* vertical-align: middle; */
     margin: 0px;
     text-align: center;
     border-collapse: collapse;
@@ -78,36 +54,24 @@ html {
     border-top-width: 1px;
     border-bottom: thick groove;
     overflow: hidden;
-    /* display: block; */
-    /* position: -webkit-sticky;
-    position: sticky;
-    top: 0; */
-    /* display: inline-block; */
 }
 
 #NameWeb {
     width: 100%;
-    /* height: 90px; */
     vertical-align: middle;
     background-color: #6699CC;
     font-size: 45px;
     padding: 10px;
     margin: 0px;
-    /* display: inline */
 }
 
 #HeadMenu {
     width: 100%;
     height: 100%;
-    /* position: right; */
     vertical-align: middle;
     background-color: #B4CBE2;
-    /* color: #B4CBE2; */
-    /* font-size: calc(15px + 1vw); */
     font-size: 25px;
-    /* padding: 10px; */
     margin: 0px;
-    /* content: block; */
     display: flex;
     justify-content: space-between
 }
@@ -118,9 +82,7 @@ html {
 }
 
 #LogButtonToggle {
-    /* width: 35%; */
     min-width: 240px;
-    /* max-width: 400px; */
 }
 
 #header h1,
@@ -133,27 +95,11 @@ html {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Central settings (Main and Side log) ---- */
 #centralPage {
-    /* height: calc(100% - 110px); */
-    /* height: calc(100% - 123px); */
     height: calc(100vh - 109px);
-    /* height:a */
     width: auto;
     min-height: 490px;
-    /* height: auto; */
-    /* height: 80vh; */
-    /* height: 100%; */
-    /* height: 100vh; */
-
-    /* padding: 15px;
-    margin: 3%;
-    margin-right: 2%;
-    margin-left: 2%; */
     display: flex;
     justify-content: space-between;
-    /* position: -webkit-sticky;
-  position: sticky;
-  top: 50px; */
-    /* overflow-y: scroll; */
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -163,29 +109,15 @@ html {
     min-width: 190px;
     max-width: 400px;
     min-height: 30px;
-    /* height: auto; */
-    /* height: 300px; */
-    /* height: 80vh; */
     overflow: hidden;
     position: center;
     background-color: #B4CBE2;
-    /* background-color: lightgreen; */
     font-size: 16px;
-    /* font-family:'Courier New', Courier, monospace; */
-    /* calc(10px + 0.4vw); */
-    /* padding-left: 5%; */
     padding-top: 0px;
     padding-bottom: 0px;
-    /* margin-left: 3%; */
     border: 8px double #6699CC;
     text-indent: 15px;
     text-align: center;
-    /* position: -webkit-sticky;
-    position: sticky;
-    top: 0; */
-    /* bottom: 0; */
-    /* top: calc(80px + 1vw); */
-    /* overflow-y: scroll; */
 }
 
 #SideLog h1 {
@@ -194,12 +126,8 @@ html {
 }
 
 #LogView {
-    /* height: 85%; */
     height: calc(100% - 80px);
     background-color: white;
-    /* padding-left: 5%; */
-    /* padding-top: 12px; */
-    /* padding-bottom: 12px; */
     font-size: 15px;
     margin: 2%;
     border: 2px #6699CC;
@@ -225,9 +153,6 @@ html {
 #mainBody {
     width: 100%;
     min-width: 470px;
-    /* height: auto; */
-    /* height: 8000px; */
-    /* height: 100%; */
     text-align: center;
     padding-top: 15px;
     padding-bottom: 12px;
@@ -241,13 +166,36 @@ html {
     color: #4175a9;
 }
 
-/* #mainBody p{
-    font-size: 16px;
-} */
 .textContent {
     padding: 6%;
     padding-top: 0;
-    padding-bottom: 20px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Popup settings ---- */
+#popUpBaseDiv {
+    min-width: 670px;
+    min-height: 600px;
+    /* z-index: 100; */
+    position: absolute;
+    background-color: rgba(123, 123, 123, 0.8);
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.popupDiv {
+    display: none;
+    position: inherit;
+    background-color: rgba(255, 255, 255);
+    vertical-align: middle;
+    width: 80%;
+    height: 80%;
+    margin: 10%;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -264,10 +212,7 @@ input[type="checkbox"] {
 }
 
 .aform {
-    /* text-align: left; */
-    /* padding: 20px; */
     padding: 0px;
-    /* margin-top: 10px; */
     margin: 0px;
 }
 
@@ -275,7 +220,6 @@ input[type="checkbox"] {
 .aform input[type="text"],
 .aform textarea {
     width: 100%;
-    /* max-width: 95%; */
     font: 1em sans-serif;
     min-width: 200px;
     box-sizing: border-box;
@@ -288,21 +232,12 @@ input[type="checkbox"] {
 /* Search  */
 .search {
     width: 100%;
-    /* max-width: 95%; */
     min-width: 200px;
-    /* box-sizing: border-box; */
-    /* margin-bottom: 20px; */
-    /* border-radius: 5px; */
 }
 
 .search input {
-    /* width: 95%;
-    max-width: 95%; */
     min-width: 200px;
     font: 1em sans-serif;
-    /* box-sizing: border-box; */
-    /* margin-bottom: 20px; */
-    /* border-radius: 5px; */
 }
 
 /* Form design settings */
@@ -326,7 +261,6 @@ input:read-only {
     border-bottom: none;
     border-top: none;
     z-index: 99;
-    /*position the autocomplete items to be the same width as the container:*/
     top: 100%;
     left: 0;
     right: 0;
@@ -355,7 +289,6 @@ input:read-only {
 /* Default button */
 .aButton,
 input[type="button"] {
-    /* margin: 10px; */
     border-style: groove;
     border-radius: 15px;
 }
@@ -523,9 +456,10 @@ input[type="button"] {
 .noBorder {
     border: none;
 }
+
 .yesBorder {
-    border:black;
-    border-width: 1px ;
+    border: black;
+    border-width: 1px;
     border-style: ridge;
 }
 

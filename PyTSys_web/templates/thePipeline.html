@@ -102,15 +102,35 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="location.href='parameters/'">
                     Parameters
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
                     Fit
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('11')">
                     Transform
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('22')">
                     Score
                 </button>
+                <div id="popUpBaseDiv">
+                    <div id="dataSelector" class="popupDiv">
+                        {% include "popDataSelector.html" %}
+                        <button onclick="popupClose()">
+                            close
+                        </button>
+                    </div>
+                    <div id="11" class="popupDiv">
+                       ci
+                       <button onclick="popupClose()">
+                        close
+                    </button>
+                    </div>
+                    <div id="22" class="popupDiv">
+                       algo
+                       <button onclick="popupClose()">
+                        close
+                    </button>
+                    </div>
+                </div>
             </div>
             <button class="right aButton b1 s16 yesPadding yesMargin object2">
                 Delete pipeline
@@ -137,6 +157,7 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>
 
@@ -144,13 +165,13 @@
 
 
 {% block funcionesJS %}
-<script src="{{url_for('static', filename='js/pipelines.js')}}" defer>
-</script>
+<script src="{{url_for('static', filename='js/pipelines.js')}}" defer></script>
+<script src="{{url_for('static', filename='js/popUp.js')}}" defer></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
     var numPipe = '{{ numPipe }}';
     // var hasAlgorithm = parseInt('{{ thePipeline.hasAlgorithm }}');
 </script>
 <!-- <script type="text/javascript"> -->
-
+    
 {% endblock %}

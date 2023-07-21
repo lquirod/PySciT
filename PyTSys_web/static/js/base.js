@@ -52,9 +52,8 @@ function addViewLog(text = null) {
     if (text != '' || text != null) {
         var theLog = document.getElementById('LogView');
         var addlog = document.createElement('p');
-        addlog.innerHTML = text[0]+text[1];
+        addlog.innerHTML = text[0] + text[1];
         // window.alert(text)
         theLog.appendChild(addlog);
     }
 }
-
