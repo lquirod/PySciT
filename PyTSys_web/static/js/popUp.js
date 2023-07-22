@@ -8,9 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function popupWindow(item) {
     if (actualPopup == null) {
-        actualPopup = document.getElementById(item);
-        popupBase.style.display = "table-cell";
-        actualPopup.style.display = "inline-block";
+        if(actualPopup = document.getElementById(item)){
+            popupBase.style.display = "table-cell";
+            actualPopup.style.display = "inline-block";
+        }
     }
 }
 

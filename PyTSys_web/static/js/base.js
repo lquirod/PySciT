@@ -52,8 +52,21 @@ function addViewLog(text = null) {
     if (text != '' || text != null) {
         var theLog = document.getElementById('LogView');
         var addlog = document.createElement('p');
-        addlog.innerHTML = text[0] + text[1];
+        var timelog = document.createElement('span');
+        timelog.classList.add('boldText');
+        timelog.innerHTML = text[0]
+        addlog.appendChild(timelog);
+
+
+        var br = document.createElement("br");
+        addlog.appendChild(br.cloneNode(true));
+
+        var ptext = document.createTextNode(text[1]);
+        addlog.appendChild(ptext);
+
+        // addlog.innerHTML = text[0] + text[1];
         // window.alert(text)
-        theLog.appendChild(addlog);
+        // theLog.appendChild(addlog);
+        theLog.insertBefore(addlog, theLog.firstChild);
     }
 }
