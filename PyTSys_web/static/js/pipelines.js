@@ -78,7 +78,35 @@ function changeNamePipeline() {
         text.textContent = "The new name can't be empty";
     }
 }
-/*  ---- Step operations ---- */
+/*  ---- Step operations (add) ---- */
+function addStepToPipe() {
+    var position = document.getElementById("position").value
+    var theAddStep = document.querySelector('input[name="addStepTr"]:checked').value;
+    // window.alert('Got the '+theAddStep+' in pos '+position)
+    $.ajax({
+        contentType: 'application/json',
+        url: '/operate/pipeline/' + numPipe + '/addStep/',
+        data: JSON.stringify({ position: position, theAddStep: theAddStep }),
+        type: 'post',
+        beforeSend: function () {
+            popupClose()
+            text.textContent = 'Adding new step...';
+        },
+        success: function (ret) {
+            if (ret.response) {
+                text.textContent = 'Done, updating changes... ';
+                location.reload();
+            } else {
+                text.textContent = ret.err;
+            }
+            addViewLog(ret.newLog);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+        }
+    });
+};
+/*  ---- Step operations (move, delete) ---- */
 function switchAlg(from, to) {
     var fromTR = document.getElementById("TR-" + from);
     var toTR = document.getElementById("TR-" + to);
@@ -122,10 +150,8 @@ function applyChangesStep(op, arg) {
     }
     else {
         ret = { 'response': False, 'err': 'Operation not found' }
-        addLog('Error: ' + op + ' failed')
+        addViewLog('Error: ' + op + ' failed')
     }
-    // msg = msg + '/ FIN / '
-    // text.textContent = msg;
 }
 function operateStep(operation, arg) {
     // window.alert(operation+", "+arg)
@@ -150,6 +176,7 @@ function operateStep(operation, arg) {
                         text.textContent = ret.err;
                     }
                     toggleModify();
+                    addViewLog(ret.newLog)
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     toggleModify();

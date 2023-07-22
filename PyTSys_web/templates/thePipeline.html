@@ -84,11 +84,11 @@
         </button>
     </div>
     <div class="err" id="errPipeSection">
-        {{thePipeline.aPipeline.get_params()}}
+        <!-- {{thePipeline.aPipeline.get_params(deep=False)}}
         </br>
         and
         </br>
-        {{thePipeline.aPipeline.atributes}}
+        {{thePipeline.aPipeline.atributes}} -->
     </div>
     <div class="yesMargin objectLine alingTop textLeft">
         <div class="yesMargin objectLine object2">
@@ -96,10 +96,11 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2">
                     Save Setup
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('Add_Step')">
                     Add Step
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="location.href='parameters/'">
+                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('Parameters')">
+                    <!-- onclick="location.href='parameters/'"> -->
                     Parameters
                 </button>
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
@@ -111,24 +112,54 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('22')">
                     Score
                 </button>
-                <div id="popUpBaseDiv">
+                <div id="popUpBaseDiv" onclick="popupClose()">
+                    <div id="Add_Step" class="popupDiv" onclick="event.stopPropagation();">
+                        <h2>Add step to pipeline {{numPipe}}</h2>
+                        <form id="addStep" class="aform" action="javascript:addStepToPipe('{{numPipe}}')" >
+                            <label for="position" title="position">Position: </label>
+                            <select id="position">
+                                {% for x in range( thePipeline.steps()|length ): %}
+                                <option value="{{loop.index0}}">{{loop.index0}}</option>
+                                {% endfor %}
+                                <option selected="selected" value="{{thePipeline.steps()|length}}">
+                                    {{thePipeline.steps()|length }} (last)</option>
+                            </select>
+                            <h3>Transformation list: </h3>
+                            <div class="colText1 colText2 colText3 yesPadding yesMargin textLeft">
+                                {% for aTr in allTr %}
+                                <label class="pointer">
+                                    <input type="radio" name="addStepTr" value="{{aTr}}" required>
+                                    {{aTr}}
+                                </label><br />
+                                {% endfor %}
+                            </div>
+                            <button class="aButton b4 s16 yesMargin yesPadding">
+                                Add Step
+                            </button>
+                        </form>
+                        <button class="aButton b1 yesMargin" onclick="popupClose()">
+                            Cancel
+                        </button>
+                    </div>
                     <div id="dataSelector" class="popupDiv">
+
                         {% include "popDataSelector.html" %}
                         <button onclick="popupClose()">
                             close
                         </button>
                     </div>
                     <div id="11" class="popupDiv">
-                       ci
-                       <button onclick="popupClose()">
-                        close
-                    </button>
+                        ci
+                        <button onclick="popupClose()">
+                            close
+                        </button>
                     </div>
                     <div id="22" class="popupDiv">
-                       algo
-                       <button onclick="popupClose()">
-                        close
-                    </button>
+                        algo
+                        <button onclick="popupClose()">
+                            close
+                        </button>
+                        botton
                     </div>
                 </div>
             </div>
@@ -173,5 +204,5 @@
     // var hasAlgorithm = parseInt('{{ thePipeline.hasAlgorithm }}');
 </script>
 <!-- <script type="text/javascript"> -->
-    
+
 {% endblock %}

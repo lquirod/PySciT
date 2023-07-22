@@ -132,7 +132,7 @@ def thePipelinePage(numberPipeline=None):
         return messagePage('It seems that the pipeline you want to access does not exist, '+
                                'not valid pipeline.')
     
-    return render_template("thePipeline.html", thePipeline = thePipeline, numPipe = numberPipeline)
+    return render_template("thePipeline.html", thePipeline = thePipeline, numPipe = numberPipeline, allTr = mTr.getTransformationsList())
 
 @app.route('/pipelines/get<numberPipeline>/parameters/',  methods=["GET", "POST"])
 def thePipelineParametersPage(numberPipeline=None):

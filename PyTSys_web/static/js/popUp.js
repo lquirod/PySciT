@@ -9,13 +9,15 @@ document.addEventListener('DOMContentLoaded', function () {
 function popupWindow(item) {
     if (actualPopup == null) {
         actualPopup = document.getElementById(item);
-        popupBase.style.display = "block";
-        actualPopup.style.display = "block";
+        popupBase.style.display = "table-cell";
+        actualPopup.style.display = "inline-block";
     }
 }
 
 function popupClose() {
-    popupBase.style.display = "none";
-    actualPopup.style.display = "none";
-    actualPopup = null
+    if (actualPopup != null) {
+        popupBase.style.display = "none";
+        actualPopup.style.display = "none";
+        actualPopup = null
+    }
 }

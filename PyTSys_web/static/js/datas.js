@@ -25,12 +25,6 @@ function checkSaveColumn(element, num) {
     // window.alert( sessionStorage.getItem("BlockLog"))
 }
 /*  ---- Data operations ---- */
-// loginForm = document.getElementById("saveDataForm");
-// theData = SavetheData
-// theData2 = SavetheData2
-
-// loginForm.addEventListener("submit", (e) => {
-// $('#saveDataForm').on('submit', function (e) {
 function saveDataLoaded() {
     var checkCols = [];
     var nameCols = []
