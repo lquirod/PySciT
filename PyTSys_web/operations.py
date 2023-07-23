@@ -4,18 +4,6 @@ from PyTSys_web.mainRoutes import *
 
 #############################################################################################
 # Datas #
-def thisDataExist(numberData=None, total = None):
-    if total == None:
-        total = len(myUser.myDatas)
-    try:
-        nData = int(numberData)
-        if total == 0 or nData < 0 and total < nData :
-            return None
-        else:
-            return nData
-    except Exception:
-        return None
-
 @app.route('/download/data/<numberData>/',  methods=["GET", "POST"])
 def downloadData(numberData=-1):
     nData = thisDataExist(numberData)
@@ -46,19 +34,6 @@ def operateDataNewName(numberData=None):
 
 #############################################################################################
 # Pipelines #
-def thisPipeExist(numberPipeline=None, total = None):
-    if total == None:
-        total = len(myUser.myPipelines)
-    try:
-        nPipe = int(numberPipeline)
-        if total == 0 or nPipe < 0 and total < nPipe :
-            return None
-        else:
-            return nPipe
-    except Exception:
-        return None
-
-
 @app.route('/operate/pipeline/<numberPipeline>/addStep/',  methods=["GET", "POST"])
 def operatePipelineAddStep(numberPipeline=-1):
     if request.method == 'POST':

@@ -1,20 +1,19 @@
-<div class="allExpand yesMargin">
-    Select a data
-    <select id="selectData">
-        <option value="First">First</option>
-        <option value="Second">Second</option>
-        <option value="Third">Third</option>
-    </select>
-    and the columns
-</div>
-<div class="allExpand">
-    <div class="object2" id="prevData">
-    </div>
-    <div class="object2" id="selectCols">
-        <select id="selectCols">
-            <option value="First">First</option>
-            <option value="Second">Second</option>
-            <option value="Third">Third</option>
+<div id="dataSelector" class="popupDiv" onclick="event.stopPropagation();">
+    <h2 id="titleSelectData"></h2>
+    <form id="selectDataForm" class="aform allExpand yesMargin">
+        Select data:
+        <select id="selectData" onchange="selectDataChanged()">
+            <option selected="selected" disabled="disabled">Choose data</option>
+            {% for datName in datasNames %}
+            <option value="{{loop.index0}}">{{loop.index0}}- {{datName}}</option>
+            {% endfor %}
         </select>
-    </div>
+        <br>
+        <div class="err" id="errPopupSection"></div>
+        <div id="selectDataCols" class="colText1 colText2 yesPadding yesMargin textLeft">
+        </div>
+    </form>
+    <button class="aButton b1 yesMargin" onclick="popupCloseSelectData()">
+        Cancel
+    </button>
 </div>

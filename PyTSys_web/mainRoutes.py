@@ -12,6 +12,34 @@ from PyTSys_web.staticRoutes import *
 # python app.py
 # The server will be accessible at http://localhost:8080.
 
+#############################################################################################
+# Some useful functions #
+def thisDataExist(numberData=None, total = None):
+    if total == None:
+        total = len(myUser.myDatas)
+    try:
+        nData = int(numberData)
+        if total == 0 or nData < 0 and total < nData :
+            return None
+        else:
+            return nData
+    except Exception:
+        return None
+
+def thisPipeExist(numberPipeline=None, total = None):
+    if total == None:
+        total = len(myUser.myPipelines)
+    try:
+        nPipe = int(numberPipeline)
+        if total == 0 or nPipe < 0 and total < nPipe :
+            return None
+        else:
+            return nPipe
+    except Exception:
+        return None
+
+#############################################################################################
+# Routes #
 @app.route('/')
 @app.route('/home/')
 def homePage():
@@ -22,6 +50,7 @@ def List():
     return render_template("static/ConfigurationList.html", 
                            allTr = mTr.getTransformationsList(), allALG= mAlg.getAlgorithmsList())
 
+########### Data routes ###########
 @app.route('/datas/', methods=["GET", "POST"])
 def mainData():
     return render_template("mainDatas.html", Datas = myUser.myDatas)
@@ -80,25 +109,29 @@ def addADataLoad(theFile = None, checkHasCols = True, SaveData = False):
 
 
 @app.route('/datas/get<numberData>/',  methods=["GET", "POST"])
-def theDataPage(numberData=None):
-    total = len(myUser.myDatas)
+@app.route('/datas/get<numberData>/<plain>',  methods=["GET", "POST"])
+def theDataPage(numberData=None, plain=''):
     name = ''
     err = []
-    try:
-        nData = int(numberData)
-        if total == 0 or nData < 0 and total < nData :
-            return messagePage('It seems that the data you want to access does not exist, '+
-                               'data not in range.')
+    nData = thisDataExist(numberData)
+    if nData is None:
+        if request.method == 'POST' and plain=='plain':
+            ret = {'response': False,
+                   'err': 'Error getting the data, it seems that the data you want to access does not exist'}
+            return jsonify(ret)
+        return messagePage('It seems that the data you want to access does not exist')
+    
+    theDataPage = myUser.myDatas[nData]
+    if request.method == 'POST' and plain=='plain':
+        if theDataPage.getNameCols():
+            ret = {'response': True, 'selectColsData': theDataPage.getNameCols()}
         else:
-            theDataPage = myUser.myDatas[nData]
-
-    except Exception:
-        return messagePage('It seems that the data you want to access does not exist, '+
-                               'not valid data.')
+            ret = {'response': False, 'err': 'This data has no data'}
+        return jsonify(ret)
     
     return render_template("theData.html", theData = theDataPage, numData = numberData, newName = name, errors = err)
 
-
+########### Pipelines routes ###########
 @app.route('/pipelines/', methods=["GET", "POST"])
 def mainPipeline():
     return render_template("mainPipelines.html", Pipelines = myUser.myPipelines)
@@ -119,35 +152,19 @@ def addAPipeline():
 
 @app.route('/pipelines/get<numberPipeline>/',  methods=["GET", "POST"])
 def thePipelinePage(numberPipeline=None):
-    total = len(myUser.myPipelines)
-    try:
-        nPipe = int(numberPipeline)
-        if total == 0 or nPipe < 0 and total < nPipe :
-            return messagePage('It seems that the pipeline you want to access does not exist, '+
-                               'pipeline not in range.')
-        else:
-            thePipeline = myUser.myPipelines[nPipe]
+    nPipe = thisPipeExist(numberPipeline)
+    if nPipe is None:
+        return messagePage('It seems that the pipeline you want to access does not exist')
 
-    except Exception:
-        return messagePage('It seems that the pipeline you want to access does not exist, '+
-                               'not valid pipeline.')
-    
-    return render_template("thePipeline.html", thePipeline = thePipeline, numPipe = numberPipeline, allTr = mTr.getTransformationsList())
+    thePipeline = myUser.myPipelines[nPipe]
+    return render_template("thePipeline.html", thePipeline = thePipeline, numPipe = numberPipeline, allTr = mTr.getTransformationsList(), datasNames = list(myUser.getMyDatasNames().values()))
 
 @app.route('/pipelines/get<numberPipeline>/parameters/',  methods=["GET", "POST"])
 def thePipelineParametersPage(numberPipeline=None):
-    total = len(myUser.myPipelines)
-    try:
-        nPipe = int(numberPipeline)
-        if total == 0 or nPipe < 0 and total < nPipe :
-            return messagePage('It seems that the pipeline you want to access does not exist, '+
-                               'pipeline not in range.')
-        else:
-            thePipeline = myUser.myPipelines[nPipe]
+    nPipe = thisPipeExist(numberPipeline)
+    if nPipe is None:
+        return messagePage('It seems that the pipeline you want to access does not exist')
 
-    except Exception:
-        return messagePage('It seems that the pipeline you want to access does not exist, '+
-                               'not valid pipeline.')
-    
+    thePipeline = myUser.myPipelines[nPipe]
     return render_template("thePipelineParameters.html", thePipeline = thePipeline, numPipe = numberPipeline)
 

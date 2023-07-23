@@ -5,17 +5,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // window.alert( sessionStorage.getItem("BlockLog"))
     modify = false;
     text = document.getElementById('errPipeSection');
+    popupText = document.getElementById('errPopupSection');
+    popupOptions = [];
+    actualOperation = null;
 }, false);
 
 /*  ---- Modify toggle button ---- */
 function toggleModify(element) {
-    // window.alert(element.checked)
     if (element.checked) {
         modify = true;
-        // window.alert("Cambiado a true")
     } else {
         modify = false;
-        // window.alert("Cambiado a false")
     }
 }
 function toggleModify() {
@@ -48,6 +48,7 @@ function toggleModify() {
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Pipeline operations ---- */
+/*  ---- Name ---- */
 function changeNamePipeline() {
     newName = document.getElementById('newName').value.trim()
     // window.alert("Hey "+newName)
@@ -118,7 +119,6 @@ function switchAlg(from, to) {
         fromTR.classList.add('boldText');
     }
 }
-
 function moveupName(arg) {
     var from = arg.toString();
     var to = (parseInt(arg) - 1).toString();
@@ -127,9 +127,8 @@ function moveupName(arg) {
     toCOL.innerHTML = fromCOL.innerHTML;
     switchAlg(from, to);
 }
-
+/*  ---- operations ---- */
 function applyChangesStep(op, arg) {
-    // var msg = "En applyChanges, op: " + op + " y arg: " + arg + " / "
     if (op === "MOVUP" || op === "MOVDOWN") {
         if (op.valueOf() == "MOVUP") {
             var from = arg.toString();
@@ -144,17 +143,15 @@ function applyChangesStep(op, arg) {
         fromCOL.innerHTML = toCOL.innerHTML;
         toCOL.innerHTML = COL;
         switchAlg(from, to);
-    }
-    else if (op == 'DEL') {
+    } else if (op == 'DEL') {
         location.reload();
-    }
-    else {
+    } else {
         ret = { 'response': False, 'err': 'Operation not found' }
         addViewLog('Error: ' + op + ' failed')
     }
 }
+/*  ---- AJAX call to operate ---- */
 function operateStep(operation, arg) {
-    // window.alert(operation+", "+arg)
     if (modify == true) {
         if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete step " + arg + "?")))
 
@@ -185,34 +182,153 @@ function operateStep(operation, arg) {
             });
     }
 }
-function operatePipeline(operation, arg) {
-    // window.alert(operation+", "+arg)
-    if (modify == true) {
-        if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines " + numPipe + "?")))
-            $.ajax({
-                // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
-                data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
-                contentType: 'application/json',
-                url: '/operate/pipeline/' + numPipe + '/operate/',
-                type: 'post',
-                beforeSend: function () {
-                    toggleModify();
-                    text.textContent = 'Operating, wait please...';
-                },
-                success: function (ret) {
-                    if (ret.response) {
-                        text.textContent = '';
-                        applyChangesStep(operation, arg);
-                    } else {
-                        text.textContent = ret.err;
-                    }
-                    addViewLog(ret.newLog);
-                    toggleModify();
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    toggleModify();
-                    text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
-                }
-            });
+// function operatePipeline(operation, arg) {
+//     // window.alert(operation+", "+arg)
+//     if (modify == true) {
+//         if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines " + numPipe + "?")))
+//             $.ajax({
+//                 // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
+//                 data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
+//                 contentType: 'application/json',
+//                 url: '/operate/pipeline/' + numPipe + '/operate/',
+//                 type: 'post',
+//                 beforeSend: function () {
+//                     toggleModify();
+//                     text.textContent = 'Operating, wait please...';
+//                 },
+//                 success: function (ret) {
+//                     if (ret.response) {
+//                         text.textContent = '';
+//                         applyChangesStep(operation, arg);
+//                     } else {
+//                         text.textContent = ret.err;
+//                     }
+//                     addViewLog(ret.newLog);
+//                     toggleModify();
+//                 },
+//                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                     toggleModify();
+//                     text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+//                 }
+//             });
+//     }
+// }
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Data selector to pipeline operations ---- */
+// Open selection
+function popupSelectData(operation, title, options, mode = []) {
+    if (popupWindow('dataSelector')) {
+        document.getElementById("titleSelectData").innerHTML = title;
+        actualOperation = operation;
+        for (var i = 0; i < options.length; i++)
+            popupOptions.push([options[i], ((typeof mode[i] === 'undefined') ? true : mode[i])])
     }
+}
+// Close selection
+function popupCloseSelectData() {
+    if (popupClose()) {
+        document.getElementById("selectDataCols").innerHTML = '';
+        var theForm = document.getElementById("selectDataForm")
+        theForm.reset();
+        if (theForm.childElementCount > 4)
+            theForm.removeChild(theForm.lastChild)
+        actualOperation = null;
+        popupOptions.length = 0;
+    }
+}
+// Show selection options in a data
+function selectColsDataShow(selectColsData) {
+    var theOptionView = document.getElementById("selectDataCols")
+    for (var i = 0; i < popupOptions.length; i++) {
+        var ptext = document.createTextNode(popupOptions[i][0] + ': ');
+        theOptionView.appendChild(ptext);
+        var theSelect = document.createElement('select');
+        theSelect.name = 'selectData';
+
+        var anOption = document.createElement('option');
+        if (popupOptions[i][1]) {
+            anOption.selected = true;
+            theSelect.required = 'required';
+            anOption.disabled = 'disabled';
+            anOption.innerHTML = 'Required';
+        } else {
+            anOption.required = false;
+            anOption.disabled = false;
+            anOption.innerHTML = 'Not required';
+        }
+        anOption.value = '';
+        theSelect.appendChild(anOption);
+
+        for (var j = 0; j < selectColsData.length; j++) {
+            var anOption = document.createElement('option');
+            anOption.innerHTML = selectColsData[j]
+            anOption.value = j;
+            theSelect.appendChild(anOption);
+        }
+
+        theOptionView.appendChild(theSelect);
+        var br = document.createElement("br");
+        theOptionView.appendChild(br.cloneNode(true));
+    }
+    var theSubmitButton = document.createElement('button');
+    theSubmitButton.classList.add('aButton');
+    theSubmitButton.classList.add('b4');
+    theSubmitButton.classList.add('s16');
+    theSubmitButton.classList.add('yesPadding');
+    theSubmitButton.innerHTML = 'Accept';
+    //   var aa = document.getElementById("dataSelector")
+    //   aa.appendChild(theSubmitButton)
+    document.getElementById("selectDataForm").appendChild(theSubmitButton)
+
+}
+
+
+
+// if (text != '' || text != null) {
+//     var theLog = document.getElementById('LogView');
+//     var addlog = document.createElement('p');
+//     var timelog = document.createElement('span');
+//     timelog.classList.add('boldText');
+//     timelog.innerHTML = text[0]
+//     addlog.appendChild(timelog);
+
+
+//     var br = document.createElement("br");
+//     addlog.appendChild(br.cloneNode(true));
+
+//     var ptext = document.createTextNode(text[1]);
+//     addlog.appendChild(ptext);
+
+//     // addlog.innerHTML = text[0] + text[1];
+//     // window.alert(text)
+//     // theLog.appendChild(addlog);
+//     theLog.insertBefore(addlog, theLog.firstChild);
+// }
+
+
+
+function selectDataChanged() {
+    var selectData = document.getElementById("selectData").value
+    $.ajax({
+        // data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
+        contentType: 'application/json',
+        url: '/datas/get' + selectData + '/plain',
+        type: 'post',
+        beforeSend: function () {
+            popupText.textContent = 'Getting data...';
+        },
+        success: function (ret) {
+            if (ret.response) {
+                popupText.textContent = '';
+                // selectColsData = ret.selectColsData;
+                selectColsDataShow(ret.selectColsData);
+            } else {
+                popupText.textContent = ret.err;
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            popupText.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+        }
+    });
+
 }
