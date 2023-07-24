@@ -2,12 +2,12 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Initial settings ---- */
 document.addEventListener('DOMContentLoaded', function () {
-    // window.alert( sessionStorage.getItem("BlockLog"))
     modify = false;
     text = document.getElementById('errPipeSection');
     popupText = document.getElementById('errPopupSection');
     popupOptions = [];
     actualOperation = null;
+    actualOutput = null;
 }, false);
 
 /*  ---- Modify toggle button ---- */
@@ -18,21 +18,23 @@ function toggleModify(element) {
         modify = false;
     }
 }
-function toggleModify() {
+function toggleModify(mode = true) {
     var mov = document.getElementsByName('movStep');
     var del = document.getElementsByName('delStep');
     var buttonModify = document.getElementById('toggleModify');
     if (mov[0].classList.contains('Darker')) {
-        for (var i = 0; i < mov.length; i++)
-            mov[i].classList.remove('Darker');
+        if (mode) {
+            for (var i = 0; i < mov.length; i++)
+                mov[i].classList.remove('Darker');
 
-        for (var i = 0; i < del.length; i++)
-            del[i].classList.remove('Darker');
+            for (var i = 0; i < del.length; i++)
+                del[i].classList.remove('Darker');
 
-        buttonModify.classList.remove('b4');
-        buttonModify.classList.add('b3');
-        buttonModify.textContent = 'Modify enabled';
-        modify = true;
+            buttonModify.classList.remove('b4');
+            buttonModify.classList.add('b3');
+            buttonModify.textContent = 'Modify enabled';
+            modify = true;
+        }
     } else {
         for (var i = 0; i < mov.length; i++)
             mov[i].classList.add('Darker');
@@ -150,14 +152,12 @@ function applyChangesStep(op, arg) {
         addViewLog('Error: ' + op + ' failed')
     }
 }
-/*  ---- AJAX call to operate ---- */
+/*  ---- AJAX call to operate step ---- */
 function operateStep(operation, arg) {
     if (modify == true) {
         if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete step " + arg + "?")))
-
             $.ajax({
-                // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
-                data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
+                data: JSON.stringify({ op: operation, arg: arg }),
                 contentType: 'application/json',
                 url: '/operate/pipeline/' + numPipe + '/steps/',
                 type: 'post',
@@ -182,37 +182,6 @@ function operateStep(operation, arg) {
             });
     }
 }
-// function operatePipeline(operation, arg) {
-//     // window.alert(operation+", "+arg)
-//     if (modify == true) {
-//         if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines " + numPipe + "?")))
-//             $.ajax({
-//                 // data: { op: operation, arg: arg }, //, etiquetas: etiquetasCheck},
-//                 data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
-//                 contentType: 'application/json',
-//                 url: '/operate/pipeline/' + numPipe + '/operate/',
-//                 type: 'post',
-//                 beforeSend: function () {
-//                     toggleModify();
-//                     text.textContent = 'Operating, wait please...';
-//                 },
-//                 success: function (ret) {
-//                     if (ret.response) {
-//                         text.textContent = '';
-//                         applyChangesStep(operation, arg);
-//                     } else {
-//                         text.textContent = ret.err;
-//                     }
-//                     addViewLog(ret.newLog);
-//                     toggleModify();
-//                 },
-//                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-//                     toggleModify();
-//                     text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
-//                 }
-//             });
-//     }
-// }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Data selector to pipeline operations ---- */
 // Open selection
@@ -239,13 +208,14 @@ function popupCloseSelectData() {
 // Show selection options in a data
 function selectColsDataShow(selectColsData) {
     var theOptionView = document.getElementById("selectDataCols")
+    var br = document.createElement("br");
     for (var i = 0; i < popupOptions.length; i++) {
-        var ptext = document.createTextNode(popupOptions[i][0] + ': ');
+        let ptext = document.createTextNode(popupOptions[i][0] + ': ');
         theOptionView.appendChild(ptext);
-        var theSelect = document.createElement('select');
+        let theSelect = document.createElement('select');
         theSelect.name = 'selectData';
 
-        var anOption = document.createElement('option');
+        let anOption = document.createElement('option');
         if (popupOptions[i][1]) {
             anOption.selected = true;
             theSelect.required = 'required';
@@ -260,14 +230,12 @@ function selectColsDataShow(selectColsData) {
         theSelect.appendChild(anOption);
 
         for (var j = 0; j < selectColsData.length; j++) {
-            var anOption = document.createElement('option');
+            anOption = document.createElement('option');
             anOption.innerHTML = selectColsData[j]
             anOption.value = j;
             theSelect.appendChild(anOption);
         }
-
         theOptionView.appendChild(theSelect);
-        var br = document.createElement("br");
         theOptionView.appendChild(br.cloneNode(true));
     }
     var theSubmitButton = document.createElement('button');
@@ -281,36 +249,10 @@ function selectColsDataShow(selectColsData) {
     document.getElementById("selectDataForm").appendChild(theSubmitButton)
 
 }
-
-
-
-// if (text != '' || text != null) {
-//     var theLog = document.getElementById('LogView');
-//     var addlog = document.createElement('p');
-//     var timelog = document.createElement('span');
-//     timelog.classList.add('boldText');
-//     timelog.innerHTML = text[0]
-//     addlog.appendChild(timelog);
-
-
-//     var br = document.createElement("br");
-//     addlog.appendChild(br.cloneNode(true));
-
-//     var ptext = document.createTextNode(text[1]);
-//     addlog.appendChild(ptext);
-
-//     // addlog.innerHTML = text[0] + text[1];
-//     // window.alert(text)
-//     // theLog.appendChild(addlog);
-//     theLog.insertBefore(addlog, theLog.firstChild);
-// }
-
-
-
 function selectDataChanged() {
     var selectData = document.getElementById("selectData").value
     $.ajax({
-        // data: JSON.stringify({ op: operation, arg: arg }), //, etiquetas: etiquetasCheck},
+        // data: JSON.stringify({ op: operation, arg: arg }), 
         contentType: 'application/json',
         url: '/datas/get' + selectData + '/plain',
         type: 'post',
@@ -332,3 +274,114 @@ function selectDataChanged() {
     });
 
 }
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Manage output of pipeline operation ---- */
+function setOutputPipeline(title, text, isCSV = []) {
+    if (actualOutput == null) {
+        actualOutput = [title, text, isCSV];
+        var pipeOutput = document.getElementById("pipeOutput");
+        pipeOutput.style.display = 'inline-block'
+        var br = document.createElement("br");
+
+        var theTitle = document.createElement('h2');
+        theTitle.innerHTML = title;
+        pipeOutput.appendChild(theTitle);
+
+        for (let i = 0; i < text.length; i++) {
+            let aCSV = isCSV.includes(i);
+            if (aCSV) var theOutput = document.createElement('span');
+            else var theOutput = document.createElement('textarea');
+            theOutput.innerHTML = text[i] + (aCSV ? '__' + i : '');
+            pipeOutput.appendChild(theOutput)
+            pipeOutput.appendChild(br.cloneNode(true));
+
+            let saveOutput = document.createElement('button');
+            saveOutput.innerHTML = 'Save output ' + (i + 1)
+            saveOutput.classList.add('aButton');
+            saveOutput.classList.add('b4');
+            saveOutput.classList.add('s14');
+            saveOutput.classList.add('yesPadding');
+            saveOutput.classList.add('yesMargin');
+            let addTheFuction = function () { saveOutputPipeline((i), aCSV); };
+            saveOutput.onclick = addTheFuction
+            pipeOutput.appendChild(saveOutput)
+            pipeOutput.appendChild(br.cloneNode(true));
+        }
+
+        var closeOutput = document.createElement('button');
+        closeOutput.innerHTML = 'Close'
+        closeOutput.classList.add('aButton');
+        saveOutput.classList.add('yesMargin');
+        closeOutput.classList.add('b1');
+        closeOutput.classList.add('roundBorder');
+        closeOutput.onclick = closeOutputPipeline
+        pipeOutput.appendChild(closeOutput)
+    }
+}
+function closeOutputPipeline() {
+    if (actualOutput != null && confirm("Do you want to close the Output pipeline? Do not forget to save it first!")) {
+        var pipeOutput = document.getElementById("pipeOutput");
+        pipeOutput.innerHTML = '';
+        pipeOutput.style.display = 'none';
+        actualOutput = null;
+    }
+}
+function saveOutputPipeline(num = 0, isCSV = false) {
+    // window.alert(num)
+    // window.alert(actualOutput[2].includes(1))
+    // window.alert(actualOutput[1][1])
+    // window.alert(actualOutput[1][parseInt(num)])
+    if (actualOutput != null) {
+        $.ajax({
+            data: JSON.stringify({
+                num: num,
+                title: actualOutput[0] + '_' + (parseInt(num) + 1),
+                text: actualOutput[1][parseInt(num)],
+                isCSV: isCSV
+            }),
+            contentType: 'application/json',
+            url: '/download/pipeline/output',
+            type: 'post',
+            beforeSend: function () {
+                text.textContent = 'Downloading output...';
+            },
+            success: function (ret) {
+                if (ret.response) {
+                    window.location.href = ret.download;
+                }
+                text.textContent = ret.err;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+            }
+        });
+    }
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- AJAX call to operate pipeline ---- */
+function operatePipeline(operation, args) {
+    if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines " + numPipe + "?")))
+        $.ajax({
+            data: JSON.stringify({ op: operation, args: args }),
+            contentType: 'application/json',
+            url: '/operate/pipeline/' + numPipe + '/operate/',
+            type: 'post',
+            beforeSend: function () {
+                toggleModify(false);
+                text.textContent = 'Operating pipeline with ' + operation + '...';
+            },
+            success: function (ret) {
+                if (ret.response) {
+                    text.textContent = '';
+                    applyChangesStep(operation, arg);
+                } else {
+                    text.textContent = ret.err;
+                }
+                addViewLog(ret.newLog);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+            }
+        });
+}
+

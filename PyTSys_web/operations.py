@@ -13,7 +13,8 @@ def downloadData(numberData=-1):
     downloadCSVName = myUser.myDatas[nData].Name
     downloadCSV = myUser.myDatas[nData]
     downloadCSV = downloadCSV.Data.to_csv(index=False)
-    return download(downloadCSV, downloadCSVName, 'text/csv', 'data nº'+str(nData))
+    theDownload = download(downloadCSV, downloadCSVName, 'text/csv')
+    return theDownload if theDownload is not None else messagePage(('Error saving data nº'+str(nData)))
 
 @app.route('/operate/data/<numberData>/name/',  methods=["GET", "POST"])
 def operateDataNewName(numberData=None):
@@ -116,3 +117,39 @@ def operatePipelineStep(numberPipeline=None):
     else:
         return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
 
+@app.route('/download/pipeline/output',  methods=["GET", "POST"])
+def downloadOutputPipeline():
+    if request.method == 'POST':
+        num = request.json.get('num')
+        title = request.json.get('title')
+        text = request.json.get('text')
+        isCSV = request.json.get('isCSV')
+        err = ''
+        print(num)
+        print(title)
+        print(text)
+        print(isCSV)
+
+        if isCSV:
+            # print('\n++CSV en '+str(i)+' con contenido: '+output[1][i]+', y de nombre como: '+output[0]+'_'+str(i))
+            theOutput = text
+            theOutput = pd.read_html(theOutput)
+            theOutput = theOutput.Data.to_csv(index=False)
+            theDownload = download(theOutput, title, 'text/csv', True)
+        else:
+            # print('\nno CSV en '+str(i)+' con contenido: '+output[1][i]+', y de nombre como: '+output[0]+'_'+str(i))
+
+            theDownload = download(text, title, 'text/plain', True)
+
+        if theDownload is None:
+            err = 'Error saving the output nº '+str(num+1)
+            res = False
+        else:
+            # outputDownloads.append(theDownload)
+            res = True
+
+        ret = {'response': res, 'err': err, 'download': theDownload}
+        return jsonify(ret)
+ 
+    else:
+        return redirect(url_for('mainPipeline'))

@@ -79,16 +79,10 @@
     <div class="yesMargin objectLine">
         <label for="newName">Pipeline's name:</label> <br>
         <input type="text" name="newName" id="newName" value="{{ thePipeline.Name}}" maxlength="100">
-        <button class="aButton b3  roundBorder yesPadding" onclick="changeNamePipeline()">
+        <button for="newName" class="aButton b3  roundBorder yesPadding" onclick="changeNamePipeline()">
             Change name
         </button>
-    </div>
-    <div class="err" id="errPipeSection">
-        <!-- {{thePipeline.aPipeline.get_params(deep=False)}}
-        <br>
-        and
-        <br>
-        {{thePipeline.aPipeline.atributes}} -->
+        <div class="err yesPadding " id="errPipeSection"></div>
     </div>
     <div class="yesMargin objectLine alingTop textLeft">
         <div class="yesMargin objectLine object2">
@@ -102,12 +96,11 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('Parameters')">
                     Parameters
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" 
-                onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
+                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
                 ['opciónA', 'opcion la b', 'la 3', '44Jhin44 opsion']
                 ,[false, true, false, true],)">
-                <!-- , [true, true, true, true],)"> -->
-                <!-- )"> -->
+                    <!-- , [true, true, true, true],)"> -->
+                    <!-- )"> -->
                     Fit
                 </button>
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
@@ -116,7 +109,8 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
                     Score
                 </button>
-                <button class="right aButton b1 s16 yesPadding yesMargin object2">
+                <button class="right aButton b1 s16 yesPadding yesMargin object2"
+                    onclick="operatePipeline('DEL', null)">
                     Delete pipeline
                 </button>
             </div>
@@ -172,12 +166,65 @@
                                 Operate</button>
                         </td>
                     </tr>
+                    {% endfor %} {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %} {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %} {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %} {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %} {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
+                    {% endfor %} {% for aStep in thePipeline.steps() %}
+                    <tr id="OP-{{loop.index0}}">
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                            <button>
+                                Operate</button>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-
     </div>
+    <button class="objectLine" onclick="setOutputPipeline('titulo de esto',
+    ['texto sin importancia con salto de linea y cosas', 'hehent']
+    )">
+        click
+    </button>
+    <div id="pipeOutput" class="otherSection"></div>
 </div>
 
 {% endblock %}

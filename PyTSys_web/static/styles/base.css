@@ -51,7 +51,6 @@ html {
     text-align: center;
     border-collapse: collapse;
     border-top-width: 1px;
-    border-top-width: 1px;
     border-bottom: thick groove;
     overflow: hidden;
 }
@@ -251,7 +250,7 @@ input[type="checkbox"] {
 }
 
 /* Form design settings */
-textarea {
+.aform textarea {
     height: 5em;
 }
 
@@ -364,15 +363,26 @@ input[type="button"] {
 /*  ---- Additional settings ---- */
 /* Secction design */
 .otherSection {
-    text-align: center;
-    padding: 10px;
-    padding-right: 5vw;
-    padding-left: 5vw;
-    margin-top: 5px;
-    background-color: lightcyan;
+    max-height: 75vh;
+    padding: 3%;
+    /* margin: 3%; */
+    margin: 1% 5% 1% 5%;
+    background-color: #e3f1fd;
+    border-color: #4175a9;
     border-radius: 20px;
     border-style: outset;
-    border-color: rgb(150, 164, 255);
+    text-align: center;
+    overflow-y: scroll;
+}
+
+.otherSection>span {
+    white-space: pre-wrap;
+}
+
+.otherSection:empty {
+    display: none;
+    /* padding: 0px;
+    margin: 0px; */
 }
 
 .border1 {
@@ -629,6 +639,8 @@ input[type="button"] {
 
 .err {
     color: red;
+    max-width: 360px;
+    text-align: left;
 }
 
 .pointer {

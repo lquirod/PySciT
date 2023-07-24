@@ -88,11 +88,7 @@
 
                 <div class="err" id="errDataSection">
                     {% if errors %}
-                    <p> Error adding a new Data:
-                        {% for e in º %}
-                        <br>- {{e}}
-                        {% endfor %}
-                    </p>
+                    <p>{{errors}}</p>
                     {% endif %}
                 </div>
                 {% if loaded %}

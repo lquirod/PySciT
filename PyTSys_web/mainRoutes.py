@@ -74,13 +74,15 @@ def addADataLoad(theFile = None, checkHasCols = True, SaveData = False):
     if SaveData:
         if theFile is None:
             redirect(url_for('addAData'))
-        if checkHasCols:
-            checkHasCols = 0
-        else:
-            checkHasCols = None
 
+        checkHasCols = 0 if checkHasCols else None
         err = []
-        theData = pd.read_csv(theFile, header=checkHasCols)
+        try:
+            theData = pd.read_csv(theFile, header=checkHasCols)
+        except Exception:
+            return render_template("createData.html", loaded = False,
+                                   errors = 'Error loading data, check the file is not empty')
+
         theDataJSON = theData.to_json(orient = 'split')
         if theData.empty:
             return render_template("createData.html", loaded = False, errors = 'The data file is empty')

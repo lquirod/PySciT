@@ -3,15 +3,17 @@ from PyTSys_web import app
 from markupsafe import Markup
 from datetime import datetime
 
-def download(text, name, type, err = ''):
+def download(text, name, type, mode = False):
     try:
         response = make_response(text)
         cd = 'attachment; filename='+name
         response.headers['Content-Disposition'] = cd
         response.mimetype = type
+        # if mode:
+            # response.status_code = 200
         return response
     except Exception:
-        return messagePage(('Error saving '+err))
+        return None
 
 logs = []
 
@@ -25,7 +27,8 @@ def addLog(msg):
 def downloadLogs():
     downloadName = datetime.now().strftime("%m-%d-%Y_%H-%M")
     logText = [' '.join(elem) for elem in logs]
-    return download( "\n".join(reversed(logText)), 'log_'+downloadName, 'text/plain', 'the logs')
+    theDownload = download( "\n".join(reversed(logText)), 'log_'+downloadName, 'text/plain')
+    return theDownload if theDownload is not None else messagePage(('Error saving the logs'))
 
 @app.context_processor
 def logFuction():
