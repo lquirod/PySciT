@@ -8,20 +8,25 @@ Clone repository:
 $ git clone https://github.com/lquirod/PyTSys
 
 Create and activate virtual environment:
+
 	$ cd PyTSys/
 	$ python3 -m venv venv/
 	$ source venv/bin/activate
 
 Changed to:
+
 	$ (venv) myuser:path$
 
 Install requirements:
+
 	$ pip3 install -r requirements.txt
 
 Install flask application:
+
 	$ pip install -e .
 
 Execute:
+
 	$ flask --app PyTSys_web run
 
 
