@@ -1,31 +1,36 @@
 <!-- Error Page
     With an error message and some important buttons links
  -->
- {% extends "base.html" %}
- {% block infoWindow %}
- <title>PyTSys - Message</title>
- {% endblock %}
- {% block mainBody %}
- 
- {% if errMSG %}
- <h1>Oops, something went wrong!</h1>
- {% else %}
- <h1>Page message</h1>
- {% endif %}
+{% extends "base.html" %}
+{% block infoWindow %}
+<title>PyTSys - Message</title>
+{% endblock %}
+{% block mainBody %}
 
- <div class="textContent">
-     <p> {{ MSG }}</p>
-        <p>You can use the upper navigation bar or the buttons below with more interesting links:
-     </p>
- </div>
+{% if errMSG %}
+<h1>Oops, something went wrong!</h1>
+{% else %}
+<h1>Page message</h1>
+{% endif %}
+
+<div class="textContent">
+    {% if isList %}
+    {% for amsg in MSG %}
+    <p> {{ amsg }}</p>
+    {% endfor %}
+    {% else %}
+    <p> {{ MSG }}</p>
+    {% endif %}
+    <p>You can use the upper navigation bar or the buttons below with more interesting links:
+</div>
 
 <button class="aButton b4 s16 roundBorder yesPadding yesMargin object3" onclick="location.href='/'">
     Home menu</button>
 {% include "static/mainButtons.html" %}
- {% endblock %}
- 
- {% block funcionesJS %}
- <!-- <script src="js/basic.js" defer></script>
+{% endblock %}
+
+{% block funcionesJS %}
+<!-- <script src="js/basic.js" defer></script>
  <script src="js/busqueda.js" defer></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
- {% endblock %}
+{% endblock %}

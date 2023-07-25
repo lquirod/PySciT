@@ -9,8 +9,6 @@ def download(text, name, type, mode = False):
         cd = 'attachment; filename='+name
         response.headers['Content-Disposition'] = cd
         response.mimetype = type
-        # if mode:
-            # response.status_code = 200
         return response
     except Exception:
         return None
@@ -40,11 +38,10 @@ def helpPage():
 
 @app.route('/msg/', methods=["GET", "POST"])
 def messagePage(msg=None, err = True):
-    print('baia '+msg+' y err is '+str(err))
-    if msg == None or msg == '':
+    if msg == None or msg == '' or msg == []:
         return redirect(url_for('homePage'))
     else:
-        return render_template("static/messagePage.html", MSG = msg, errMSG = err)
+        return render_template("static/messagePage.html", MSG = msg, errMSG = err, isList = isinstance(msg, list))
 
 
 @app.errorhandler(404)

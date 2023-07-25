@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     popupText = document.getElementById('errPopupSection');
     popupOptions = [];
     actualOperation = null;
-    actualOutput = null;
+    actualOutput = false;
 }, false);
 
 /*  ---- Modify toggle button ---- */
@@ -276,85 +276,81 @@ function selectDataChanged() {
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Manage output of pipeline operation ---- */
-function setOutputPipeline(title, text, isCSV = []) {
-    if (actualOutput == null) {
-        actualOutput = [title, text, isCSV];
+function setOutputPipeline(title, text, isHTMLtable = []) {
+    if (!actualOutput ) {
+        actualOutput = true;
         var pipeOutput = document.getElementById("pipeOutput");
         pipeOutput.style.display = 'inline-block'
         var br = document.createElement("br");
 
-        var theTitle = document.createElement('h2');
-        theTitle.innerHTML = title;
+        var closeOutput = document.createElement('button');
+        closeOutput.innerHTML = 'Close';
+        closeOutput.type = 'button';
+        closeOutput.onclick = closeOutputPipeline;
+        closeOutput.style.position = 'sticky';
+        closeOutput.style.top = '-3%';
+        closeOutput.style.marginRight = '-3%';
+        closeOutput.style.marginTop = '-3%';
+        closeOutput.classList.add('aButton');
+        closeOutput.classList.add('pointer');
+        closeOutput.classList.add('yesPadding');
+        closeOutput.classList.add('right');
+        closeOutput.classList.add('b1');
+        closeOutput.classList.add('s16');
+        pipeOutput.appendChild(closeOutput);
+
+        var addText = document.createElement('h2');
+        addText.innerHTML = title;
+        pipeOutput.appendChild(addText);
+        var theTitle = document.createElement('input');
+        theTitle.type = 'hidden';
+        theTitle.name = 'title';
+        theTitle.value = title;
         pipeOutput.appendChild(theTitle);
 
         for (let i = 0; i < text.length; i++) {
-            let aCSV = isCSV.includes(i);
-            if (aCSV) var theOutput = document.createElement('span');
-            else var theOutput = document.createElement('textarea');
-            theOutput.innerHTML = text[i] + (aCSV ? '__' + i : '');
-            pipeOutput.appendChild(theOutput)
-            pipeOutput.appendChild(br.cloneNode(true));
+            let aHTMLtable = isHTMLtable.includes(i);
+            if (aHTMLtable) {
+                pipeOutput.insertAdjacentHTML('beforeend', text[i]);
+            } else {
+                var addText = document.createElement('p');
+                addText.innerHTML = text[i];
+                pipeOutput.appendChild(addText);
+            }
+            var checkTable = document.createElement('input');
+            checkTable.type = 'checkbox';
+            checkTable.name = 'check_' + i;
+            checkTable.checked = aHTMLtable;
+            checkTable.style.display = 'none'
+        pipeOutput.appendChild(checkTable);
+
+            var theSubmitOutput = document.createElement('input');
+            theSubmitOutput.type = 'hidden';
+            theSubmitOutput.name = 'text_' + i;
+            theSubmitOutput.value = text[i];
+            pipeOutput.appendChild(theSubmitOutput);
 
             let saveOutput = document.createElement('button');
             saveOutput.innerHTML = 'Save output ' + (i + 1)
             saveOutput.classList.add('aButton');
             saveOutput.classList.add('b4');
-            saveOutput.classList.add('s14');
+            saveOutput.classList.add('s16');
             saveOutput.classList.add('yesPadding');
             saveOutput.classList.add('yesMargin');
-            let addTheFuction = function () { saveOutputPipeline((i), aCSV); };
-            saveOutput.onclick = addTheFuction
+            saveOutput.name = 'submit_button';
+            saveOutput.value = i;
             pipeOutput.appendChild(saveOutput)
             pipeOutput.appendChild(br.cloneNode(true));
         }
-
-        var closeOutput = document.createElement('button');
-        closeOutput.innerHTML = 'Close'
-        closeOutput.classList.add('aButton');
-        saveOutput.classList.add('yesMargin');
-        closeOutput.classList.add('b1');
-        closeOutput.classList.add('roundBorder');
-        closeOutput.onclick = closeOutputPipeline
-        pipeOutput.appendChild(closeOutput)
     }
+    document.getElementById("pipeOutput").scrollIntoView({ behavior: 'smooth' });
 }
 function closeOutputPipeline() {
-    if (actualOutput != null && confirm("Do you want to close the Output pipeline? Do not forget to save it first!")) {
+    if (actualOutput  && confirm("Do you want to close the Output pipeline? Do not forget to save it first!")) {
         var pipeOutput = document.getElementById("pipeOutput");
         pipeOutput.innerHTML = '';
         pipeOutput.style.display = 'none';
-        actualOutput = null;
-    }
-}
-function saveOutputPipeline(num = 0, isCSV = false) {
-    // window.alert(num)
-    // window.alert(actualOutput[2].includes(1))
-    // window.alert(actualOutput[1][1])
-    // window.alert(actualOutput[1][parseInt(num)])
-    if (actualOutput != null) {
-        $.ajax({
-            data: JSON.stringify({
-                num: num,
-                title: actualOutput[0] + '_' + (parseInt(num) + 1),
-                text: actualOutput[1][parseInt(num)],
-                isCSV: isCSV
-            }),
-            contentType: 'application/json',
-            url: '/download/pipeline/output',
-            type: 'post',
-            beforeSend: function () {
-                text.textContent = 'Downloading output...';
-            },
-            success: function (ret) {
-                if (ret.response) {
-                    window.location.href = ret.download;
-                }
-                text.textContent = ret.err;
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
-            }
-        });
+        actualOutput = false;
     }
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

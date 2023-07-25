@@ -120,36 +120,26 @@ def operatePipelineStep(numberPipeline=None):
 @app.route('/download/pipeline/output',  methods=["GET", "POST"])
 def downloadOutputPipeline():
     if request.method == 'POST':
-        num = request.json.get('num')
-        title = request.json.get('title')
-        text = request.json.get('text')
-        isCSV = request.json.get('isCSV')
-        err = ''
-        print(num)
-        print(title)
-        print(text)
-        print(isCSV)
+        button = request.form['submit_button']
+        title = request.form['title']+'_'+button
+        text = request.form['text_'+button]
+        isHTMLtable = True if request.form.get('check_'+button) else False
 
-        if isCSV:
-            # print('\n++CSV en '+str(i)+' con contenido: '+output[1][i]+', y de nombre como: '+output[0]+'_'+str(i))
+        if isHTMLtable:
             theOutput = text
             theOutput = pd.read_html(theOutput)
-            theOutput = theOutput.Data.to_csv(index=False)
+            theOutput = theOutput[0].to_csv(index=False)
             theDownload = download(theOutput, title, 'text/csv', True)
         else:
-            # print('\nno CSV en '+str(i)+' con contenido: '+output[1][i]+', y de nombre como: '+output[0]+'_'+str(i))
-
             theDownload = download(text, title, 'text/plain', True)
 
         if theDownload is None:
-            err = 'Error saving the output nº '+str(num+1)
-            res = False
+            msg ='Output couldn\'t be downloaded'
+            err = True
+            return render_template("static/messagePage.html", MSG = msg, errMSG = err, isList = isinstance(msg, list)) 
         else:
-            # outputDownloads.append(theDownload)
-            res = True
-
-        ret = {'response': res, 'err': err, 'download': theDownload}
-        return jsonify(ret)
- 
+            msg ='Output downloaded sucessfully'
+            err= False
+            return theDownload
     else:
         return redirect(url_for('mainPipeline'))
