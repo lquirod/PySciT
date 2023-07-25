@@ -3,6 +3,27 @@ A (Python) Pipelines Toolkit System
 
 gitHub: https://github.com/lquirod/PyTSys
 
+## Installing
+Clone repository:
+$ git clone https://github.com/lquirod/PyTSys
+
+Create and activate virtual environment:
+$ cd PyTSys/
+$ python3 -m venv venv/
+$ source venv/bin/activate
+
+	Cuando el entorno esté activado se indicará en nuestro terminal como
+$ (venv) myuser:path$
+
+Install requirements:
+$ pip3 install -r requirements.txt
+
+Install flask application:
+$ pip install -e .
+
+Execute:
+$ flask --app PyTSys_web run
+
 
 <!-- 
 En Linux/Mac:
