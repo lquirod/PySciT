@@ -126,7 +126,7 @@ def theDataPage(numberData=None, plain=''):
     theDataPage = myUser.myDatas[nData]
     if request.method == 'POST' and plain=='plain':
         if theDataPage.getNameCols():
-            ret = {'response': True, 'selectColsData': theDataPage.getNameCols()}
+            ret = {'response': True, 'selectColsData': theDataPage.getNameCols(), 'selectData': theDataPage.Data[:10].to_html()}
         else:
             ret = {'response': False, 'err': 'This data has no data'}
         return jsonify(ret)
@@ -148,7 +148,6 @@ def addAPipeline():
         newPipe = str(myUser.addPipeline(mAlg.getAlgorithmPipe(alg, name))-1)
         addLog("Created pipeline "+newPipe+", "+alg+": "+name)
         return redirect(url_for('thePipelinePage',numberPipeline = newPipe))
-
 
     return render_template("createPipeline.html",  allALG= mAlg.getAlgorithmsList(), newName = name, errors = err)
 

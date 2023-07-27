@@ -68,7 +68,7 @@ function changeNameData() {
         $.ajax({
             data: JSON.stringify({ newName: newName }),
             contentType: 'application/json',
-            url: '/operate/data/' + numData + '/name/',
+            url: '/datas/get' + numData + '/operate/name/',
             type: 'post',
             beforeSend: function () {
                 text.textContent = 'Renaming data...';
@@ -94,7 +94,7 @@ function changeNameData() {
 function saveDataFile(allFile, num) {
     $.ajax({
         contentType: 'application/json',
-        url: '/download/data/'+num,
+        url: '/datas/get'+num+'/download',
         type: 'post',
         beforeSend: function () {
             text.textContent = 'Saving new data...';

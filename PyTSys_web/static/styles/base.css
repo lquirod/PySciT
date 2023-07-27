@@ -199,6 +199,8 @@ html {
     display: none;
     text-align: center;
     vertical-align: middle;
+    overflow: scroll;
+    padding: 2%;
 }
 
 .popupDiv {
@@ -211,13 +213,11 @@ html {
     z-index: 99;
     /* width: 80%;
     height: 80%; */
-    min-width: 670px;
-    min-height: 600px;
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 3%;
+    margin-bottom: 3%;
     padding: 2%;
-    overflow: auto;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

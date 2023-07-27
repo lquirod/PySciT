@@ -4,7 +4,7 @@ from PyTSys_web.mainRoutes import *
 
 #############################################################################################
 # Datas #
-@app.route('/download/data/<numberData>/',  methods=["GET", "POST"])
+@app.route('/datas/get<numberData>/download/',  methods=["GET", "POST"])
 def downloadData(numberData=-1):
     nData = thisDataExist(numberData)
     if nData == None:
@@ -16,7 +16,7 @@ def downloadData(numberData=-1):
     theDownload = download(downloadCSV, downloadCSVName, 'text/csv')
     return theDownload if theDownload is not None else messagePage(('Error saving data nº'+str(nData)))
 
-@app.route('/operate/data/<numberData>/name/',  methods=["GET", "POST"])
+@app.route('/datas/get<numberData>/operate/name/',  methods=["GET", "POST"])
 def operateDataNewName(numberData=None):
     if request.method == 'POST':
         nlog = ''
@@ -35,7 +35,25 @@ def operateDataNewName(numberData=None):
 
 #############################################################################################
 # Pipelines #
-@app.route('/operate/pipeline/<numberPipeline>/addStep/',  methods=["GET", "POST"])
+@app.route('/pipelines/get<numberPipeline>/operate/name/',  methods=["GET", "POST"])
+def operatePipelineNewName(numberPipeline=None):
+    if request.method == 'POST':
+        nlog = ''
+        nPipe = thisPipeExist(numberPipeline)
+        if nPipe == None:
+            ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
+            return jsonify(ret)
+        
+        newName = request.json.get('newName')
+        myUser.myPipelines[nPipe].Name = newName
+        nlog = addLog('Renamed Pipe '+str(nPipe)+' to '+newName)
+        ret = {'response': True, 'err': 'Operation done', 'newLog': nlog}
+        return jsonify(ret)
+    
+    else:
+        return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
+
+@app.route('/pipelines/get<numberPipeline>/operate/steps/add/',  methods=["GET", "POST"])
 def operatePipelineAddStep(numberPipeline=-1):
     if request.method == 'POST':
         nPipe = thisPipeExist(numberPipeline)
@@ -65,25 +83,7 @@ def operatePipelineAddStep(numberPipeline=-1):
     else:
         return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
 
-@app.route('/operate/pipeline/<numberPipeline>/name/',  methods=["GET", "POST"])
-def operatePipelineNewName(numberPipeline=None):
-    if request.method == 'POST':
-        nlog = ''
-        nPipe = thisPipeExist(numberPipeline)
-        if nPipe == None:
-            ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
-            return jsonify(ret)
-        
-        newName = request.json.get('newName')
-        myUser.myPipelines[nPipe].Name = newName
-        nlog = addLog('Renamed Pipe '+str(nPipe)+' to '+newName)
-        ret = {'response': True, 'err': 'Operation done', 'newLog': nlog}
-        return jsonify(ret)
-    
-    else:
-        return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
-
-@app.route('/operate/pipeline/<numberPipeline>/steps/',  methods=["GET", "POST"])
+@app.route('/pipelines/get<numberPipeline>/operate/steps/',  methods=["GET", "POST"])
 def operatePipelineStep(numberPipeline=None):
     if request.method == 'POST':
         nlog = ''
@@ -101,7 +101,7 @@ def operatePipelineStep(numberPipeline=None):
         elif op == 'DEL':
             response = myUser.delStep(arg, nPipe)
         else:
-            nlog = addLog('Error: '+op+' failed')
+            nlog = addLog('Error: '+op+' failed on pipeline '+str(nPipe))
             ret = {'response': False, 'err': 'Operation not found', 'newLog': nlog}
             return jsonify(ret)
 
@@ -117,7 +117,42 @@ def operatePipelineStep(numberPipeline=None):
     else:
         return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
 
-@app.route('/download/pipeline/output',  methods=["GET", "POST"])
+@app.route('/pipelines/get<numberPipeline>/operate/',  methods=["GET", "POST"])
+def operatePipelineOperate(numberPipeline=None):
+    if request.method == 'POST':
+        nlog = ''
+        nPipe = thisPipeExist(numberPipeline)
+        if nPipe == None:
+            ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
+            return jsonify(ret)
+
+        op = request.json.get('op')
+        args = request.json.get('args')
+        if op == 'DEL':
+            response = myUser.delPipeline(nPipe)
+        elif op == '_______':
+            print('')
+        elif op == '_______':
+            print('')
+        else:
+            nlog = addLog('Error: '+op+' failed on pipeline '+str(nPipe))
+            ret = {'response': False, 'err': 'Operation not found', 'newLog': nlog}
+            return jsonify(ret)
+
+        if response:
+            nlog = addLog(op+' Pipe '+str(nPipe))
+            err = 'Operation done'
+        else:
+            nlog = addLog('Error, denied operation: '+op+' Pipe '+str(nPipe))
+            err = 'Error, denied operation'
+            
+        ret = {'response': response, 'err': err, 'newLog': nlog}
+        return jsonify(ret)
+    
+    else:
+        return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
+
+@app.route('/pipelines/download/output',  methods=["GET", "POST"])
 def downloadOutputPipeline():
     if request.method == 'POST':
         button = request.form['submit_button']

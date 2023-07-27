@@ -110,7 +110,7 @@
                     Score
                 </button>
                 <button class="right aButton b1 s16 yesPadding yesMargin object2"
-                    onclick="operatePipeline('DEL', null)">
+                    onclick="operatePipeline('DEL')">
                     Delete pipeline
                 </button>
             </div>
@@ -229,7 +229,7 @@
         click
     </button>
     <br>
-    <form id="pipeOutput" action="/download/pipeline/output" method="post" target="_blank" class="otherSection invisibleForm" ></form>
+    <form id="pipeOutput" action="/pipelines/download/output" method="post" target="_blank" class="otherSection invisibleForm" ></form>
 </div>
 
 {% endblock %}

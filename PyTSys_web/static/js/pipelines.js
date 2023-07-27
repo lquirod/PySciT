@@ -58,7 +58,7 @@ function changeNamePipeline() {
         $.ajax({
             data: JSON.stringify({ newName: newName }),
             contentType: 'application/json',
-            url: '/operate/pipeline/' + numPipe + '/name/',
+            url: '/pipelines/get' + numPipe + '/operate/name/',
             type: 'post',
             beforeSend: function () {
                 text.textContent = 'Renaming pipeline...';
@@ -88,7 +88,7 @@ function addStepToPipe() {
     // window.alert('Got the '+theAddStep+' in pos '+position)
     $.ajax({
         contentType: 'application/json',
-        url: '/operate/pipeline/' + numPipe + '/addStep/',
+        url: '/pipelines/get' + numPipe + '/operate/steps/add',
         data: JSON.stringify({ position: position, theAddStep: theAddStep }),
         type: 'post',
         beforeSend: function () {
@@ -159,7 +159,7 @@ function operateStep(operation, arg) {
             $.ajax({
                 data: JSON.stringify({ op: operation, arg: arg }),
                 contentType: 'application/json',
-                url: '/operate/pipeline/' + numPipe + '/steps/',
+                url: '/pipelines/get' + numPipe + 'operate/steps/',
                 type: 'post',
                 beforeSend: function () {
                     toggleModify();
@@ -194,13 +194,18 @@ function popupSelectData(operation, title, options, mode = []) {
     }
 }
 // Close selection
+function popupClearSelectData() {
+    document.getElementById("selectDataCols").innerHTML = '';
+    document.getElementById("dataSelectorPreview").innerHTML = '';
+    var theForm = document.getElementById("selectDataForm")
+    // theForm.reset();
+    if (theForm.childElementCount > 4)
+        theForm.removeChild(theForm.lastChild)
+    return theForm
+}
 function popupCloseSelectData() {
     if (popupClose()) {
-        document.getElementById("selectDataCols").innerHTML = '';
-        var theForm = document.getElementById("selectDataForm")
-        theForm.reset();
-        if (theForm.childElementCount > 4)
-            theForm.removeChild(theForm.lastChild)
+        popupClearSelectData().reset()
         actualOperation = null;
         popupOptions.length = 0;
     }
@@ -247,9 +252,14 @@ function selectColsDataShow(selectColsData) {
     //   var aa = document.getElementById("dataSelector")
     //   aa.appendChild(theSubmitButton)
     document.getElementById("selectDataForm").appendChild(theSubmitButton)
-
+}
+function selectDataShowPreview(selectData) {
+    //     var selectDataPreview = document.getElementById("dataSelectorPreview")
+    //    selectDataPreview.insertAdjacentHTML('beforeend', selectData);
+    document.getElementById("dataSelectorPreview").insertAdjacentHTML('beforeend', selectData);
 }
 function selectDataChanged() {
+    popupClearSelectData()
     var selectData = document.getElementById("selectData").value
     $.ajax({
         // data: JSON.stringify({ op: operation, arg: arg }), 
@@ -262,8 +272,8 @@ function selectDataChanged() {
         success: function (ret) {
             if (ret.response) {
                 popupText.textContent = '';
-                // selectColsData = ret.selectColsData;
                 selectColsDataShow(ret.selectColsData);
+                selectDataShowPreview(ret.selectData)
             } else {
                 popupText.textContent = ret.err;
             }
@@ -277,7 +287,7 @@ function selectDataChanged() {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Manage output of pipeline operation ---- */
 function setOutputPipeline(title, text, isHTMLtable = []) {
-    if (!actualOutput ) {
+    if (!actualOutput) {
         actualOutput = true;
         var pipeOutput = document.getElementById("pipeOutput");
         pipeOutput.style.display = 'inline-block'
@@ -288,9 +298,8 @@ function setOutputPipeline(title, text, isHTMLtable = []) {
         closeOutput.type = 'button';
         closeOutput.onclick = closeOutputPipeline;
         closeOutput.style.position = 'sticky';
-        closeOutput.style.top = '-3%';
-        closeOutput.style.marginRight = '-3%';
-        closeOutput.style.marginTop = '-3%';
+        closeOutput.style.top = '0px';
+        closeOutput.style.right = '0px';
         closeOutput.classList.add('aButton');
         closeOutput.classList.add('pointer');
         closeOutput.classList.add('yesPadding');
@@ -322,7 +331,7 @@ function setOutputPipeline(title, text, isHTMLtable = []) {
             checkTable.name = 'check_' + i;
             checkTable.checked = aHTMLtable;
             checkTable.style.display = 'none'
-        pipeOutput.appendChild(checkTable);
+            pipeOutput.appendChild(checkTable);
 
             var theSubmitOutput = document.createElement('input');
             theSubmitOutput.type = 'hidden';
@@ -346,7 +355,7 @@ function setOutputPipeline(title, text, isHTMLtable = []) {
     document.getElementById("pipeOutput").scrollIntoView({ behavior: 'smooth' });
 }
 function closeOutputPipeline() {
-    if (actualOutput  && confirm("Do you want to close the Output pipeline? Do not forget to save it first!")) {
+    if (actualOutput && confirm("Do you want to close the Output pipeline?\nDo not forget to save it first!")) {
         var pipeOutput = document.getElementById("pipeOutput");
         pipeOutput.innerHTML = '';
         pipeOutput.style.display = 'none';
@@ -355,12 +364,12 @@ function closeOutputPipeline() {
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- AJAX call to operate pipeline ---- */
-function operatePipeline(operation, args) {
+function operatePipeline(operation, args = 0) {
     if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines " + numPipe + "?")))
         $.ajax({
             data: JSON.stringify({ op: operation, args: args }),
             contentType: 'application/json',
-            url: '/operate/pipeline/' + numPipe + '/operate/',
+            url: '/pipelines/get' + numPipe + '/operate',
             type: 'post',
             beforeSend: function () {
                 toggleModify(false);
@@ -369,7 +378,8 @@ function operatePipeline(operation, args) {
             success: function (ret) {
                 if (ret.response) {
                     text.textContent = '';
-                    applyChangesStep(operation, arg);
+                    if (operation == 'DEL')
+                        window.location.replace("/pipelines");
                 } else {
                     text.textContent = ret.err;
                 }

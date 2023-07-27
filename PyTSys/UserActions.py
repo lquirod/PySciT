@@ -26,7 +26,7 @@ class UserActions:
         return len(self.myPipelines)
     
     def existPipeline(self, num):
-       if  len(self.myPipelines) == 0 or num is None or num < 0 or len(self.myPipelines) < num:
+       if  len(self.myPipelines) == 0 or num is None or int(num) < 0 or len(self.myPipelines) < int(num):
             return False
        else:
            return True
@@ -58,7 +58,7 @@ class UserActions:
             lenPip = len(self.myPipelines)
             if self.actualPipeline == pipePosition :
                 pipePosition = None
-            elif pipePosition < self.actualPipeline or self.actualPipeline == lenPip:
+            elif self.actualPipeline is not None and (pipePosition < self.actualPipeline or self.actualPipeline == lenPip):
                 self.actualPipeline -= 1
             return lenPip
         else:
