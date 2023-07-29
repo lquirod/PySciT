@@ -158,7 +158,8 @@ def thePipelinePage(numberPipeline=None):
         return messagePage('It seems that the pipeline you want to access does not exist')
 
     thePipeline = myUser.myPipelines[nPipe]
-    return render_template("thePipeline.html", thePipeline = thePipeline, numPipe = numberPipeline, allTr = mTr.getTransformationsList(), datasNames = list(myUser.getMyDatasNames().values()))
+    return render_template("thePipeline.html", allTr = mTr.getTransformationsList(), numPipe = numberPipeline, datasNames = list(myUser.getMyDatasNames().values()),
+                           thePipeline = thePipeline,  pipeParams = thePipeline.get_params())
 
 @app.route('/pipelines/get<numberPipeline>/parameters/',  methods=["GET", "POST"])
 def thePipelineParametersPage(numberPipeline=None):

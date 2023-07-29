@@ -83,6 +83,9 @@
             Change name
         </button>
         <div class="err yesPadding " id="errPipeSection"></div>
+        <!-- <div class=" yesPadding " id="errPipeSection">
+{{pipeParams}}
+        </div> -->
     </div>
     <div class="yesMargin objectLine alingTop textLeft">
         <div class="yesMargin objectLine object2">
@@ -109,8 +112,7 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
                     Score
                 </button>
-                <button class="right aButton b1 s16 yesPadding yesMargin object2"
-                    onclick="operatePipeline('DEL')">
+                <button class="right aButton b1 s16 yesPadding yesMargin object2" onclick="operatePipeline('DEL')">
                     Delete pipeline
                 </button>
             </div>
@@ -145,6 +147,61 @@
                     </button>
                 </div>
 
+                <div id="Parameters" class="popupDiv" onclick="event.stopPropagation();">
+                    <h2>Parameters of pipeline {{numPipe}}</h2>
+                    <!-- <br>
+Datos:                    <br>
+{{pipeParams}}
+<br>
+<br> -->
+
+
+                    <form id="setParameters" class="aform yesPadding">
+                        <div class="colText1 colText2">
+
+                            {% for aParam in pipeParams %}
+                            -- Es un   {{aParam}}: {{pipeParams[aParam]}}
+                            
+                            {% if aParam == 'steps' or aParam == 'memory'%}
+
+
+                            {% elif pipeParams[aParam] == False%}
+                            <div class="yesPadding">
+                                <label for="{{aParam}}">{{aParam}}: </label><br>
+                                <select id="position"  class="s16">
+                                    <option value="False" selected="selected" >False</option>
+                                    <option value="True">True</option>
+                                </select>
+                                <!-- <br> -->
+                            </div>
+                            {% elif pipeParams[aParam] == True %}
+                            <div class="yesPadding">
+                                <label for="{{aParam}}">{{aParam}}: </label><br>
+                                <select id="position" class="s16">
+                                    <option value="False">False</option>
+                                    <option value="True" selected="selected">True</option>
+                                </select>
+                                <!-- <br> -->
+                            </div>
+                            {% else %}
+                            <div class="yesPadding">
+                                <label for="{{aParam}}">{{aParam}}: </label><br>
+                                <input type="text" name={{aParam}} value="{{pipeParams[aParam]}}" maxlength="30">
+                                <!-- <br> -->
+                            </div>
+                            {% endif %}
+
+
+                            {% endfor %}
+                        </div>
+                        <button class="aButton b4 s16 yesMargin yesPadding">
+                            Set parameters
+                        </button>
+                    </form>
+                    <button class="aButton b1 yesMargin" onclick="popupClose()">
+                        Cancel
+                    </button>
+                </div>
                 {% include "popDataSelector.html" %}
 
             </div>
@@ -229,7 +286,8 @@
         click
     </button>
     <br>
-    <form id="pipeOutput" action="/pipelines/download/output" method="post" target="_blank" class="otherSection invisibleForm" ></form>
+    <form id="pipeOutput" action="/pipelines/download/output" method="post" target="_blank"
+        class="otherSection invisibleForm"></form>
 </div>
 
 {% endblock %}

@@ -64,9 +64,15 @@ class aPipeline(ABC):
     ####################################################################################################
     #### Concrete Operations
 
-    @abstractmethod
+    # @abstractmethod
     def get_params(self, deep=True):
-        pass
+        # if self.hasAlgorithm is None:
+        #     return None
+        # else:
+        #     # return self.steps()[self.hasAlgorithm].deep(deep)
+        #     return self.aPipeline.get_params(deep)
+        return self.aPipeline.get_params(deep)
+    
 
     @abstractmethod
     def setParams(self, params):

@@ -34,19 +34,21 @@ class LinearRegressionPipe(aPipeline.aPipeline):
     ####################################################################################################
     #### Concrete Operations
 
-    # @abstractmethod
-    def get_params(self, deep=True):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.steps()[self.hasAlgorithm].deep(deep)
+    # # @abstractmethod
+    # def get_params(self, deep=True):
+    #     if self.hasAlgorithm is None:
+    #         return None
+    #     else:
+    #         # return self.steps()[self.hasAlgorithm].deep(deep)
+    #         return self.aPipeline.get_params(deep)
 
     # @abstractmethod
     def setParams(self, params):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.steps()[self.hasAlgorithm].set_params(params)
+        # if self.hasAlgorithm is None:
+        #     return None
+        # else:
+        #     return self.steps()[self.hasAlgorithm].set_params(params)
+        return self.steps()[self.hasAlgorithm].set_params(params)
 
     # @abstractmethod
     def fitData(self, x,y = None, sample_weight=None):

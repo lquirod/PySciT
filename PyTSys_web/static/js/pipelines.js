@@ -197,15 +197,15 @@ function popupSelectData(operation, title, options, mode = []) {
 function popupClearSelectData() {
     document.getElementById("selectDataCols").innerHTML = '';
     document.getElementById("dataSelectorPreview").innerHTML = '';
-    var theForm = document.getElementById("selectDataForm")
+    var theForm = document.getElementById("selectDataForm");
     // theForm.reset();
     if (theForm.childElementCount > 4)
-        theForm.removeChild(theForm.lastChild)
-    return theForm
+        theForm.removeChild(theForm.lastChild);
+    return theForm;
 }
 function popupCloseSelectData() {
     if (popupClose()) {
-        popupClearSelectData().reset()
+        popupClearSelectData().reset();
         actualOperation = null;
         popupOptions.length = 0;
     }
@@ -229,7 +229,7 @@ function selectColsDataShow(selectColsData) {
         } else {
             anOption.required = false;
             anOption.disabled = false;
-            anOption.innerHTML = 'Not required';
+            anOption.innerHTML = 'None';
         }
         anOption.value = '';
         theSelect.appendChild(anOption);
