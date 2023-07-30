@@ -24,7 +24,7 @@
     <!-- <form action="/pipelines/new/" method="post" class="aform allExpand"> -->
     <div class=" objectLine alingTop yes yesMargin">
         <div class=" allExpand  textLeft">
-            <span> Total Steps: {{ thePipeline.steps()|length }} </span>
+            <span> Total Steps: {{ nameSteps|length }} </span>
 
             <div class="objectLine right">
                 <!-- <span class="err"> Steps changed! </span> -->
@@ -43,7 +43,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for aStep in thePipeline.steps() %}
+                {% for aStep in nameSteps %}
                 {% if loop.index0==thePipeline.hasAlgorithm %}
                 <tr id="TR-{{loop.index0}}" class="boldText">
                     {% else %}
@@ -51,7 +51,7 @@
                     {% endif %}
                     <td class="minCol cell110">{{loop.index0}}</td>
                     <td id="COL-{{loop.index0}}" class="cell1 textCenter">
-                        {{ aStep[0] }}</td>
+                        {{ aStep }}</td>
                     <td name="movStep" class="Darker minSmallCol">
                         {% if loop.index0 != 0 %}
                         <span onclick="operateStep('MOVUP', '{{loop.index0}}' )" id="'MoveUp{{loop.index0}}"
@@ -59,7 +59,7 @@
                             &#8657;
                         </span> |
                         {% endif %}
-                        {% if loop.index != ( thePipeline.steps()|length ) %} |
+                        {% if loop.index != (nameSteps|length ) %} |
                         <span onclick="operateStep('MOVDOWN', '{{loop.index0}}' )" id="'MoveDown{{loop.index0}}"
                             class="pointer">
                             &#8659;
@@ -96,7 +96,7 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('Add_Step')">
                     Add Step
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('Parameters')">
+                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="parameterPopup()">
                     Parameters
                 </button>
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
@@ -117,17 +117,17 @@
                 </button>
             </div>
 
-            <div id="popUpBaseDiv" onclick="popupCloseSelectData()">
+            <div id="popUpBaseDiv" onclick="pipelinePopupClose()">
                 <div id="Add_Step" class="popupDiv" onclick="event.stopPropagation();">
                     <h2>Add step to pipeline {{numPipe}}</h2>
                     <form id="addStep" class="aform" action="javascript:addStepToPipe('{{numPipe}}')">
-                        <label for="position" title="position">Position: </label>
+                        <label for="position" title="Step insert position">Position: </label>
                         <select id="position">
-                            {% for x in range( thePipeline.steps()|length ): %}
+                            {% for x in range( nameSteps|length ): %}
                             <option value="{{loop.index0}}">{{loop.index0}}</option>
                             {% endfor %}
-                            <option selected="selected" value="{{thePipeline.steps()|length}}">
-                                {{thePipeline.steps()|length }} (last)</option>
+                            <option selected="selected" value="{{nameSteps|length}}">
+                                {{nameSteps|length }} (last)</option>
                         </select>
                         <h3>Transformation list: </h3>
                         <div class="colText1 colText2 colText3 yesPadding yesMargin textLeft">
@@ -149,61 +149,40 @@
 
                 <div id="Parameters" class="popupDiv" onclick="event.stopPropagation();">
                     <h2>Parameters of pipeline {{numPipe}}</h2>
-                    <!-- <br>
-Datos:                    <br>
-{{pipeParams}}
-<br>
-<br> -->
-
-
-                    <form id="setParameters" class="aform yesPadding">
-                        <div class="colText1 colText2">
-
+                    <form id="setParameters" class=" yesPadding" action="javascript:setParameters()">
+                        <div id="setParametersForm" class="colText1 colText2">
                             {% for aParam in pipeParams %}
-                            -- Es un   {{aParam}}: {{pipeParams[aParam]}}
-                            
-                            {% if aParam == 'steps' or aParam == 'memory'%}
+                            {% if aParam == 'steps' or aParam == 'memory' or aParam in nameSteps %}
 
-
-                            {% elif pipeParams[aParam] == False%}
-                            <div class="yesPadding">
-                                <label for="{{aParam}}">{{aParam}}: </label><br>
-                                <select id="position"  class="s16">
-                                    <option value="False" selected="selected" >False</option>
-                                    <option value="True">True</option>
-                                </select>
-                                <!-- <br> -->
-                            </div>
-                            {% elif pipeParams[aParam] == True %}
-                            <div class="yesPadding">
-                                <label for="{{aParam}}">{{aParam}}: </label><br>
-                                <select id="position" class="s16">
-                                    <option value="False">False</option>
-                                    <option value="True" selected="selected">True</option>
-                                </select>
-                                <!-- <br> -->
-                            </div>
-                            {% else %}
-                            <div class="yesPadding">
-                                <label for="{{aParam}}">{{aParam}}: </label><br>
-                                <input type="text" name={{aParam}} value="{{pipeParams[aParam]}}" maxlength="30">
-                                <!-- <br> -->
-                            </div>
-                            {% endif %}
-
-
-                            {% endfor %}
+                            {% elif pipeParams[aParam][1] == "<class 'bool'>" %}
+                                <div class="" title="{{pipeParams[aParam][1]}}">
+                                    <label for="{{aParam}}">{{aParam}}: </label><br>
+                                    {% if pipeParams[aParam][0] %}
+                                    <input type="checkbox" name="{{aParam}}" checked />
+                                    {% else %}
+                                    <input type="checkbox" name="{{aParam}}" />
+                                    {% endif %}
+                                </div>
+                                {% else %}
+                                <div class="" title="{{pipeParams[aParam][1]}}">
+                                    <label for="{{aParam}}">{{aParam}}: </label><br>
+                                    <input type="text" name={{aParam}} value="{{pipeParams[aParam][0]}}" maxlength="30">
+                                </div>
+                                {% endif %}
+                                {% endfor %}
                         </div>
                         <button class="aButton b4 s16 yesMargin yesPadding">
-                            Set parameters
+                            Save parameters
+                        </button><br>
+                        <button type="reset" class="aButton roundBorder b3 s14 yesMargin yesPadding">
+                            Reset
                         </button>
                     </form>
-                    <button class="aButton b1 yesMargin" onclick="popupClose()">
+                    <button class="aButton b1 yesMargin" onclick="parameterPopupClose()">
                         Cancel
                     </button>
                 </div>
                 {% include "popDataSelector.html" %}
-
             </div>
         </div>
         <div class="yesMargin objectLine object2">
@@ -215,9 +194,9 @@ Datos:                    <br>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for aStep in thePipeline.steps() %}
+                    {% for aStep in nameSteps %}
                     <tr id="OP-{{loop.index0}}">
-                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep }}</td>
                         <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
                             <button>
                                 Operate</button>
@@ -231,52 +210,14 @@ Datos:                    <br>
                                 Operate</button>
                         </td>
                     </tr>
-                    {% endfor %} {% for aStep in thePipeline.steps() %}
-                    <tr id="OP-{{loop.index0}}">
-                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
-                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
-                            <button>
-                                Operate</button>
-                        </td>
-                    </tr>
-                    {% endfor %} {% for aStep in thePipeline.steps() %}
-                    <tr id="OP-{{loop.index0}}">
-                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
-                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
-                            <button>
-                                Operate</button>
-                        </td>
-                    </tr>
-                    {% endfor %} {% for aStep in thePipeline.steps() %}
-                    <tr id="OP-{{loop.index0}}">
-                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
-                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
-                            <button>
-                                Operate</button>
-                        </td>
-                    </tr>
-                    {% endfor %} {% for aStep in thePipeline.steps() %}
-                    <tr id="OP-{{loop.index0}}">
-                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
-                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
-                            <button>
-                                Operate</button>
-                        </td>
-                    </tr>
-                    {% endfor %} {% for aStep in thePipeline.steps() %}
-                    <tr id="OP-{{loop.index0}}">
-                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
-                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
-                            <button>
-                                Operate</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                    {% endfor %} 
                 </tbody>
             </table>
         </div>
     </div>
-    <button class="objectLine" onclick="setOutputPipeline('titulo de esto',
+
+
+    <!-- <button class="objectLine" onclick="setOutputPipeline('titulo de esto',
     ['texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas',
     'hehent',
     '<table border=\'1\' class=\'dataframe\'\>  <thead>    <tr style=\'text-align: right;\'\>      <th></th>      <th>Name</th>      <th>Address</th>      <th>ID</th>      <th>Sell</th>      <th>Name</th>      <th>Address</th>      <th>ID</th>      <th>Sell</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>Anurag</td>      <td>Patna</td>      <td>20afasfs as asda sdafasfs as asda sd123</td>      <td>140000</td>    </tr>    <tr>      <th>1</th>      <td>Manjeet</td>      <td>Delhi</td>      <td>20124</td>      <td>300000</td>    </tr>    <tr>      <th>2</th>      <td>Shubham</td>      <td>Coimbatore</td>      <td>afasfs as asda sdafasfs as asda sdafasfs as asda sd</td>      <td>600000</td>    </tr>    <tr>      <th>3</th>      <td>Saurabh</td>      <td>Greater noida</td>      <td>20146</td>      <td>200000</td>    </tr>    <tr>      <th>4</th>      <td>Ujjawal</td>      <td>Patna</td>      <td>20147</td>      <td>600000</td>    </tr>    <tr>      <th>0afasfs as asda sdafasfs as asda sd</th>      <td>Anurag</td>      <td>Patna</td>      <td>20123</td>      <td>140000</td>    </tr>    <tr>      <th>1</th>      <td>Manjeet</td>      <td>Delhi</td>      <td>20124</td>      <td>300000</td>    </tr>    <tr>      <th>2</th>      <td>Shubham</td>      <td>Coimbatore</td>      <td>20145</td>      <td>600000</td>    </tr>    <tr>      <th>3</th>      <td>Saurabh</td>      <td>Greater noida</td>      <td>2afasfs as asda sdafasfs as asda sd0146</td>      <td>200000</td>    </tr>    <tr>      <th>4</th>      <td>afasfs as asda sdafasfs as asda sd</td>      <td>Patna</td>      <td>20147</td>      <td>600000</td>    </tr>  </tbody></table>'
@@ -285,7 +226,10 @@ Datos:                    <br>
     )">
         click
     </button>
-    <br>
+    <br> -->
+
+
+
     <form id="pipeOutput" action="/pipelines/download/output" method="post" target="_blank"
         class="otherSection invisibleForm"></form>
 </div>

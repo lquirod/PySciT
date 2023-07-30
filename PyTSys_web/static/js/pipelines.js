@@ -50,10 +50,9 @@ function toggleModify(mode = true) {
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Pipeline operations ---- */
-/*  ---- Name ---- */
+/*  ---- Change name ---- */
 function changeNamePipeline() {
     newName = document.getElementById('newName').value.trim()
-    // window.alert("Hey "+newName)
     if (newName != '' && newName != document.getElementById('thePipeName').innerHTML.trim()) {
         $.ajax({
             data: JSON.stringify({ newName: newName }),
@@ -85,7 +84,6 @@ function changeNamePipeline() {
 function addStepToPipe() {
     var position = document.getElementById("position").value
     var theAddStep = document.querySelector('input[name="addStepTr"]:checked').value;
-    // window.alert('Got the '+theAddStep+' in pos '+position)
     $.ajax({
         contentType: 'application/json',
         url: '/pipelines/get' + numPipe + '/operate/steps/add',
@@ -159,7 +157,7 @@ function operateStep(operation, arg) {
             $.ajax({
                 data: JSON.stringify({ op: operation, arg: arg }),
                 contentType: 'application/json',
-                url: '/pipelines/get' + numPipe + 'operate/steps/',
+                url: '/pipelines/get' + numPipe + '/operate/steps/',
                 type: 'post',
                 beforeSend: function () {
                     toggleModify();
@@ -198,19 +196,19 @@ function popupClearSelectData() {
     document.getElementById("selectDataCols").innerHTML = '';
     document.getElementById("dataSelectorPreview").innerHTML = '';
     var theForm = document.getElementById("selectDataForm");
-    // theForm.reset();
+    parameterPopupClose()
     if (theForm.childElementCount > 4)
         theForm.removeChild(theForm.lastChild);
     return theForm;
 }
-function popupCloseSelectData() {
+function pipelinePopupClose() {
     if (popupClose()) {
         popupClearSelectData().reset();
         actualOperation = null;
         popupOptions.length = 0;
     }
 }
-// Show selection options in a data
+// Show data selection options in a data
 function selectColsDataShow(selectColsData) {
     var theOptionView = document.getElementById("selectDataCols")
     var br = document.createElement("br");
@@ -249,20 +247,13 @@ function selectColsDataShow(selectColsData) {
     theSubmitButton.classList.add('s16');
     theSubmitButton.classList.add('yesPadding');
     theSubmitButton.innerHTML = 'Accept';
-    //   var aa = document.getElementById("dataSelector")
-    //   aa.appendChild(theSubmitButton)
     document.getElementById("selectDataForm").appendChild(theSubmitButton)
 }
-function selectDataShowPreview(selectData) {
-    //     var selectDataPreview = document.getElementById("dataSelectorPreview")
-    //    selectDataPreview.insertAdjacentHTML('beforeend', selectData);
-    document.getElementById("dataSelectorPreview").insertAdjacentHTML('beforeend', selectData);
-}
+
 function selectDataChanged() {
     popupClearSelectData()
     var selectData = document.getElementById("selectData").value
     $.ajax({
-        // data: JSON.stringify({ op: operation, arg: arg }), 
         contentType: 'application/json',
         url: '/datas/get' + selectData + '/plain',
         type: 'post',
@@ -273,7 +264,7 @@ function selectDataChanged() {
             if (ret.response) {
                 popupText.textContent = '';
                 selectColsDataShow(ret.selectColsData);
-                selectDataShowPreview(ret.selectData)
+                document.getElementById("dataSelectorPreview").insertAdjacentHTML('beforeend', ret.selectData);
             } else {
                 popupText.textContent = ret.err;
             }
@@ -282,8 +273,55 @@ function selectDataChanged() {
             popupText.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
         }
     });
-
 }
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Parameters ---- */
+function parameterPopup() {
+    popupWindow('Parameters');
+    var setParametersForm = document.getElementById('setParametersForm');
+    if (setParametersForm.childElementCount % 2 == 1) {
+        setParametersForm.appendChild(document.createElement('div'))
+    }
+}
+function parameterPopupClose() {
+    document.getElementById('setParameters').reset();
+    popupClose();
+}
+function setParameters(form) {
+    var form = document.getElementById('setParameters');
+    var theInputs = form.getElementsByTagName("input");
+    var setParams = {};
+
+    for (var i = 0; i < theInputs.length; i++) {
+        if (theInputs[i].getAttribute("type") == "checkbox") {
+            setParams[theInputs[i].name] = theInputs[i].checked;
+        } else
+            setParams[theInputs[i].name] = theInputs[i].value;
+    }
+
+    $.ajax({
+        contentType: 'application/json',
+        url: '/pipelines/get' + numPipe + '/params/',
+        data: JSON.stringify({ setParams: setParams }),
+        type: 'post',
+        beforeSend: function () {
+            text.textContent = 'Saving new data...';
+        },
+        success: function (ret) {
+            if (ret.response) {
+                text.textContent = 'Done, updating changes...';
+                location.reload();
+            } else {
+                text.textContent = ret.err;
+                parameterPopupClose();
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+        }
+    });
+};
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Manage output of pipeline operation ---- */
 function setOutputPipeline(title, text, isHTMLtable = []) {

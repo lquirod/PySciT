@@ -39,11 +39,11 @@ class UserActions:
     
     def selectPipeline(self, select = None):
         if  self.existPipeline(select):
-            self.actualPipeline = None
-            return None
-        else:
             self.actualPipeline = select
             return select
+        else:
+            self.actualPipeline = None
+            return None
     
     def getActualPipe(self):
         if self.actualPipeline is None:
@@ -67,13 +67,18 @@ class UserActions:
     ####################################################################################################
     ## Operations with the user's actual Pipeline
     # Steps
-    def getSteps(self, pip=None):
+    def getSteps(self, pip=None, namesOnly = False):
         if self.existPipeline(pip):
-            return self.myPipelines[pip].steps()
+            getFrom = self.myPipelines[pip]
         elif self.getActualPipe() is not None:
-            return self.getActualPipe().steps()
+            getFrom = self.getActualPipe()
         else:
             return None
+        if namesOnly:
+            getFrom.nameSteps()
+        else:
+            return getFrom.steps()
+        
         
     def addStep(self, aStep, position = None, thePipe = None):
         if self.existPipeline(thePipe):
@@ -100,6 +105,9 @@ class UserActions:
             return False
         
     # Common operations
+    def setParams(self, **params):
+        return self.getActualPipe().setParams(**params)
+
     def fitSelectData(self, thePipe = None, theData = None):
         if self.existPipeline(thePipe) and self.existData(theData):
             return self.myPipelines[thePipe].moveStep(fromPosition, toPosition)

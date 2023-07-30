@@ -16,6 +16,10 @@ class aPipeline(ABC):
     def steps(self):
         return self.aPipeline.steps
 
+    def nameSteps(self):
+        return [ x[0] for x in self.aPipeline.steps ]
+
+
     def getASteps(self, position=None):
         if position is None or position < 0 or len(self.steps()) < position:
             return None
@@ -74,9 +78,12 @@ class aPipeline(ABC):
         return self.aPipeline.get_params(deep)
     
 
-    @abstractmethod
-    def setParams(self, params):
-        pass
+    # @abstractmethod
+    def setParams(self, **params):
+        self.aPipeline.set_params(**params)
+        return True
+        # return self.aPipeline.set_params(**params)
+
 
     @abstractmethod
     def fitData(self, data):

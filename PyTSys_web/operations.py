@@ -117,6 +117,49 @@ def operatePipelineStep(numberPipeline=None):
     else:
         return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
 
+@app.route('/pipelines/get<numberPipeline>/params/',  methods=["GET", "POST"])
+def setParams(numberPipeline=None):
+    if request.method == 'POST':
+        nlog = ''
+        nPipe = thisPipeExist(numberPipeline)
+        if nPipe == None:
+            ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
+            return jsonify(ret)
+
+        beforeParams = myUser.myPipelines[nPipe].get_params()
+        setParams = request.json.get('setParams')
+        setParamsNew = {}
+        result = True
+        err = ''
+        for aParam in setParams:
+            try:
+                if type(beforeParams[aParam]) is tuple:
+                    fields = setParams[aParam].strip("()").split(',')
+                    fieldList = []
+                    for aField in fields:
+                        fieldList.append(int(aField))
+                    setParamsNew[aParam] = tuple(fieldList)
+                elif beforeParams[aParam] is None:
+                    setParamsNew[aParam] = setParams[aParam]
+                else:
+                    setParamsNew[aParam] = type(beforeParams[aParam])(setParams[aParam])
+            except (TypeError, ValueError) as e:
+                result = False
+                err='Not compatible'
+            except KeyError as e:
+                result = False
+                err = 'not matching'
+
+        if result:
+            myUser.selectPipeline(nPipe)
+            myUser.setParams( **setParamsNew)
+            
+        ret = {'response': result, 'err':err}
+        return jsonify(ret)
+    
+    else:
+        return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
+
 @app.route('/pipelines/get<numberPipeline>/operate/',  methods=["GET", "POST"])
 def operatePipelineOperate(numberPipeline=None):
     if request.method == 'POST':
