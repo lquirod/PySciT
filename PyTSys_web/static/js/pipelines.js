@@ -50,25 +50,38 @@ function toggleModify(mode = true) {
 }
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Pipeline operations ---- */
-/*  ---- Change name ---- */
-function changeNamePipeline() {
-    newName = document.getElementById('newName').value.trim()
-    if (newName != '' && newName != document.getElementById('thePipeName').innerHTML.trim()) {
+/*  ---- Change pipeline ---- */
+function changePipeline(operation) {
+    var yesOperate = false
+    var newName = ''
+    if (operation == 'Renaming') {
+        newName = document.getElementById('newName').value.trim()
+        if (newName != '' && newName != document.getElementById('thePipeName').innerHTML.trim())
+            yesOperate = true;
+        else
+            text.textContent = "The new name can't be empty";
+    }
+
+    if (operation == 'Deleting' && confirm("Are you sure you want to delete the pipelines " + numPipe + "?"))
+        yesOperate = true
+
+    if (yesOperate) {
         $.ajax({
-            data: JSON.stringify({ newName: newName }),
+            data: JSON.stringify({ op: operation, newName: newName }),
             contentType: 'application/json',
-            url: '/pipelines/get' + numPipe + '/operate/name/',
+            url: '/pipelines/get' + numPipe + '/change',
             type: 'post',
             beforeSend: function () {
-                text.textContent = 'Renaming pipeline...';
+                text.textContent = operation + ' pipeline...';
             },
             success: function (ret) {
                 if (ret.response) {
-                    text.textContent = '';
-                    document.getElementById('thePipeName').textContent = newName
-                } else {
-                    text.textContent = ret.err;
+                    if (operation == 'Deleting')
+                        window.location.replace("/pipelines");
+                    if (operation == 'Renaming')
+                        document.getElementById('thePipeName').textContent = newName
                 }
+                text.textContent = ret.err;
                 addViewLog(ret.newLog);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -76,8 +89,6 @@ function changeNamePipeline() {
                 text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
             }
         });
-    } else {
-        text.textContent = "The new name can't be empty";
     }
 }
 /*  ---- Step operations (add) ---- */
@@ -196,7 +207,6 @@ function popupClearSelectData() {
     document.getElementById("selectDataCols").innerHTML = '';
     document.getElementById("dataSelectorPreview").innerHTML = '';
     var theForm = document.getElementById("selectDataForm");
-    parameterPopupClose()
     if (theForm.childElementCount > 4)
         theForm.removeChild(theForm.lastChild);
     return theForm;
@@ -224,12 +234,15 @@ function selectColsDataShow(selectColsData) {
             theSelect.required = 'required';
             anOption.disabled = 'disabled';
             anOption.innerHTML = 'Required';
+            anOption.value = '';
+
         } else {
+            anOption.selected = true;
             anOption.required = false;
             anOption.disabled = false;
             anOption.innerHTML = 'None';
+            anOption.value = 'None';
         }
-        anOption.value = '';
         theSelect.appendChild(anOption);
 
         for (var j = 0; j < selectColsData.length; j++) {
@@ -274,6 +287,132 @@ function selectDataChanged() {
         }
     });
 }
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- AJAX call to operate pipeline ---- */
+function operatePipeline() {
+    if (actualOperation != null) {
+        var form = document.getElementById('selectDataForm');
+        var theSelects = form.getElementsByTagName("select");
+        var theInputs = [];
+        for (var i = 0; i < theSelects.length; i++)
+            theInputs.push(theSelects[i].value);
+
+        $.ajax({
+            data: JSON.stringify({ op: actualOperation, inputs: theInputs }),
+            contentType: 'application/json',
+            url: '/pipelines/get' + numPipe + '/operate',
+            type: 'post',
+            beforeSend: function () {
+                toggleModify(false);
+                text.textContent = 'Operating pipeline with ' + actualOperation + '...';
+            },
+            success: function (ret) {
+                if (ret.response) {
+                    setOutputPipeline(actualOperation, ret.output, ret.isHTMLtable);
+                } else {
+                }
+                document.getElementById('errDataSelector').textContent = ret.err;
+                addViewLog(ret.newLog);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
+            }
+        });
+    }
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*  ---- Manage output of pipeline operation ---- */
+function setOutputPipeline(title, text, isHTMLtable = []) {
+    var pipeOutput = document.getElementById("pipeOutput");
+    if (!actualOutput) {
+        actualOutput = true;
+        pipeOutput.classList.remove('hidden');
+
+        var closeOutput = document.createElement('button');
+        closeOutput.innerHTML = 'Close';
+        closeOutput.type = 'button';
+        closeOutput.onclick = closeOutputPipeline;
+        closeOutput.style.position = 'sticky';
+        closeOutput.style.top = '0px';
+        closeOutput.style.right = '0px';
+        closeOutput.classList.add('aButton');
+        closeOutput.classList.add('pointer');
+        closeOutput.classList.add('yesPadding');
+        closeOutput.classList.add('right');
+        closeOutput.classList.add('b1');
+        closeOutput.classList.add('s16');
+        pipeOutput.appendChild(closeOutput);
+    }
+
+    var br = document.createElement("br");
+    var aForm = document.createElement('form');
+    aForm.action = "/pipelines/download/output";
+    aForm.method = "post";
+    aForm.target = "_blank"
+
+    var addText = document.createElement('h2');
+    title = new Date().toLocaleString() + '- ' + title
+    addText.innerHTML = title;
+    aForm.appendChild(addText);
+    var theTitle = document.createElement('input');
+    theTitle.type = 'hidden';
+    theTitle.name = 'title';
+    theTitle.value = title;
+    aForm.appendChild(theTitle);
+
+    for (let i = 0; i < text.length; i++) {
+        let aHTMLtable = isHTMLtable.includes(i);
+        if (aHTMLtable) {
+            aForm.insertAdjacentHTML('beforeend', text[i]);
+        } else {
+            var addText = document.createElement('p');
+            addText.innerHTML = text[i];
+            aForm.appendChild(addText);
+        }
+        var checkTable = document.createElement('input');
+        checkTable.type = 'checkbox';
+        checkTable.name = 'check_' + i;
+        checkTable.checked = aHTMLtable;
+        checkTable.style.display = 'none'
+        aForm.appendChild(checkTable);
+
+        var theSubmitOutput = document.createElement('input');
+        theSubmitOutput.type = 'hidden';
+        theSubmitOutput.name = 'text_' + i;
+        theSubmitOutput.value = text[i];
+        aForm.appendChild(theSubmitOutput);
+
+        let saveOutput = document.createElement('button');
+        saveOutput.innerHTML = '&#8593; Save output &#8593;'
+        saveOutput.classList.add('aButton');
+        saveOutput.classList.add('b4');
+        saveOutput.classList.add('s16');
+        saveOutput.classList.add('yesPadding');
+        saveOutput.classList.add('yesMargin');
+        saveOutput.name = 'submit_button';
+        saveOutput.value = i;
+        aForm.appendChild(saveOutput)
+        aForm.appendChild(br.cloneNode(true));
+    }
+    pipeOutput.insertBefore(aForm, pipeOutput.firstChild);
+    pipeOutput.scrollIntoView({ behavior: 'smooth' });
+}
+
+function closeOutputPipeline() {
+    if (actualOutput && confirm("Do you want to close the Output pipeline?\nIf you close it, your outputs will be lost. Do not forget to save things first!")) {
+        var pipeOutput = document.getElementById("pipeOutput");
+        pipeOutput.innerHTML = '';
+        actualOutput = false;
+        pipeOutput.classList.add('hidden');
+    }
+}
+window.addEventListener('beforeunload', function (event) {
+    if (actualOutput) {
+        event.preventDefault();
+        return (event.returnValue = "");
+    }
+});
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*  ---- Parameters ---- */
 function parameterPopup() {
@@ -321,111 +460,3 @@ function setParameters(form) {
         }
     });
 };
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*  ---- Manage output of pipeline operation ---- */
-function setOutputPipeline(title, text, isHTMLtable = []) {
-    if (!actualOutput) {
-        actualOutput = true;
-        var pipeOutput = document.getElementById("pipeOutput");
-        pipeOutput.style.display = 'inline-block'
-        var br = document.createElement("br");
-
-        var closeOutput = document.createElement('button');
-        closeOutput.innerHTML = 'Close';
-        closeOutput.type = 'button';
-        closeOutput.onclick = closeOutputPipeline;
-        closeOutput.style.position = 'sticky';
-        closeOutput.style.top = '0px';
-        closeOutput.style.right = '0px';
-        closeOutput.classList.add('aButton');
-        closeOutput.classList.add('pointer');
-        closeOutput.classList.add('yesPadding');
-        closeOutput.classList.add('right');
-        closeOutput.classList.add('b1');
-        closeOutput.classList.add('s16');
-        pipeOutput.appendChild(closeOutput);
-
-        var addText = document.createElement('h2');
-        addText.innerHTML = title;
-        pipeOutput.appendChild(addText);
-        var theTitle = document.createElement('input');
-        theTitle.type = 'hidden';
-        theTitle.name = 'title';
-        theTitle.value = title;
-        pipeOutput.appendChild(theTitle);
-
-        for (let i = 0; i < text.length; i++) {
-            let aHTMLtable = isHTMLtable.includes(i);
-            if (aHTMLtable) {
-                pipeOutput.insertAdjacentHTML('beforeend', text[i]);
-            } else {
-                var addText = document.createElement('p');
-                addText.innerHTML = text[i];
-                pipeOutput.appendChild(addText);
-            }
-            var checkTable = document.createElement('input');
-            checkTable.type = 'checkbox';
-            checkTable.name = 'check_' + i;
-            checkTable.checked = aHTMLtable;
-            checkTable.style.display = 'none'
-            pipeOutput.appendChild(checkTable);
-
-            var theSubmitOutput = document.createElement('input');
-            theSubmitOutput.type = 'hidden';
-            theSubmitOutput.name = 'text_' + i;
-            theSubmitOutput.value = text[i];
-            pipeOutput.appendChild(theSubmitOutput);
-
-            let saveOutput = document.createElement('button');
-            saveOutput.innerHTML = 'Save output ' + (i + 1)
-            saveOutput.classList.add('aButton');
-            saveOutput.classList.add('b4');
-            saveOutput.classList.add('s16');
-            saveOutput.classList.add('yesPadding');
-            saveOutput.classList.add('yesMargin');
-            saveOutput.name = 'submit_button';
-            saveOutput.value = i;
-            pipeOutput.appendChild(saveOutput)
-            pipeOutput.appendChild(br.cloneNode(true));
-        }
-    }
-    document.getElementById("pipeOutput").scrollIntoView({ behavior: 'smooth' });
-}
-function closeOutputPipeline() {
-    if (actualOutput && confirm("Do you want to close the Output pipeline?\nDo not forget to save it first!")) {
-        var pipeOutput = document.getElementById("pipeOutput");
-        pipeOutput.innerHTML = '';
-        pipeOutput.style.display = 'none';
-        actualOutput = false;
-    }
-}
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*  ---- AJAX call to operate pipeline ---- */
-function operatePipeline(operation, args = 0) {
-    if (operation != 'DEL' || (operation == 'DEL' && confirm("Are you sure you want to delete the pipelines " + numPipe + "?")))
-        $.ajax({
-            data: JSON.stringify({ op: operation, args: args }),
-            contentType: 'application/json',
-            url: '/pipelines/get' + numPipe + '/operate',
-            type: 'post',
-            beforeSend: function () {
-                toggleModify(false);
-                text.textContent = 'Operating pipeline with ' + operation + '...';
-            },
-            success: function (ret) {
-                if (ret.response) {
-                    text.textContent = '';
-                    if (operation == 'DEL')
-                        window.location.replace("/pipelines");
-                } else {
-                    text.textContent = ret.err;
-                }
-                addViewLog(ret.newLog);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                text.textContent = " Status: " + textStatus + "; Error: " + errorThrown;
-            }
-        });
-}
-

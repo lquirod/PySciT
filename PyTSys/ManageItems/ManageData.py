@@ -33,12 +33,31 @@ class ManageData:
         self.Data = data
         self.history = []
 
+    def existNumCol(self, numCol = None):
+        try:
+            total = len(self.Data.columns)
+            nCol = int(numCol)
+            if total == 0 or nCol < 0 and total < nCol :
+                return None
+            else:
+                return nCol
+        except Exception:
+            return None
+        
     def getNameCols(self):
         if self.Data is None:
             return None
         else:
             return self.Data.columns.values.tolist()
 
+    def getCol(self, numCol):
+        nCol =  self.existNumCol(numCol)
+        # if self.Data is None:
+        if nCol is None:
+            return None
+        else:
+            return self.Data.iloc[:,nCol].tolist()
+        
     ####################################################################################################
     #### Modify Data
     ## From File

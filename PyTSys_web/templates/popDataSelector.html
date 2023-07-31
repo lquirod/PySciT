@@ -1,8 +1,8 @@
 <div id="dataSelector" class="popupDiv" onclick="event.stopPropagation();">
     <h2 id="titleSelectData"></h2>
-    <form id="selectDataForm" class="aform allExpand yesMargin">
+    <form id="selectDataForm" action="javascript:operatePipeline()" class="aform allExpand yesMargin">
         Select data:
-        <select id="selectData" onchange="selectDataChanged()">
+        <select id="selectData" name="Data" onchange="selectDataChanged()">
             <option selected="selected" disabled="disabled">Choose data</option>
             {% for datName in datasNames %}
             <option value="{{loop.index0}}">{{loop.index0}}- {{datName}}</option>
@@ -10,9 +10,10 @@
         </select>
         <br>
         <div class="err" id="errPopupSection"></div>
-        <div id="selectDataCols" class="colText1 colText2 yesPadding yesMargin textLeft">
+        <div id="selectDataCols" class=" yesPadding yesMargin textLeft">
         </div>
     </form>
+    <div id="errDataSelector" class="s14"></div>
     <div id="dataSelectorPreview" class="s16"></div>
     <button class="aButton b1 yesMargin" onclick="pipelinePopupClose()">
         Cancel

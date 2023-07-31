@@ -158,18 +158,11 @@ def thePipelinePage(numberPipeline=None):
         return messagePage('It seems that the pipeline you want to access does not exist')
 
     thePipeline = myUser.myPipelines[nPipe]
-
-
-
     theParams = thePipeline.get_params()
     for aParam in theParams:
         theParams[aParam] = [theParams[aParam], type( theParams[aParam])]
         if theParams[aParam][1]==bool:
             theParams[aParam][1]=str( theParams[aParam][1])
-        # print('--- Type of '+se)
-        # print(type(algo[se]))
-
-    print(theParams)
 
     return render_template("thePipeline.html", allTr = mTr.getTransformationsList(), numPipe = numberPipeline, datasNames = list(myUser.getMyDatasNames().values()),
                            thePipeline = thePipeline,  pipeParams =theParams, nameSteps =thePipeline.nameSteps())

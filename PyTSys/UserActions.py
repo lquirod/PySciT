@@ -108,17 +108,18 @@ class UserActions:
     def setParams(self, **params):
         return self.getActualPipe().setParams(**params)
 
-    def fitSelectData(self, thePipe = None, theData = None):
-        if self.existPipeline(thePipe) and self.existData(theData):
-            return self.myPipelines[thePipe].moveStep(fromPosition, toPosition)
-        elif True:
-        # elif self.getActualPipe() is not None:
-            zipped = [[x, y] for x, y in zip(self.getActualData().Data['X_train1'].tolist(), self.getActualData().Data['X_train2'].tolist())]
-            # print(self.getActualPipe())
-            # print(zipped)
-            # self.getActualPipe().fitData(self.getActualData().Data['X_train1'], self.getActualData().Data['X_train2'])
-            # self.getActualPipe().fitData(zipped)
-            self.getActualPipe().fitData(zipped, self.getActualData().Data['y_train'].tolist())
+    def fitSelectData(self, theData, thePipe = None):
+        if self.existPipeline(thePipe):
+            return self.myPipelines[thePipe].fit(theData)
+        elif self.getActualPipe() is not None:
+        # # elif self.getActualPipe() is not None:
+        #     zipped = [[x, y] for x, y in zip(self.getActualData().Data['X_train1'].tolist(), self.getActualData().Data['X_train2'].tolist())]
+        #     # print(self.getActualPipe())
+        #     # print(zipped)
+        #     # self.getActualPipe().fitData(self.getActualData().Data['X_train1'], self.getActualData().Data['X_train2'])
+        #     # self.getActualPipe().fitData(zipped)
+        #     self.getActualPipe().fitData(zipped, self.getActualData().Data['y_train'].tolist())
+            return self.getActualPipe().fit(theData)
         else:
             return None
 

@@ -35,8 +35,8 @@ def operateDataNewName(numberData=None):
 
 #############################################################################################
 # Pipelines #
-@app.route('/pipelines/get<numberPipeline>/operate/name/',  methods=["GET", "POST"])
-def operatePipelineNewName(numberPipeline=None):
+@app.route('/pipelines/get<numberPipeline>/change/',  methods=["GET", "POST"])
+def changePipeline(numberPipeline=None):
     if request.method == 'POST':
         nlog = ''
         nPipe = thisPipeExist(numberPipeline)
@@ -44,12 +44,28 @@ def operatePipelineNewName(numberPipeline=None):
             ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
             return jsonify(ret)
         
-        newName = request.json.get('newName')
-        myUser.myPipelines[nPipe].Name = newName
-        nlog = addLog('Renamed Pipe '+str(nPipe)+' to '+newName)
-        ret = {'response': True, 'err': 'Operation done', 'newLog': nlog}
-        return jsonify(ret)
-    
+        op = request.json.get('op')
+        if op == 'Deleting':
+            response = myUser.delPipeline(nPipe)
+            if response:
+                nlog = addLog('Deleted Pipe '+str(nPipe))
+                err = 'Operation done'
+            else:
+                nlog = addLog('Error, couldn\' delete Pipe '+str(nPipe))
+                err = nlog
+            ret = {'response': response, 'err': err, 'newLog': nlog}
+
+        elif op == 'Renaming':
+            newName = request.json.get('newName')
+            myUser.myPipelines[nPipe].Name = newName
+            nlog = addLog('Renamed Pipe '+str(nPipe)+' to '+newName)
+            ret = {'response': True, 'err': 'Operation done', 'newLog': nlog}
+
+        else:
+            nlog = addLog('Error: '+op+' failed on pipeline '+str(nPipe))
+            ret = {'response': False, 'err': 'Operation not found', 'newLog': nlog}
+
+        return jsonify(ret)  
     else:
         return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
 
@@ -117,6 +133,13 @@ def operatePipelineStep(numberPipeline=None):
     else:
         return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
 
+def is_float(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+    
 @app.route('/pipelines/get<numberPipeline>/params/',  methods=["GET", "POST"])
 def setParams(numberPipeline=None):
     if request.method == 'POST':
@@ -140,7 +163,10 @@ def setParams(numberPipeline=None):
                         fieldList.append(int(aField))
                     setParamsNew[aParam] = tuple(fieldList)
                 elif beforeParams[aParam] is None:
-                    setParamsNew[aParam] = setParams[aParam]
+                    if is_float(setParams[aParam]):
+                        setParamsNew[aParam] = float(setParams[aParam])
+                    else:
+                        setParamsNew[aParam] = setParams[aParam]
                 else:
                     setParamsNew[aParam] = type(beforeParams[aParam])(setParams[aParam])
             except (TypeError, ValueError) as e:
@@ -161,20 +187,39 @@ def setParams(numberPipeline=None):
         return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
 
 @app.route('/pipelines/get<numberPipeline>/operate/',  methods=["GET", "POST"])
-def operatePipelineOperate(numberPipeline=None):
+def operatePipeline(numberPipeline=None):
     if request.method == 'POST':
         nlog = ''
         nPipe = thisPipeExist(numberPipeline)
-        if nPipe == None:
+        if nPipe is None:
             ret = {'response': False, 'err': 'Not valid pipeline to operate', 'newLog': nlog}
             return jsonify(ret)
 
         op = request.json.get('op')
-        args = request.json.get('args')
-        if op == 'DEL':
-            response = myUser.delPipeline(nPipe)
-        elif op == '_______':
-            print('')
+        inputs = request.json.get('inputs')
+        args = []
+        print(inputs)
+        nData = thisDataExist(inputs[0])
+        if nData is not None:
+            theData = myUser.myDatas[nData]
+            print(theData.Data)
+            for x in range(1, len(inputs)):
+                args.append(theData.getCol(inputs[x]))
+        print(args)
+
+        response = ''
+        output = ''
+        isHTMLtable = []
+        err = ''
+        nlog = ''
+
+        if op == 'Fit':
+            output = myUser.fitSelectData(args, nPipe)
+            isHTMLtable = []
+            response = True
+        elif op == 'Score':
+            output = myUser.fitSelectData(args)
+            response = True
         elif op == '_______':
             print('')
         else:
@@ -182,14 +227,10 @@ def operatePipelineOperate(numberPipeline=None):
             ret = {'response': False, 'err': 'Operation not found', 'newLog': nlog}
             return jsonify(ret)
 
-        if response:
-            nlog = addLog(op+' Pipe '+str(nPipe))
-            err = 'Operation done'
-        else:
-            nlog = addLog('Error, denied operation: '+op+' Pipe '+str(nPipe))
-            err = 'Error, denied operation'
+        nlog = addLog(op+' Pipe '+str(nPipe))
+        err = 'Operation done'
             
-        ret = {'response': response, 'err': err, 'newLog': nlog}
+        ret = {'response': response, 'output': output, 'isHTMLtable': isHTMLtable, 'err': err, 'newLog': nlog}
         return jsonify(ret)
     
     else:

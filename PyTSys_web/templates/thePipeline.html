@@ -27,7 +27,6 @@
             <span> Total Steps: {{ nameSteps|length }} </span>
 
             <div class="objectLine right">
-                <!-- <span class="err"> Steps changed! </span> -->
                 <button id="toggleModify" class="aButton b4 right" onclick="toggleModify()">
                     Modify disabled
                 </button>
@@ -79,7 +78,7 @@
     <div class="yesMargin objectLine">
         <label for="newName">Pipeline's name:</label> <br>
         <input type="text" name="newName" id="newName" value="{{ thePipeline.Name}}" maxlength="100">
-        <button for="newName" class="aButton b3  roundBorder yesPadding" onclick="changeNamePipeline()">
+        <button for="newName" class="aButton b3  roundBorder yesPadding" onclick="changePipeline('Renaming')">
             Change name
         </button>
         <div class="err yesPadding " id="errPipeSection"></div>
@@ -100,8 +99,8 @@
                     Parameters
                 </button>
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
-                ['opciónA', 'opcion la b', 'la 3', '44Jhin44 opsion']
-                ,[false, true, false, true],)">
+                {{thePipeline._fit[0]}},
+                {{thePipeline._fit[1]}})">
                     <!-- , [true, true, true, true],)"> -->
                     <!-- )"> -->
                     Fit
@@ -109,10 +108,14 @@
                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
                     Transform
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
+                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
+                ['opciónA', 'opcion la b', 'la 3', '44Jhin44 opsion']
+                ,[false, true, false, true],)">
+                    <!-- , [true, true, true, true],)"> -->
+                    <!-- )"> -->
                     Score
                 </button>
-                <button class="right aButton b1 s16 yesPadding yesMargin object2" onclick="operatePipeline('DEL')">
+                <button class="right aButton b1 s16 yesPadding yesMargin object2" onclick="changePipeline('Deleting')">
                     Delete pipeline
                 </button>
             </div>
@@ -185,6 +188,15 @@
                 {% include "popDataSelector.html" %}
             </div>
         </div>
+        <!-- <button class="objectLine" onclick="setOutputPipeline('titulo de esto',
+        ['texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas',
+        'hehent',
+        '<table border=\'1\' class=\'dataframe\'\>  <thead>    <tr style=\'text-align: right;\'\>      <th></th>      <th>Name</th>      <th>Address</th>      <th>ID</th>      <th>Sell</th>      <th>Name</th>      <th>Address</th>      <th>ID</th>      <th>Sell</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>Anurag</td>      <td>Patna</td>      <td>20afasfs as asda sdafasfs as asda sd123</td>      <td>140000</td>    </tr>    <tr>      <th>1</th>      <td>Manjeet</td>      <td>Delhi</td>      <td>20124</td>      <td>300000</td>    </tr>    <tr>      <th>2</th>      <td>Shubham</td>      <td>Coimbatore</td>      <td>afasfs as asda sdafasfs as asda sdafasfs as asda sd</td>      <td>600000</td>    </tr>    <tr>      <th>3</th>      <td>Saurabh</td>      <td>Greater noida</td>      <td>20146</td>      <td>200000</td>    </tr>    <tr>      <th>4</th>      <td>Ujjawal</td>      <td>Patna</td>      <td>20147</td>      <td>600000</td>    </tr>    <tr>      <th>0afasfs as asda sdafasfs as asda sd</th>      <td>Anurag</td>      <td>Patna</td>      <td>20123</td>      <td>140000</td>    </tr>    <tr>      <th>1</th>      <td>Manjeet</td>      <td>Delhi</td>      <td>20124</td>      <td>300000</td>    </tr>    <tr>      <th>2</th>      <td>Shubham</td>      <td>Coimbatore</td>      <td>20145</td>      <td>600000</td>    </tr>    <tr>      <th>3</th>      <td>Saurabh</td>      <td>Greater noida</td>      <td>2afasfs as asda sdafasfs as asda sd0146</td>      <td>200000</td>    </tr>    <tr>      <th>4</th>      <td>afasfs as asda sdafasfs as asda sd</td>      <td>Patna</td>      <td>20147</td>      <td>600000</td>    </tr>  </tbody></table>'
+    ],
+        [2]
+        )">
+            click
+        </button> -->
         <div class="yesMargin objectLine object2">
             <table id="" class="textCenter smallTable">
                 <thead>
@@ -210,28 +222,13 @@
                                 Operate</button>
                         </td>
                     </tr>
-                    {% endfor %} 
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-
-
-    <!-- <button class="objectLine" onclick="setOutputPipeline('titulo de esto',
-    ['texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas',
-    'hehent',
-    '<table border=\'1\' class=\'dataframe\'\>  <thead>    <tr style=\'text-align: right;\'\>      <th></th>      <th>Name</th>      <th>Address</th>      <th>ID</th>      <th>Sell</th>      <th>Name</th>      <th>Address</th>      <th>ID</th>      <th>Sell</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>Anurag</td>      <td>Patna</td>      <td>20afasfs as asda sdafasfs as asda sd123</td>      <td>140000</td>    </tr>    <tr>      <th>1</th>      <td>Manjeet</td>      <td>Delhi</td>      <td>20124</td>      <td>300000</td>    </tr>    <tr>      <th>2</th>      <td>Shubham</td>      <td>Coimbatore</td>      <td>afasfs as asda sdafasfs as asda sdafasfs as asda sd</td>      <td>600000</td>    </tr>    <tr>      <th>3</th>      <td>Saurabh</td>      <td>Greater noida</td>      <td>20146</td>      <td>200000</td>    </tr>    <tr>      <th>4</th>      <td>Ujjawal</td>      <td>Patna</td>      <td>20147</td>      <td>600000</td>    </tr>    <tr>      <th>0afasfs as asda sdafasfs as asda sd</th>      <td>Anurag</td>      <td>Patna</td>      <td>20123</td>      <td>140000</td>    </tr>    <tr>      <th>1</th>      <td>Manjeet</td>      <td>Delhi</td>      <td>20124</td>      <td>300000</td>    </tr>    <tr>      <th>2</th>      <td>Shubham</td>      <td>Coimbatore</td>      <td>20145</td>      <td>600000</td>    </tr>    <tr>      <th>3</th>      <td>Saurabh</td>      <td>Greater noida</td>      <td>2afasfs as asda sdafasfs as asda sd0146</td>      <td>200000</td>    </tr>    <tr>      <th>4</th>      <td>afasfs as asda sdafasfs as asda sd</td>      <td>Patna</td>      <td>20147</td>      <td>600000</td>    </tr>  </tbody></table>'
-],
-    [2]
-    )">
-        click
-    </button>
-    <br> -->
-
-
-
-    <form id="pipeOutput" action="/pipelines/download/output" method="post" target="_blank"
-        class="otherSection invisibleForm"></form>
+    <section id="pipeOutput" class="otherSection invisibleForm hidden objectLine">
+    </section>
 </div>
 
 {% endblock %}
@@ -243,8 +240,5 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
     var numPipe = '{{ numPipe }}';
-    // var hasAlgorithm = parseInt('{{ thePipeline.hasAlgorithm }}');
 </script>
-<!-- <script type="text/javascript"> -->
-
 {% endblock %}

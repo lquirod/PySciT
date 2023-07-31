@@ -33,6 +33,17 @@ data = [['tom', 10, 2005, 'gummies'],
 df = pd.DataFrame(data, columns=['Name', 'Age', 'birth', 'likes'])
 myUser.createData(df, 'Hola data')
 
+data = [[1,1,6, [1,1]],
+[1,2,8, [1,2]],
+[2,2,9, [2,2]],
+[2,3,11, [2,3]],]
+
+# Create the pandas DataFrame
+df = pd.DataFrame(data, columns=['X_train1','X_train2','y_train', 'Xtrain1y2'])
+myUser.createData(df, 'train data')
+
+
+
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression'))
 myUser.addStep(mTr.getTransformation("MinMax_Scaling"),1, 0)
 myUser.addStep(mTr.getTransformation("MinMax_Scaling"),0, 0)
@@ -76,3 +87,22 @@ myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo 
 # print(myUser.addStep(got,0))
 # print(myUser.getActualPipe().steps())
 # print(myUser.delPipeline(0))
+
+from sklearn.svm import SVC
+from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn import linear_model
+import numpy as np
+
+X = np.array([[1, 1], [1, 2], [2, 2], [2, 3]])
+y = np.dot(X, np.array([1, 2])) + 3
+pipe = Pipeline([('linearmodel', linear_model.LinearRegression())])
+# The pipeline can be used as any other estimator
+# and avoids leaking the test set into the train set
+pipe.fit(X, y)
+print(type(pipe.steps))
+print(pipe.steps)
+print(pipe.steps[0])
+print(pipe.score(X, y))

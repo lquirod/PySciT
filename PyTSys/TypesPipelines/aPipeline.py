@@ -10,9 +10,13 @@ class aPipeline(ABC):
         self.hasAlgorithm = None
         self.aPipeline = Pipeline([])
 
+
+    ## Operations with the Pipeline's Algorithm
+    @abstractmethod
+    def setAlgorithm(self, theAlgorithm, stepPosition = None):
+        pass
     ####################################################################################################
-    #### Operations with the Pipeline's structure
-    ## Operations with the Pipeline's Steps
+    ### Operations with the Pipeline's Steps
     def steps(self):
         return self.aPipeline.steps
 
@@ -60,35 +64,31 @@ class aPipeline(ABC):
             self.steps().insert(toPosition, movStep)
             return True
 
-    ## Operations with the Pipeline's Algorithm
-    @abstractmethod
-    def setAlgorithm(self, theAlgorithm, stepPosition = None):
-        pass
-
     ####################################################################################################
-    #### Concrete Operations
-
-    # @abstractmethod
+    #### Common Operations to all Pipelines
     def get_params(self, deep=True):
-        # if self.hasAlgorithm is None:
-        #     return None
-        # else:
-        #     # return self.steps()[self.hasAlgorithm].deep(deep)
-        #     return self.aPipeline.get_params(deep)
         return self.aPipeline.get_params(deep)
     
-
-    # @abstractmethod
     def setParams(self, **params):
         self.aPipeline.set_params(**params)
         return True
-        # return self.aPipeline.set_params(**params)
-
-
-    @abstractmethod
-    def fitData(self, data):
-        pass
+    ####################################################################################################
+    #### Concrete Operations to all Pipelines
+    # Concrete variables to each pipeline operation:
+    # _varNameOperation = [ [NameParams], [Required bool] ]
     
+    # _fit = [[],[]]
+    @abstractmethod
+    def fit(self, data):
+        theData = []
+        theDataLen = len(self.__class__._fit[1])
+        for aDat in range(theDataLen):
+            if aDat < len(data):
+                theData.append(data[aDat])
+            else:
+                theData.append(None)
+        return theData
+
     @abstractmethod
     def predict(self, data):
         pass
