@@ -1,0 +1,249 @@
+<!-- 
+    Pipeline operations in scroll, principal buttons only
+ -->
+ <!-- A Pipeline Page
+    With a summary of the Status and some important buttons links
+ -->
+ {% extends "base.html" %}
+ {% block CSSs %}
+ <link rel="stylesheet" href="{{ url_for('static', filename='styles/tables.css')}}">
+ {% endblock %}
+ {% block infoWindow %}
+ <title>PyTSys -A Pipelines</title>
+ {% endblock %}
+ {% block mainBody %}
+ <div class="objectLine allExpand">
+     <button class="left aButton b3 s16 yesPadding yesMargin" onclick="location.href='/pipelines/'">
+         <div class="objectLine">
+             &#8617;
+             <div class="objectLine">
+                 Back to <br /> Pipeline Menu
+             </div>
+         </div>
+     </button>
+     <h1>Pipeline {{numPipe}}: <span id="thePipeName">{{thePipeline.Name}}</span></h1>
+ </div>
+ <div class="aform allExpand">
+     <!-- <form action="/pipelines/new/" method="post" class="aform allExpand"> -->
+     <div class=" objectLine alingTop yes yesMargin">
+         <div class=" allExpand  textLeft">
+             <span> Total Steps: {{ nameSteps|length }} </span>
+ 
+             <div class="objectLine right">
+                 <button id="toggleModify" class="aButton b4 right" onclick="toggleModify()">
+                     Modify disabled
+                 </button>
+             </div>
+         </div>
+         <table id="" class="fixTable textCenter ">
+             <thead>
+                 <tr class="s20">
+                     <th class="minCol cell110">Pos</th>
+                     <th class="cell1">Steps' Name</th>
+                     <th class="minSmallCol ">Move</th>
+                     <th class="minCol finalHeaderCell">Delete</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 {% for aStep in nameSteps %}
+                 {% if loop.index0==thePipeline.hasAlgorithm %}
+                 <tr id="TR-{{loop.index0}}" class="boldText">
+                     {% else %}
+                 <tr id="TR-{{loop.index0}}">
+                     {% endif %}
+                     <td class="minCol cell110">{{loop.index0}}</td>
+                     <td id="COL-{{loop.index0}}" class="cell1 textCenter">
+                         {{ aStep }}</td>
+                     <td name="movStep" class="Darker minSmallCol">
+                         {% if loop.index0 != 0 %}
+                         <span onclick="operateStep('MOVUP', '{{loop.index0}}' )" id="'MoveUp{{loop.index0}}"
+                             class="pointer">
+                             &#8657;
+                         </span> |
+                         {% endif %}
+                         {% if loop.index != (nameSteps|length ) %} |
+                         <span onclick="operateStep('MOVDOWN', '{{loop.index0}}' )" id="'MoveDown{{loop.index0}}"
+                             class="pointer">
+                             &#8659;
+                         </span>
+                         {% endif %}
+                     </td>
+                     <td name="delStep" class="Darker minSmallCol">
+                         <span onclick="operateStep('DEL', '{{loop.index0}}' )" id="'del{{loop.index0}}" class="pointer">
+                             &#128465;
+                         </span>
+                     </td>
+                 </tr>
+                 {% endfor %}
+             </tbody>
+         </table>
+     </div>
+     <div class="yesMargin objectLine">
+         <label for="newName">Pipeline's name:</label> <br>
+         <input type="text" name="newName" id="newName" value="{{ thePipeline.Name}}" maxlength="100">
+         <button for="newName" class="aButton b3  roundBorder yesPadding" onclick="changePipeline('Renaming')">
+             Change name
+         </button>
+         <div class="err yesPadding " id="errPipeSection"></div>
+         <!-- <div class=" yesPadding " id="errPipeSection">
+ {{pipeParams}}
+         </div> -->
+     </div>
+     <div class="yesMargin objectLine alingTop textLeft">
+         <div class="yesMargin objectLine object2">
+             <div class="objectLine">
+                 <button class="aButton b4 s16 yesPadding yesMargin object2">
+                     Save Setup
+                 </button>
+                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('Add_Step')">
+                     Add Step
+                 </button>
+                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="parameterPopup()">
+                     Parameters
+                 </button>
+                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
+                 {{thePipeline._fit[0]}},
+                 {{thePipeline._fit[1]}})">
+                     Fit
+                 </button>
+                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
+                     Transform
+                 </button>
+                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Score', 'Score model of pipeline {{numPipe}}',
+                 {{thePipeline._score[0]}},
+                 {{thePipeline._score[1]}})">
+                     Score
+                 </button>
+                 <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Predict', 'Predict pipeline {{numPipe}}',
+                 {{thePipeline._predict[0]}},
+                 {{thePipeline._predict[1]}})">
+                     Predict
+                 </button>
+                 <button class="right aButton b1 s16 yesPadding yesMargin object2" onclick="changePipeline('Deleting')">
+                     Delete pipeline
+                 </button>
+             </div>
+ 
+             <div id="popUpBaseDiv" onclick="pipelinePopupClose()">
+                 <div id="Add_Step" class="popupDiv" onclick="event.stopPropagation();">
+                     <h2>Add step to pipeline {{numPipe}}</h2>
+                     <form id="addStep" class="aform" action="javascript:addStepToPipe('{{numPipe}}')">
+                         <label for="position" title="Step insert position">Position: </label>
+                         <select id="position">
+                             {% for x in range( nameSteps|length ): %}
+                             <option value="{{loop.index0}}">{{loop.index0}}</option>
+                             {% endfor %}
+                             <option selected="selected" value="{{nameSteps|length}}">
+                                 {{nameSteps|length }} (last)</option>
+                         </select>
+                         <h3>Transformation list: </h3>
+                         <div class="colText1 colText2 colText3 yesPadding yesMargin textLeft">
+                             {% for aTr in allTr %}
+                             <label class="pointer">
+                                 <input type="radio" name="addStepTr" value="{{aTr}}" required>
+                                 {{aTr}}
+                             </label><br>
+                             {% endfor %}
+                         </div>
+                         <button class="aButton b4 s16 yesMargin yesPadding">
+                             Add Step
+                         </button>
+                     </form>
+                     <button class="aButton b1 yesMargin" onclick="popupClose()">
+                         Cancel
+                     </button>
+                 </div>
+ 
+                 <div id="Parameters" class="popupDiv" onclick="event.stopPropagation();">
+                     <h2>Parameters of pipeline {{numPipe}}</h2>
+                     <form id="setParameters" class=" yesPadding" action="javascript:setParameters()">
+                         <div id="setParametersForm" class="colText1 colText2">
+                             {% for aParam in pipeParams %}
+                             {% if aParam == 'steps' or aParam == 'memory' or aParam in nameSteps %}
+ 
+                             {% elif pipeParams[aParam][1] == "<class 'bool'>" %}
+                                 <div class="" title="{{pipeParams[aParam][1]}}">
+                                     <label for="{{aParam}}">{{aParam}}: </label><br>
+                                     {% if pipeParams[aParam][0] %}
+                                     <input type="checkbox" name="{{aParam}}" checked />
+                                     {% else %}
+                                     <input type="checkbox" name="{{aParam}}" />
+                                     {% endif %}
+                                 </div>
+                                 {% else %}
+                                 <div class="" title="{{pipeParams[aParam][1]}}">
+                                     <label for="{{aParam}}">{{aParam}}: </label><br>
+                                     <input type="text" name={{aParam}} value="{{pipeParams[aParam][0]}}" maxlength="30">
+                                 </div>
+                                 {% endif %}
+                                 {% endfor %}
+                         </div>
+                         <button class="aButton b4 s16 yesMargin yesPadding">
+                             Save parameters
+                         </button><br>
+                         <button type="reset" class="aButton roundBorder b3 s14 yesMargin yesPadding">
+                             Reset
+                         </button>
+                     </form>
+                     <button class="aButton b1 yesMargin" onclick="parameterPopupClose()">
+                         Cancel
+                     </button>
+                 </div>
+                 {% include "popDataSelector.html" %}
+             </div>
+         </div>
+         <!-- <button class="objectLine" onclick="setOutputPipeline('titulo de esto',
+         ['texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas texto sin importancia mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas y mu largo y con muchas cosas',
+         'hehent',
+         '<table border=\'1\' class=\'dataframe\'\>  <thead>    <tr style=\'text-align: right;\'\>      <th></th>      <th>Name</th>      <th>Address</th>      <th>ID</th>      <th>Sell</th>      <th>Name</th>      <th>Address</th>      <th>ID</th>      <th>Sell</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>Anurag</td>      <td>Patna</td>      <td>20afasfs as asda sdafasfs as asda sd123</td>      <td>140000</td>    </tr>    <tr>      <th>1</th>      <td>Manjeet</td>      <td>Delhi</td>      <td>20124</td>      <td>300000</td>    </tr>    <tr>      <th>2</th>      <td>Shubham</td>      <td>Coimbatore</td>      <td>afasfs as asda sdafasfs as asda sdafasfs as asda sd</td>      <td>600000</td>    </tr>    <tr>      <th>3</th>      <td>Saurabh</td>      <td>Greater noida</td>      <td>20146</td>      <td>200000</td>    </tr>    <tr>      <th>4</th>      <td>Ujjawal</td>      <td>Patna</td>      <td>20147</td>      <td>600000</td>    </tr>    <tr>      <th>0afasfs as asda sdafasfs as asda sd</th>      <td>Anurag</td>      <td>Patna</td>      <td>20123</td>      <td>140000</td>    </tr>    <tr>      <th>1</th>      <td>Manjeet</td>      <td>Delhi</td>      <td>20124</td>      <td>300000</td>    </tr>    <tr>      <th>2</th>      <td>Shubham</td>      <td>Coimbatore</td>      <td>20145</td>      <td>600000</td>    </tr>    <tr>      <th>3</th>      <td>Saurabh</td>      <td>Greater noida</td>      <td>2afasfs as asda sdafasfs as asda sd0146</td>      <td>200000</td>    </tr>    <tr>      <th>4</th>      <td>afasfs as asda sdafasfs as asda sd</td>      <td>Patna</td>      <td>20147</td>      <td>600000</td>    </tr>  </tbody></table>'
+     ],
+         [2]
+         )">
+             click
+         </button> -->
+         <div class="yesMargin objectLine object2">
+             <table id="" class="textCenter smallTable">
+                 <thead>
+                     <tr class="s20">
+                         <th class="cell1">Pipeline operations</th>
+                         <th class="cell13"></th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     {% for aStep in nameSteps %}
+                     <tr id="OP-{{loop.index0}}">
+                         <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep }}</td>
+                         <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                             <button>
+                                 Operate
+                             </button>
+                         </td>
+                     </tr>
+                     {% endfor %} {% for aStep in thePipeline.steps() %}
+                     <tr id="OP-{{loop.index0}}">
+                         <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
+                         <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
+                             <button>
+                                 Operate</button>
+                         </td>
+                     </tr>
+                     {% endfor %}
+                 </tbody>
+             </table>
+         </div>
+     </div>
+     <section id="pipeOutput" class="otherSection invisibleForm hidden objectLine">
+     </section>
+ </div>
+ 
+ {% endblock %}
+ 
+ 
+ {% block funcionesJS %}
+ <script src="{{url_for('static', filename='js/pipelines.js')}}" defer></script>
+ <script src="{{url_for('static', filename='js/popUp.js')}}" defer></script>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ <script>
+     var numPipe = '{{ numPipe }}';
+ </script>
+ {% endblock %}

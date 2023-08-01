@@ -1,0 +1,24 @@
+Rojo:
+    #efb6b6;
+    #e89393;
+
+Verde
+    #ccfdcc;
+    #aaf1aa;
+
+Axul principal:
+    #6699CC;
+    #B4CBE2;
+    #4175a9;
+
+Azul claro:
+    #e3f1fd;
+    #d5e0e9;
+
+Azul oscuro:
+    #093672;
+    #022859;
+
+Otros:
+    #05aff2;
+    #04b2d9;
