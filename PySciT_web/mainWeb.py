@@ -1,9 +1,9 @@
-# import PyTSys.UserActions as user
-# from PyTSys.MoreFunctions import *
+# import PySciT.UserActions as user
+# from PySciT.MoreFunctions import *
 # # from ManageItems import ManageTransformations as mo
-# import PyTSys.ManageItems as M
-# from PyTSys.Aditional.MoreFunctions import *
-from PyTSys import *
+# import PySciT.ManageItems as M
+# from PySciT.Aditional.MoreFunctions import *
+from PySciT import *
 import pandas as pd
 
 myUser = user.UserActions('Cherished User')

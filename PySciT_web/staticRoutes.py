@@ -1,5 +1,5 @@
 from flask import redirect, render_template, url_for, make_response
-from PyTSys_web import app
+from PySciT_web import app
 from markupsafe import Markup
 from datetime import datetime
 

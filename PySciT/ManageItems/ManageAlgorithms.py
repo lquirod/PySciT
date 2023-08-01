@@ -1,5 +1,5 @@
-from PyTSys import Enumerations as Enum
-from PyTSys import TypesPipelines as tPip
+from PySciT import Enumerations as Enum
+from PySciT import TypesPipelines as tPip
 import pandas as pd
 
 class ManageAlgorithms:

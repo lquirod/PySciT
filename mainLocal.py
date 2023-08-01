@@ -1,13 +1,13 @@
-import PyTSys.UserActions as user
-# from PyTSys.MoreFunctions import *
+import PySciT.UserActions as user
+# from PySciT.MoreFunctions import *
 # # from ManageItems import ManageTransformations as mo
-import PyTSys.ManageItems as M
-from PyTSys.Aditional.MoreFunctions import *
+import PySciT.ManageItems as M
+from PySciT.Aditional.MoreFunctions import *
 
-# from PyTSys import UserActions as user
-# from PyTSys.MoreFunctions import *
+# from PySciT import UserActions as user
+# from PySciT.MoreFunctions import *
 # # from ManageItems import ManageTransformations as mo
-# from PyTSys import ManageItems as M
+# from PySciT import ManageItems as M
 
 # import UserActions as user
 # from MoreFunctions import *

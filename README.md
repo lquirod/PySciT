@@ -1,15 +1,15 @@
-# PyTSys
+# PySciT
 A (Python) Pipelines Toolkit System
 
-gitHub: https://github.com/lquirod/PyTSys
+gitHub: https://github.com/lquirod/PySciT
 
 ## Installing
 Clone repository:
-$ git clone https://github.com/lquirod/PyTSys
+$ git clone https://github.com/lquirod/PySciT
 
 Create and activate virtual environment:
 
-	$ cd PyTSys/
+	$ cd PySciT/
 	$ python3 -m venv venv/
 	$ source venv/bin/activate
 
@@ -27,7 +27,7 @@ Install flask application:
 
 Execute:
 
-	$ flask --app PyTSys_web run
+	$ flask --app PySciT_web run
 
 
 <!-- 
@@ -44,5 +44,5 @@ export FLASK_APP="mainWeb.py"
 flask run --debug
 flask run
 pip install -e .
-flask --app PyTSys_web run --debug
+flask --app PySciT_web run --debug
 -->

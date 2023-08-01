@@ -1,7 +1,7 @@
 from flask import jsonify, redirect, render_template, request, url_for
-from PyTSys_web import app
-from PyTSys_web.mainWeb import *
-from PyTSys_web.staticRoutes import *
+from PySciT_web import app
+from PySciT_web.mainWeb import *
+from PySciT_web.staticRoutes import *
 
 # if __name__ == "__main__":
 #     from waitress import serve

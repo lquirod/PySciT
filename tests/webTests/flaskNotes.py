@@ -50,4 +50,4 @@ def show_signup_form():
 # flask run --debug
 # flask run
 # pip install -e .
-# flask --app PyTSys run
+# flask --app PySciT run

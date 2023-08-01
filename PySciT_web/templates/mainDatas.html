@@ -1,38 +1,39 @@
-<!-- Pipelines main menu Page
-    With a list of all pipes a user has
--->
+<!-- Datas main menu Page
+    With a list of all datas a user has
+ -->
 {% extends "base.html" %}
 {% block CSSs %}
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/tables.css')}}">
 {% endblock %}
 {% block infoWindow %}
-<title>PyTSys -Pipelines</title>
+<title>PySciT -Datas</title>
 {% endblock %}
 {% block mainBody %}
 <div class="objectLine allExpand">
     <button class="left aButton b3 s16 yesPadding yesMargin " onclick="location.href='/home/'">
         &#8617; Back Home</button>
-    <h1>Manage Pipelines Menu</h1>
+    <h1>Manage Datas Menu</h1>
 </div>
+
 <div class="allExpand">
     <div class="textContent">
         <div class=" allExpand  textLeft">
-            <span> Total Pipelines: {{ Pipelines|length }} </span>
-            {% if Pipelines|length == 0 %}
+            <span> Total Datas: {{ Datas|length }} </span>
+            {% if Datas|length == 0 %}
         </div>
-        <span> Is seems there are nothing </span>
+        <span> Is seems there are no datas </span>
         <br>
         <button class="aButton b3 s18 roundBorder yesPadding yesMargin"
-            onclick="window.location.href='/pipelines/new/'">
+            onclick="window.location.href='/datas/new/'">
             <i class="fa-solid fa-plus"></i>
-            <strong>Create your first new pipeline</strong>
+            <strong>Create your first new data</strong>
             <i class="fa-solid fa-plus"></i>
         </button>
     </div>
 </div>
             {% else %}
-            <button class="aButton b3 right" onclick="window.location.href='/pipelines/new/'">
-                <strong>Create a new pipeline</strong>
+            <button class="aButton b3 right" onclick="window.location.href='/datas/new/'">
+                <strong>Create a new data</strong>
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>
@@ -41,30 +42,32 @@
                 <tr class="s20">
                     <th class="minCol cell110">Nº</th>
                     <th class="minLargeCol cell12">Name</th>
-                    <th class="minLargeCol cell12">Algorithm</th>
-                    <!-- <th class="minSmallCol cell110">Type</th> -->
-                    <th class="minSmallCol cell110">Steps</th>
+                    <th class="minMediumCol cell12">Columns</th>
+                    <th class="minSmallCol cell25">Rows</th>
                     <th class="cell110 minSmallCol finalHeaderCell">Access</th>
                 </tr>
             </thead>
             <tbody>
-                {% for aPipe in Pipelines %}
+                {% for aData in Datas %}
                 <tr>
                     <td class="minCol cell110">{{loop.index0}}</td>
-                    <td class="minLargeCol cell25">
-                        <div class="">{{ aPipe.Name }}</div>
+                    <td class="minLargeCol cell12">
+                        <div class="">{{ aData.Name }}</div>
                     </td>
-                    <td class="minMediumCol cell13">
+                    <td class="minMediumCol cell12">
                         <!-- <div class="minMediumCol cell13"> -->
-                        {{ aPipe.steps()[aPipe.hasAlgorithm][0] }}
+                        <div class="">{{ aData.getNameCols() }}</div>
                         <!-- </div> -->
                     </td>
-                    <!-- <td class="minSmallCol cell110">{{aPipe.typeAlgorithm}}</td> -->
-                    <td class="minSmallCol cell110">{{aPipe.steps()|length}}</td>
-                    <td class="minCol cell110">
-                        <a href="/pipelines/get{{loop.index0}}/">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
+                    <td class="minSmallCol cell25">
+                        {{aData.Data.index|length}}
+                    </td>
+                    <td class="minSmallCol cell110">
+                        <!-- <div class="minSmallCol"> -->
+                            <a href="/datas/get{{loop.index0}}/">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        <!-- </div> -->
                     </td>
                 </tr>
                 {% endfor %}
@@ -72,8 +75,7 @@
         </table>
     </div>
 </div>
-            {% endif %}
-
+{% endif %}
 
 {% endblock %}
 

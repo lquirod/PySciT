@@ -2,8 +2,8 @@
 # from clases.MoreFunctions import *
 # import clases.ManageTransformations as mo
 
-# import file "PyTSys/main.py"
-# PyTSys/main.py
+# import file "PySciT/main.py"
+# PySciT/main.py
 
 # menuOpciones = [
 #     "Status",

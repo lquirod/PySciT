@@ -1,7 +1,7 @@
 import inspect
 from flask import jsonify, redirect, request, url_for
-from PyTSys_web import app
-from PyTSys_web.mainRoutes import *
+from PySciT_web import app
+from PySciT_web.mainRoutes import *
 
 #############################################################################################
 # Datas #

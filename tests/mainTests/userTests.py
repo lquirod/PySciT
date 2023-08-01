@@ -1,6 +1,6 @@
-import PyTSys.UserActions as user
-from PyTSys.MoreFunctions import *
-import PyTSys.ManageItems.ManageTransformations as mo
+import PySciT.UserActions as user
+from PySciT.MoreFunctions import *
+import PySciT.ManageItems.ManageTransformations as mo
 
 # filename = askFileLocation()
 # print("This filename is in: \""+filename+"\" path")

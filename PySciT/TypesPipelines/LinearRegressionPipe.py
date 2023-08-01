@@ -3,7 +3,7 @@ from sklearn.pipeline import Pipeline
 import pandas as pd
 from abc import abstractmethod, ABC
 from sklearn import linear_model
-from PyTSys.TypesPipelines import aPipeline
+from PySciT.TypesPipelines import aPipeline
 
 class LinearRegressionPipe(aPipeline.aPipeline):
     def __init__(self, pipeName = 'MyNewPipe'):
