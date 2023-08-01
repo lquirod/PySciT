@@ -77,22 +77,42 @@ class aPipeline(ABC):
     # Concrete variables to each pipeline operation:
     # _varNameOperation = [ [NameParams], [Required bool] ]
     
-    # _fit = [[],[]]
-    @abstractmethod
-    def fit(self, data):
+    def dataInput(self, data, theDataLen):
         theData = []
-        theDataLen = len(self.__class__._fit[1])
+        # theDataLen = range
+        # theDataLen = len(range)
         for aDat in range(theDataLen):
             if aDat < len(data):
                 theData.append(data[aDat])
             else:
                 theData.append(None)
+            # if aDat < len(data):
+            #     if data[aDat] == 'None':
+            #         theData.append(None)
+            #     else:
+            #         theData.append(data[aDat])
+            # else:
+            #     theData.append(None)
+
         return theData
 
+    # _fit = ['X (training data)','Y (target values)']
+    _fit = [['Training data, X','Target values, y'],
+            [1,0]]
+    @abstractmethod
+    def fit(self, data):
+        pass
+
+    _predict = [['Data to predict(X)'],
+                [1]]
     @abstractmethod
     def predict(self, data):
         pass
         
+    # _score = [['Data to predict on, X', 'Targets used for scoring, y'],'Individual weights for each sample (Linear_Regression__sample_weight)'],
+    #           [1,0,0]]
+    _score = [['Data to predict on, X', 'Targets used for scoring, y'],
+            [1,0]]
     @abstractmethod
     def score(self, data):
         pass

@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     popupOptions = [];
     actualOperation = null;
     actualOutput = false;
+    errDataSelector=  document.getElementById('errDataSelector');
 }, false);
 
 /*  ---- Modify toggle button ---- */
@@ -216,12 +217,14 @@ function pipelinePopupClose() {
         popupClearSelectData().reset();
         actualOperation = null;
         popupOptions.length = 0;
+        errDataSelector.textContent = '';
     }
 }
 // Show data selection options in a data
 function selectColsDataShow(selectColsData) {
     var theOptionView = document.getElementById("selectDataCols")
     var br = document.createElement("br");
+    // window.alert(popupOptions)
     for (var i = 0; i < popupOptions.length; i++) {
         let ptext = document.createTextNode(popupOptions[i][0] + ': ');
         theOptionView.appendChild(ptext);
@@ -230,19 +233,19 @@ function selectColsDataShow(selectColsData) {
 
         let anOption = document.createElement('option');
         if (popupOptions[i][1]) {
-            anOption.selected = true;
             theSelect.required = 'required';
             anOption.disabled = 'disabled';
             anOption.innerHTML = 'Required';
             anOption.value = '';
 
         } else {
-            anOption.selected = true;
             anOption.required = false;
             anOption.disabled = false;
             anOption.innerHTML = 'None';
             anOption.value = 'None';
         }
+        anOption.selected = true;
+        theSelect.name = popupOptions[i][0];
         theSelect.appendChild(anOption);
 
         for (var j = 0; j < selectColsData.length; j++) {
@@ -294,24 +297,34 @@ function operatePipeline() {
         var form = document.getElementById('selectDataForm');
         var theSelects = form.getElementsByTagName("select");
         var theInputs = [];
-        for (var i = 0; i < theSelects.length; i++)
+        // var paramDict = {};
+        // var regExp = /\(([^)]+)\)/;
+        for (let i = 0; i < theSelects.length; i++) {
+            // var name = regExp.exec(theSelects[i].name);
+            // if (name)
+            //     paramDict[name[1]] = theSelects[i].value;
+            // else
             theInputs.push(theSelects[i].value);
+        }
 
         $.ajax({
-            data: JSON.stringify({ op: actualOperation, inputs: theInputs }),
+            data: JSON.stringify({ op: actualOperation, inputs: theInputs }), //, paramDict: paramDict }),
             contentType: 'application/json',
             url: '/pipelines/get' + numPipe + '/operate',
             type: 'post',
             beforeSend: function () {
                 toggleModify(false);
                 text.textContent = 'Operating pipeline with ' + actualOperation + '...';
+                errDataSelector.textContent = 'Operating pipeline with ' + actualOperation + '...';
             },
             success: function (ret) {
+                text.textContent = '';
                 if (ret.response) {
                     setOutputPipeline(actualOperation, ret.output, ret.isHTMLtable);
+                    pipelinePopupClose()
                 } else {
                 }
-                document.getElementById('errDataSelector').textContent = ret.err;
+                errDataSelector.textContent = ret.err;
                 addViewLog(ret.newLog);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

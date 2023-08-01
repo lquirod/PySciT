@@ -1,3 +1,4 @@
+import inspect
 from sklearn.pipeline import Pipeline
 import pandas as pd
 from abc import abstractmethod, ABC
@@ -33,41 +34,43 @@ class LinearRegressionPipe(aPipeline.aPipeline):
     #### Concrete Operations to all Pipelines
     # Concrete variables to each pipeline operation:
     # _varNameOperation = [ [NameParams], [Required bool] ]
-    _fit = [['X (training data)','Y (target values)', 'Individual weights for each sample (sample values)'],
-            [1,1,0]]
 
     # def fitData(self, X, y = None, sample_weight=None):
+    # _fit = [['Training data, X','Target values, y', 'Individual weights for each sample (Linear_Regression__sample_weight)'],
+    #         [1,1,0]]
+    _fit = [['Training data, X','Target values, y'],
+            [1,1]]
     def fit(self, data):
-        theData = super().fit(data)
-
-
-        print('Data: 0')
-        print(theData[0])
-        print('Data: 1')
-        print(theData[1])
-        print('Data: 2')
-        print(theData[2])
+        theData = super().dataInput(data, len(self.__class__._fit[0]))
+        # print(inspect.getargspec(self.aPipeline[0].fit).args)
+        # print('Data: 0')
+        # print(theData[0])
+        # print('Data: 1')
+        # print(theData[1])
+        # print('Data: 2')
+        # print(theData[2])
+        # print (theData)
         try:
-            self.aPipeline.fit(theData[0], theData[1], Linear_Regression__sample_weight=theData[2])
-            return True
+            self.aPipeline.fit(theData[0], theData[1])
+            return [True, 'Fit done']
         except Exception as e:
-            return e
+            return [False, str(e)]
     
-    def predict(self, X):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.steps()[self.hasAlgorithm].predict(X)
+    def predict(self, data):
+        theData = super().dataInput(data, len(self.__class__._predict[0]))
+        try:
+            ret = self.aPipeline.predict(theData[0])
+            return [True, ret]
+        except Exception as e:
+            return [False, str(e)]
         
-    def score(self, X, y, sample_weight=None):
-        if self.hasAlgorithm is None:
-            return None
-        else:
-            return self.aPipeline.score(X, y, sample_weight)
-            # return self.steps()[self.hasAlgorithm][1].score(X, y, sample_weight)
-            # return self.steps().tolist()[self.hasAlgorithm].score(X, y, sample_weight)
-            # return self.steps()[self.hasAlgorithm].score(X, y, sample_weight)
-    
+    def score(self, data):
+        theData = super().dataInput(data, len(self.__class__._fit[0]))
+        try:
+            ret = self.aPipeline.score(theData[0], theData[1])
+            return [True, ret]
+        except Exception as e:
+            return [False, str(e)]
 
     # def getCoef(self):
     #     if self.hasAlgorithm is None:

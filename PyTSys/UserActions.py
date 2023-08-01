@@ -108,7 +108,7 @@ class UserActions:
     def setParams(self, **params):
         return self.getActualPipe().setParams(**params)
 
-    def fitSelectData(self, theData, thePipe = None):
+    def fitPipe(self, theData, thePipe = None):
         if self.existPipeline(thePipe):
             return self.myPipelines[thePipe].fit(theData)
         elif self.getActualPipe() is not None:
@@ -121,15 +121,28 @@ class UserActions:
         #     self.getActualPipe().fitData(zipped, self.getActualData().Data['y_train'].tolist())
             return self.getActualPipe().fit(theData)
         else:
-            return None
+            return [False, 'Pipe not found']
 
-    def predict(self):
-        if self.getActualPipe() is None or self.getActualData() is None:
-            return None
+    def predictPipe(self, theData, thePipe = None):
+        # if self.getActualPipe() is None or self.getActualData() is None:
+        #     return None
+        # else:
+        #     zipped = [[x, y] for x, y in zip(self.getActualData().Data['X_train1'].tolist(), self.getActualData().Data['X_train2'].tolist())]
+        #     return self.getActualPipe().score(zipped, self.getActualData().Data['y_train'].tolist())
+        if self.existPipeline(thePipe):
+            return self.myPipelines[thePipe].predict(theData)
+        elif self.getActualPipe() is not None:
+            return self.getActualPipe().predict(theData)
         else:
-            zipped = [[x, y] for x, y in zip(self.getActualData().Data['X_train1'].tolist(), self.getActualData().Data['X_train2'].tolist())]
-            return self.getActualPipe().score(zipped, self.getActualData().Data['y_train'].tolist())
+            return [False, 'Pipe not found']
 
+    def scorePipe(self, theData, thePipe = None):
+        if self.existPipeline(thePipe):
+            return self.myPipelines[thePipe].score(theData)
+        elif self.getActualPipe() is not None:
+            return self.getActualPipe().score(theData)
+        else:
+            return [False, 'Pipe not found']
     ####################################################################################################
     #### Operations with user's Datas
     def createData(self, data = None, newNameData='New Data'):

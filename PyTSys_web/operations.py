@@ -1,3 +1,4 @@
+import inspect
 from flask import jsonify, redirect, request, url_for
 from PyTSys_web import app
 from PyTSys_web.mainRoutes import *
@@ -197,39 +198,48 @@ def operatePipeline(numberPipeline=None):
 
         op = request.json.get('op')
         inputs = request.json.get('inputs')
+        # paramDict = request.json.get('paramDict')
+        # print(paramDict)
         args = []
-        print(inputs)
+        # print(inputs)
         nData = thisDataExist(inputs[0])
         if nData is not None:
             theData = myUser.myDatas[nData]
-            print(theData.Data)
             for x in range(1, len(inputs)):
                 args.append(theData.getCol(inputs[x]))
+
         print(args)
 
         response = ''
-        output = ''
+        msg = ''
+        output = []
         isHTMLtable = []
         err = ''
         nlog = ''
 
         if op == 'Fit':
-            output = myUser.fitSelectData(args, nPipe)
-            isHTMLtable = []
-            response = True
+            response, msg = myUser.fitPipe(args, nPipe)
+            response = False
+            nlog = addLog(op+' Pipe '+str(nPipe)+' with '+str(args))
+        elif op == 'Predict':
+            response, msg = myUser.predictPipe(args, nPipe) 
         elif op == 'Score':
-            output = myUser.fitSelectData(args)
-            response = True
+            response, msg = myUser.scorePipe(args, nPipe)
         elif op == '_______':
-            print('')
+            print()
         else:
-            nlog = addLog('Error: '+op+' failed on pipeline '+str(nPipe))
+            nlog = addLog('Error: '+op+' failed on pipeline '+str(nPipe)+' with '+str(args))
             ret = {'response': False, 'err': 'Operation not found', 'newLog': nlog}
             return jsonify(ret)
+        
+        if response:
+            output.append(str(msg)+', with '+str(args))
+            nlog = addLog(op+' Pipe '+str(nPipe)+' with '+str(args)+', got '+str(msg))
+        else:
+            err = str(msg)+', with '+str(args)
 
-        nlog = addLog(op+' Pipe '+str(nPipe))
-        err = 'Operation done'
-            
+        print(output)
+        print(err)
         ret = {'response': response, 'output': output, 'isHTMLtable': isHTMLtable, 'err': err, 'newLog': nlog}
         return jsonify(ret)
     

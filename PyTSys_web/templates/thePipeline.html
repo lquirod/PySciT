@@ -89,33 +89,34 @@
     <div class="yesMargin objectLine alingTop textLeft">
         <div class="yesMargin objectLine object2">
             <div class="objectLine">
-                <button class="aButton b4 s16 yesPadding yesMargin object2">
+                <button class="objectLine aButton b4 s16 yesPadding yesMargin object2">
                     Save Setup
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('Add_Step')">
+                <button class="objectLine aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('Add_Step')">
                     Add Step
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="parameterPopup()">
+                <button class="objectLine aButton b4 s16 yesPadding yesMargin object2" onclick="parameterPopup()">
                     Parameters
                 </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
+                <!-- <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
                 {{thePipeline._fit[0]}},
                 {{thePipeline._fit[1]}})">
-                    <!-- , [true, true, true, true],)"> -->
-                    <!-- )"> -->
                     Fit
-                </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
+                </button> -->
+                <!-- <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupWindow('dataSelector')">
                     Transform
-                </button>
-                <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
-                ['opciónA', 'opcion la b', 'la 3', '44Jhin44 opsion']
-                ,[false, true, false, true],)">
-                    <!-- , [true, true, true, true],)"> -->
-                    <!-- )"> -->
+                </button> -->
+                <!-- <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Score', 'Score model of pipeline {{numPipe}}',
+                {{thePipeline._score[0]}},
+                {{thePipeline._score[1]}})">
                     Score
-                </button>
-                <button class="right aButton b1 s16 yesPadding yesMargin object2" onclick="changePipeline('Deleting')">
+                </button> -->
+                <!-- <button class="aButton b4 s16 yesPadding yesMargin object2" onclick="popupSelectData('Predict', 'Predict pipeline {{numPipe}}',
+                {{thePipeline._predict[0]}},
+                {{thePipeline._predict[1]}})">
+                    Predict
+                </button> -->
+                <button class="objectLine aButton b1 s16 yesPadding yesMargin object2" onclick="changePipeline('Deleting')">
                     Delete pipeline
                 </button>
             </div>
@@ -201,27 +202,50 @@
             <table id="" class="textCenter smallTable">
                 <thead>
                     <tr class="s20">
-                        <th class="cell1">Other operations</th>
+                        <th class="cell1">Pipeline operations</th>
                         <th class="cell13"></th>
                     </tr>
                 </thead>
                 <tbody>
+                    <tr title="Fit the model&#10;Fit all the transformers one after the other and transform the data. Finally, fit the transformed data using the final estimator.">
+                        <td class="cell1 textCenter">Fit</td>
+                        <td class="cell13 textCenter">
+                            <button onclick="popupSelectData('Fit', 'Fit model of pipeline {{numPipe}}',
+                            {{thePipeline._fit[0]}},
+                            {{thePipeline._fit[1]}})">
+                                Operate
+                            </button>
+                        </td>
+                    </tr>
+                    <tr title="Transform the data, and apply predict with the final estimator&#10;Call transform of each transformer in the pipeline. The transformed data are finally passed to the final estimator that calls predict method. Only valid if the final estimator implements predict">
+                        <td class="cell1 textCenter">Predict</td>
+                        <td class="cell13 textCenter">
+                            <button onclick="popupSelectData('Predict', 'Predict pipeline {{numPipe}}',
+                            {{thePipeline._predict[0]}},
+                            {{thePipeline._predict[1]}})">
+                                Operate
+                            </button>
+                        </td>
+                    </tr>
+                    <tr title="Transform the data, and apply score with the final estimator&#10;Call transform of each transformer in the pipeline. The transformed data are finally passed to the final estimator that calls score method. Only valid if the final estimator implements score.">
+                        <td class="cell1 textCenter">Score</td>
+                        <td class="cell13 textCenter">
+                            <button onclick="popupSelectData('Score', 'Score model of pipeline {{numPipe}}',
+                            {{thePipeline._score[0]}},
+                            {{thePipeline._score[1]}})">
+                                Operate
+                            </button>
+                        </td>
+                    </tr>
                     {% for aStep in nameSteps %}
-                    <tr id="OP-{{loop.index0}}">
+                    <!-- <tr id="OP-{{loop.index0}}">
                         <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep }}</td>
                         <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
                             <button>
-                                Operate</button>
+                                Operate
+                            </button>
                         </td>
-                    </tr>
-                    {% endfor %} {% for aStep in thePipeline.steps() %}
-                    <tr id="OP-{{loop.index0}}">
-                        <td id="oOP-{{loop.index0}}" class="cell1 textCenter">{{ aStep[0] }}</td>
-                        <td id="oOP-{{loop.index0}}" class="cell13 textCenter">
-                            <button>
-                                Operate</button>
-                        </td>
-                    </tr>
+                    </tr> -->
                     {% endfor %}
                 </tbody>
             </table>

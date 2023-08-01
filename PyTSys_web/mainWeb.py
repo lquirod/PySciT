@@ -17,7 +17,7 @@ aux = ''
 aux1 = ''
 
 
-print('creando user')
+print('Creating user...')
 print(myUser.Name)
 myUser.createData()
 data = [['tom', 10, 2005, 'gummies'],
@@ -101,8 +101,5 @@ y = np.dot(X, np.array([1, 2])) + 3
 pipe = Pipeline([('linearmodel', linear_model.LinearRegression())])
 # The pipeline can be used as any other estimator
 # and avoids leaking the test set into the train set
-pipe.fit(X, y)
-print(type(pipe.steps))
-print(pipe.steps)
-print(pipe.steps[0])
+print(pipe.fit(X, y))
 print(pipe.score(X, y))
