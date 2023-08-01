@@ -6,10 +6,10 @@ from PySciT_web.mainRoutes import *
 #############################################################################################
 # Datas #
 @app.route('/datas/get<numberData>/download/',  methods=["GET", "POST"])
-def downloadData(numberData=-1):
+def downloadData(numberData=None):
     nData = thisDataExist(numberData)
     if nData == None:
-        return messagePage(('Error trying saving data: '+str(nData)))
+        return messagePage(('Error while saving data: '+str(nData)))
 
     downloadCSVName = myUser.myDatas[nData].Name
     downloadCSV = myUser.myDatas[nData]
@@ -36,6 +36,22 @@ def operateDataNewName(numberData=None):
 
 #############################################################################################
 # Pipelines #
+@app.route('/pipelines/get<numberPipeline>/download/',  methods=["GET", "POST"])
+def downloadPipeline(numberPipeline=None):
+    nPipe = thisPipeExist(numberPipeline)
+    if nPipe == None:
+        return messagePage(('Error while saving pipeline: '+str(nPipe)))
+    
+    thePipe = myUser.myPipelines[nPipe]
+    name = thePipe.Name
+    downloadName = 'Pipeline' + str(nPipe) + '_' +name + ' download'
+    downloadText = 'Name\n'+name+'\nSteps\n'
+    for aStep in thePipe.steps():
+        downloadText += aStep[0] + '\n'
+    downloadText += 'Parameters\n'+ str(thePipe.get_params())
+    theDownload = download(downloadText, downloadName, 'text/plain')
+    return theDownload if theDownload is not None else messagePage(('Error saving pipeline nº'+str(nPipe)))
+
 @app.route('/pipelines/get<numberPipeline>/change/',  methods=["GET", "POST"])
 def changePipeline(numberPipeline=None):
     if request.method == 'POST':
@@ -71,7 +87,7 @@ def changePipeline(numberPipeline=None):
         return redirect(url_for('thePipelinePage',numberPipeline = numberPipeline))
 
 @app.route('/pipelines/get<numberPipeline>/operate/steps/add/',  methods=["GET", "POST"])
-def operatePipelineAddStep(numberPipeline=-1):
+def operatePipelineAddStep(numberPipeline=None):
     if request.method == 'POST':
         nPipe = thisPipeExist(numberPipeline)
         if nPipe == None:
@@ -233,13 +249,13 @@ def operatePipeline(numberPipeline=None):
             return jsonify(ret)
         
         if response:
-            output.append(str(msg)+', with '+str(args))
-            nlog = addLog(op+' Pipe '+str(nPipe)+' with '+str(args)+', got '+str(msg))
+            output.append(str(msg)+'. Used '+str(args))
+            nlog = addLog(op+' Pipe '+str(nPipe)+' with '+str(args)+':: '+str(msg))
         else:
-            err = str(msg)+', with '+str(args)
+            err = str(msg)+' Used '+str(args)
 
-        print(output)
-        print(err)
+        # print(output)
+        # print(err)
         ret = {'response': response, 'output': output, 'isHTMLtable': isHTMLtable, 'err': err, 'newLog': nlog}
         return jsonify(ret)
     

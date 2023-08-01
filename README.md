@@ -1,5 +1,5 @@
 # PySciT
-A (Python) Pipelines Toolkit System
+A Python Scikit-learn Pipelines Toolkit 
 
 gitHub: https://github.com/lquirod/PySciT
 

@@ -40,37 +40,37 @@ class LinearRegressionPipe(aPipeline.aPipeline):
     #         [1,1,0]]
     _fit = [['Training data, X','Target values, y'],
             [1,1]]
-    def fit(self, data):
-        theData = super().dataInput(data, len(self.__class__._fit[0]))
-        # print(inspect.getargspec(self.aPipeline[0].fit).args)
-        # print('Data: 0')
-        # print(theData[0])
-        # print('Data: 1')
-        # print(theData[1])
-        # print('Data: 2')
-        # print(theData[2])
-        # print (theData)
-        try:
-            self.aPipeline.fit(theData[0], theData[1])
-            return [True, 'Fit done']
-        except Exception as e:
-            return [False, str(e)]
+    # def fit(self, data):
+    #     theData = super().dataInput(data, len(self.__class__._fit[0]))
+    #     # print(inspect.getargspec(self.aPipeline[0].fit).args)
+    #     # print('Data: 0')
+    #     # print(theData[0])
+    #     # print('Data: 1')
+    #     # print(theData[1])
+    #     # print('Data: 2')
+    #     # print(theData[2])
+    #     # print (theData)
+    #     try:
+    #         self.aPipeline.fit(theData[0], theData[1])
+    #         return [True, 'Fit done']
+    #     except Exception as e:
+    #         return [False, str(e)]
     
-    def predict(self, data):
-        theData = super().dataInput(data, len(self.__class__._predict[0]))
-        try:
-            ret = self.aPipeline.predict(theData[0])
-            return [True, ret]
-        except Exception as e:
-            return [False, str(e)]
+    # def predict(self, data):
+    #     theData = super().dataInput(data, len(self.__class__._predict[0]))
+    #     try:
+    #         ret = self.aPipeline.predict(theData[0])
+    #         return [True, ret]
+    #     except Exception as e:
+    #         return [False, str(e)]
         
-    def score(self, data):
-        theData = super().dataInput(data, len(self.__class__._fit[0]))
-        try:
-            ret = self.aPipeline.score(theData[0], theData[1])
-            return [True, ret]
-        except Exception as e:
-            return [False, str(e)]
+    # def score(self, data):
+    #     theData = super().dataInput(data, len(self.__class__._fit[0]))
+    #     try:
+    #         ret = self.aPipeline.score(theData[0], theData[1])
+    #         return [True, ret]
+    #     except Exception as e:
+    #         return [False, str(e)]
 
     # def getCoef(self):
     #     if self.hasAlgorithm is None:

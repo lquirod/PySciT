@@ -99,21 +99,39 @@ class aPipeline(ABC):
     # _fit = ['X (training data)','Y (target values)']
     _fit = [['Training data, X','Target values, y'],
             [1,0]]
-    @abstractmethod
+    # @abstractmethod
     def fit(self, data):
-        pass
+        theData = self.dataInput(data, len(self.__class__._fit[0]))
+        try:
+            self.aPipeline.fit(theData[0], theData[1])
+            return [True, 'Fit done']
+        except Exception as e:
+            return [False, str(e)]
+        # pass
 
     _predict = [['Data to predict(X)'],
                 [1]]
-    @abstractmethod
+    # @abstractmethod
     def predict(self, data):
-        pass
+        theData = self.dataInput(data, len(self.__class__._predict[0]))
+        try:
+            ret = self.aPipeline.predict(theData[0])
+            return [True, ret]
+        except Exception as e:
+            return [False, str(e)]
+        # pass
         
     # _score = [['Data to predict on, X', 'Targets used for scoring, y'],'Individual weights for each sample (Linear_Regression__sample_weight)'],
     #           [1,0,0]]
     _score = [['Data to predict on, X', 'Targets used for scoring, y'],
             [1,0]]
-    @abstractmethod
+    # @abstractmethod
     def score(self, data):
-        pass
-    
+        theData = self.dataInput(data, len(self.__class__._fit[0]))
+        try:
+            ret = self.aPipeline.score(theData[0], theData[1])
+            return [True, ret]
+        except Exception as e:
+            return [False, str(e)]
+        # pass
+        
