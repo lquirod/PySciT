@@ -17,5 +17,12 @@ class ManageAlgorithms:
             pipeName = 'MyNewPipe'
         if self.thereIsAlgorithm(theAlgorithm):
             if theAlgorithm == Enum.ALG.Algorithms.Linear_Regression.name:
-                return tPip.Lineal_Regresion.LinearRegressionPipe(pipeName)
+                return tPip.Linear_Regression_Pipe(pipeName)
+            elif theAlgorithm == Enum.ALG.Algorithms.KNeighbors_Classifier.name:
+                return tPip.KNeighbors_Classifier_Pipe(pipeName)
+            elif theAlgorithm == Enum.ALG.Algorithms.Random_Forest_Classifier.name:
+                return tPip.Random_Forest_Classifier_Pipe(pipeName)
+            elif theAlgorithm == Enum.ALG.Algorithms.Support_Vector_Classification.name:
+                return tPip.Support_Vector_Classification_Pipe(pipeName)
         return None
+    

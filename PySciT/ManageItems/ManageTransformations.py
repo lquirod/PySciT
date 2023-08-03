@@ -19,10 +19,20 @@ class ManageTransformations:
         if self.thereIsTransformation(nameTransformation):
             if nameTransformation == Enum.TR.Transformations.MinMax_Scaling.name:
                 return ['MinMax_Scaling', MinMaxScaler()]
-          
+            # elif nameTransformation == Enum.TR.Transformations.Print_data.name:
+            #     return ['Print_data', Print_data()]
+                    
         return None
             
 
+# # Custom transformation to print intermediate data
+# from sklearn.base import BaseEstimator, TransformerMixin
+# class Print_data(BaseEstimator, TransformerMixin):
 
+#     def transform(self, X):
+#         self.shape = X.shape
+#         return X
 
+#     def fit(self, X, y=None, **fit_params):
+#         return self
 

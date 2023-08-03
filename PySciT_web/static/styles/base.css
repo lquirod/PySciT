@@ -182,6 +182,7 @@ html {
 .textContent {
     padding: 6%;
     padding-top: 0;
+    padding-bottom: 3%;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -284,7 +285,6 @@ html {
     background-color: transparent;
     font-size: 16px;
     resize: none;
-    overflow-y: none;
 }
 
 /*  ---- Pop up form ---- */
@@ -516,38 +516,38 @@ input[type="button"] {
 }
 
 .columsText {
-    -webkit-column-gap: 20px;
-    -moz-column-gap: 20px;
+    /* -webkit-column-gap: 20px;
+    -moz-column-gap: 20px; */
     column-gap: 20px;
 }
 
 .colText2 {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
+    /* -webkit-column-count: 2;
+    -moz-column-count: 2; */
     column-count: 2;
 }
 
 /* If screen settings */
 @media only screen and (min-width: 900px) {
     .colText3 {
-        -webkit-column-count: 3;
-        -moz-column-count: 3;
+        /* -webkit-column-count: 3;
+        -moz-column-count: 3; */
         column-count: 3;
     }
 }
 
 @media only screen and (max-width: 700px) {
     .colText1 {
-        -webkit-column-count: 1;
-        -moz-column-count: 1;
+        /* -webkit-column-count: 1;
+        -moz-column-count: 1; */
         column-count: 1;
     }
 }
 
 @media only screen and (min-width: 992px) {
     .colText4 {
-        -webkit-column-count: 4;
-        -moz-column-count: 4;
+        /* -webkit-column-count: 4;
+        -moz-column-count: 4; */
         column-count: 4;
     }
 }

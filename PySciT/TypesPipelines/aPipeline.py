@@ -96,7 +96,6 @@ class aPipeline(ABC):
 
         return theData
 
-    # _fit = ['X (training data)','Y (target values)']
     _fit = [['Training data, X','Target values, y'],
             [1,0]]
     # @abstractmethod

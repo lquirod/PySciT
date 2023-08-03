@@ -3,7 +3,9 @@ from enum import Enum
 class Algorithms(Enum):
     # Empty_Pipeline = 0
     Linear_Regression = 1
-
+    KNeighbors_Classifier = 2
+    Random_Forest_Classifier = 3
+    Support_Vector_Classification = 4
     # ALG_101 = 101
     # ALG_102 = 102
     # ALG_103 = 103

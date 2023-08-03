@@ -1,6 +1,7 @@
 from enum import Enum
 
 class Transformations(Enum):
+    # Print_data = 0
     MinMax_Scaling = 1
 
     # TR_101 = 101

@@ -1,11 +1,7 @@
-import inspect
-from sklearn.pipeline import Pipeline
-import pandas as pd
-from abc import abstractmethod, ABC
-from sklearn import linear_model
+from sklearn.neighbors import KNeighborsClassifier
 from PySciT.TypesPipelines import aPipeline
 
-class LinearRegressionPipe(aPipeline.aPipeline):
+class KNeighbors_Classifier_Pipe(aPipeline.aPipeline):
     def __init__(self, pipeName = 'MyNewPipe'):
         super().__init__(pipeName)
         # self.Name = pipeName
@@ -15,7 +11,7 @@ class LinearRegressionPipe(aPipeline.aPipeline):
 
     ## Operations with the Pipeline's Algorithm
     def setAlgorithm(self):
-        self.hasAlgorithm = self.addStep( ['Linear_Regression', linear_model.LinearRegression()])
+        self.hasAlgorithm = self.addStep( ['KNeighbors_Classifier', KNeighborsClassifier()])
         return self.hasAlgorithm
 
     ####################################################################################################
@@ -38,8 +34,8 @@ class LinearRegressionPipe(aPipeline.aPipeline):
     # def fitData(self, X, y = None, sample_weight=None):
     # _fit = [['Training data, X','Target values, y', 'Individual weights for each sample (Linear_Regression__sample_weight)'],
     #         [1,1,0]]
-    _fit = [['Training data, X','Target values, y'],
-            [1,1]]
+    _fit = [['Training data, X','Training targets, y'],
+            [1,0]]
     # def fit(self, data):
     #     theData = super().dataInput(data, len(self.__class__._fit[0]))
     #     # print(inspect.getargspec(self.aPipeline[0].fit).args)

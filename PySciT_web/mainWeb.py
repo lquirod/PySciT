@@ -51,31 +51,31 @@ myUser.addStep(mTr.getTransformation("MinMax_Scaling"),1, 0)
 myUser.addStep(mTr.getTransformation("MinMax_Scaling"),8, 0)
 myUser.addStep(mTr.getTransformation("MinMax_Scaling"),8, 0)
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largoargo largo largoargolargoargo largo largoargo largo largoargo largo largoargo largo largoargo largo largoargo largo largoargo largo largoargo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', '    '))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'fdfd fdd fd f'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Support_Vector_Classification', 'un 3rgo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('KNeighbors_Classifier', '    '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('KNeighbors_Classifier', 'un 3 Largo larggo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Random_Forest_Classifier', 'fdfd fdd fd f'))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Random_Forest_Classifier', 'un 3 Largo Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'er n1 2'))
-myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo largo largo Largo largo largo '))
+myUser.addPipeline(mAlg.getAlgorithmPipe('Linear_Regression', 'un 3 Lao Largo largo largo largo largo Largo largo largo '))
 
 
 # print(myUser.getMyPipelinesNames())
@@ -96,10 +96,36 @@ from sklearn.pipeline import Pipeline
 from sklearn import linear_model
 import numpy as np
 
-X = np.array([[1, 1], [1, 2], [2, 2], [2, 3]])
-y = np.dot(X, np.array([1, 2])) + 3
-pipe = Pipeline([('linearmodel', linear_model.LinearRegression())])
-# The pipeline can be used as any other estimator
-# and avoids leaking the test set into the train set
-print(pipe.fit(X, y))
-print(pipe.score(X, y))
+# X = np.array([[1, 1], [1, 2], [2, 2], [2, 3]])
+# y = np.dot(X, np.array([1, 2])) + 3
+# pipe = Pipeline([('linearmodel', linear_model.LinearRegression())])
+# # The pipeline can be used as any other estimator
+# # and avoids leaking the test set into the train set
+# print(pipe.fit(X, y))
+# print(pipe.predict(X))
+# print(pipe.score(X, y))
+
+
+from sklearn.datasets import make_blobs
+import numpy as np
+
+centers = [[2, 3], [5, 5], [1, 8]]
+n_classes = len(centers)
+data, labels = make_blobs(n_samples=150, 
+                          centers=np.array(centers),
+                          random_state=1)
+from sklearn.model_selection import train_test_split
+res = train_test_split(data, labels, 
+                       train_size=0.8,
+                       test_size=0.2,
+                       random_state=1)
+
+train_data, test_data, train_labels, test_labels = res 
+print('train_data,')
+print(train_data)
+print('test_data')
+print(test_data)
+print(' train_labels')
+print(train_labels)
+print(', test_labels')
+print(test_labels)
