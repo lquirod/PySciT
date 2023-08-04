@@ -43,7 +43,7 @@
                     <th class="minLargeCol cell12">Name</th>
                     <th class="minLargeCol cell12">Algorithm</th>
                     <!-- <th class="minSmallCol cell110">Type</th> -->
-                    <th class="minSmallCol cell110">Steps</th>
+                    <th class="minSmallCol cell15">Steps</th>
                     <th class="cell110 minSmallCol finalHeaderCell">Access</th>
                 </tr>
             </thead>
@@ -51,16 +51,16 @@
                 {% for aPipe in Pipelines %}
                 <tr>
                     <td class="minCol cell110">{{loop.index0}}</td>
-                    <td class="minLargeCol cell25">
+                    <td class="minLargeCol cell12">
                         <div class="">{{ aPipe.Name }}</div>
                     </td>
-                    <td class="minMediumCol cell13">
+                    <td class="minMediumCol cell12">
                         <!-- <div class="minMediumCol cell13"> -->
                         {{ aPipe.steps()[aPipe.hasAlgorithm][0] }}
                         <!-- </div> -->
                     </td>
                     <!-- <td class="minSmallCol cell110">{{aPipe.typeAlgorithm}}</td> -->
-                    <td class="minSmallCol cell110">{{aPipe.steps()|length}}</td>
+                    <td class="minSmallCol cell15">{{aPipe.steps()|length}}</td>
                     <td class="minCol cell110">
                         <a href="/pipelines/get{{loop.index0}}/">
                             <i class="fa-solid fa-pen-to-square"></i>
