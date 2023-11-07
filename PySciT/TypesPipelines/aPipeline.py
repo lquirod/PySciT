@@ -69,6 +69,11 @@ class aPipeline(ABC):
     def get_params(self, deep=True):
         return self.aPipeline.get_params(deep)
     
+    def get_paramsStep(self, position=None, deep=True):
+        if position is None or position < 0 or len(self.steps()) < position:
+            position = 0
+        return self.aPipeline[position].get_params(deep)
+    
     def setParams(self, **params):
         self.aPipeline.set_params(**params)
         return True
